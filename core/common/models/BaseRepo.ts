@@ -13,7 +13,7 @@ export class BaseRepo<T> extends Singleton<T> {
       code: res.code,
       message: res.message,
       data: res.data,
-      isSuccess: res.code === 0
+      isSuccess: `${res.code}` === `0`
     };
   }
 }

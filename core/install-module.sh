@@ -11,4 +11,5 @@ yarn add @react-navigation/native@6.1.6 \
  @reduxjs/toolkit@1.9.3 \
  redux@4.2.1 \
  redux-thunk@2.4.2 \
- react-native-uuid@2.0.1
+ react-native-uuid@2.0.1 \
+ @react-native-async-storage/async-storage@1.22.3

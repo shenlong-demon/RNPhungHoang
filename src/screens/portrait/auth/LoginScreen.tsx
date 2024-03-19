@@ -1,7 +1,6 @@
 import React, {FC, memo, useState} from 'react';
 import {Button, Input, View} from '@core/components';
-import {ENV, useAuthFacade} from "@src/business";
-import {CONSTANTS, Logger} from "@core/common";
+import {useAuthFacade} from "@src/business";
 
 type Props = {};
 export const LoginScreen: FC<Props> = memo(({}) => {

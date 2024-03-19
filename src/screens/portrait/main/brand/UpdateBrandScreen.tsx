@@ -6,7 +6,7 @@ import {BrandFacade} from '@src/business/facade';
 import {
   DataContextResult,
   useDataContext,
-} from '@src/screens/business/context_providers';
+} from '@src/business';
 
 export const UpdateBrandScreen = () => {
   // const [brands, setBrands] = useState<Brand[]>([]);

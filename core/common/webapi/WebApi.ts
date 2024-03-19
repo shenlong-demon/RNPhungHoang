@@ -85,6 +85,7 @@ export class WebApi extends Singleton<WebApi> {
           }
         : {}),
     };
+    Logger.log(() => [`WebApi createHeader token ${token} `, header]);
     return header;
   }
 }

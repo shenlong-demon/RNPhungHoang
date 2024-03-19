@@ -1,6 +1,6 @@
 import {BaseService, Dto, Sdo} from '@core/common';
 import {AuthRepo} from "@src/business/repository/AuthRepo";
-import {User} from "@src/business";
+import {LoginModel, Setting, User} from "@src/business";
 
 export class AuthService extends BaseService<AuthService> {
   private authRepo: AuthRepo = AuthRepo.shared();
@@ -11,12 +11,20 @@ export class AuthService extends BaseService<AuthService> {
     return this.Instance(AuthService);
   }
 
-  async login(phone: string, password: string): Promise<Dto<User | null>> {
+  async login(phone: string, password: string): Promise<Dto<LoginModel>> {
     let user: User | null = null;
+    let setting: Setting | null = null;
     const sdo: Sdo<any> = await this.authRepo.login(phone, password);
-    if(sdo.isSuccess){
-      user = sdo.data as User;
+    let loginModel: LoginModel | null = null;
+    if (sdo.isSuccess && !!sdo.data) {
+      user = sdo.data.user as User;
+      setting = sdo.data.setting as Setting;
+      loginModel = {
+        user,
+        setting
+      }
     }
-    return this.populateData<User | null>(sdo, user);
+
+    return this.populateData<LoginModel>(sdo, loginModel);
   }
 }
