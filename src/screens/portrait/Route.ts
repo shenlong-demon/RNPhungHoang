@@ -2,7 +2,9 @@ export enum Route {
   LOGIN = 'LOGIN',
   MAIN = 'MAIN',
   STORE = 'STORE',
+  PRODUCT = 'PRODUCT',
   POS_SELLER = 'POS_SELLER',
   BRANCH = 'BRANCH',
+  GROUP = 'GROUP',
   OPERATION = 'OPERATION',
 }

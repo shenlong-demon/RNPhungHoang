@@ -1,4 +1,4 @@
-import {Brand, Setting, useBrandFacade} from '@src/business';
+import {Brand, Setting, useDataFacade} from '@src/business';
 import React, {useContext, useEffect, useState,} from 'react';
 
 export type SettingContextResult = {

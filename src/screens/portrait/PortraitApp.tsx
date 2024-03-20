@@ -6,6 +6,8 @@ import {Route} from '@src/screens/portrait/Route';
 import StoreScreen from '@src/screens/portrait/main/store';
 import POSSellerScreen from '@src/screens/portrait/main/pos';
 import {DataContextProvider, SettingContextProvider, useAuthContext} from "@src/business";
+import {ProductListScreen} from "@src/screens/portrait/main/product";
+import {UpdateGroupScreen} from "@src/screens/portrait/main/group";
 
 type Props = {};
 export const PortraitApp: FC<Props> = memo(({}) => {
@@ -13,11 +15,9 @@ export const PortraitApp: FC<Props> = memo(({}) => {
     const {user} = useAuthContext();
     const operation = () => {
         return (
-            <DataContextProvider>
                 <StackNavigator screens={[
                     {name: Route.POS_SELLER, component: POSSellerScreen,  options: {headerShown: false}},
                 ]}/>
-            </DataContextProvider>
         );
     };
   const main = () => {
@@ -28,8 +28,10 @@ export const PortraitApp: FC<Props> = memo(({}) => {
                       screens={[
                           {name: Route.MAIN, component: MainScreen},
                           {name: Route.STORE, component: StoreScreen},
+                          {name: Route.PRODUCT, component: ProductListScreen},
                           {name: Route.POS_SELLER, component: operation},
                           {name: Route.BRANCH, component: UpdateBrandScreen},
+                          {name: Route.GROUP, component: UpdateGroupScreen},
                       ]}
                   />
               </DataContextProvider>

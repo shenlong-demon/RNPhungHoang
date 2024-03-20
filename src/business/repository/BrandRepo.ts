@@ -10,4 +10,8 @@ export class BrandRepo extends BaseRepo<BrandRepo> {
   }
 
 
+  async getBrands(): Promise<Sdo<any[]>> {
+    const api: ApiResult = await this.api.get(API_URL.GET_BRANDS());
+    return this.populate(api);
+  }
 }

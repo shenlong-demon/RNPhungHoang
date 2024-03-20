@@ -1,4 +1,4 @@
-import {Brand, Setting, useBrandFacade, User} from '@src/business';
+import {Brand, Setting, useDataFacade, User} from '@src/business';
 import React, {useContext, useEffect, useState,} from 'react';
 import {LoginFacade} from "@src/business/facade";
 import {Logger} from "@core/common";

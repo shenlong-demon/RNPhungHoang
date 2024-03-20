@@ -1,2 +1,2 @@
 export * from './LoginFacade';
-export * from './BrandFacade';
+export * from './DataFacade';

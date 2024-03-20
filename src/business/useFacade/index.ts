@@ -1,2 +1,3 @@
 export * from './useLoginFacade';
-export * from './useBrandFacade';
+export * from './useProductFacade';
+export * from './useDataFacade';

@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {View, TextInput, Button, FlatList, Text} from 'react-native';
-import {Brand, STATUS, useAuthFacade, useBrandFacade} from '@src/business';
+import {Brand, STATUS, useAuthFacade, useDataFacade} from '@src/business';
 import {AppUtility} from '@src/business/common/app_utility';
-import {BrandFacade} from '@src/business/facade';
+import {DataFacade} from '@src/business/facade';
 import {
   DataContextResult,
   useDataContext,
@@ -13,7 +13,7 @@ export const UpdateBrandScreen = () => {
   const [name, setName] = useState('');
   const [status, setStatus] = useState<STATUS>(STATUS.ACTIVE);
   const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null);
-  // const brandFacade = useBrandFacade();
+  // const brandFacade = useDataFacade();
   const {brands}: DataContextResult = useDataContext();
   // Initialize brands data (you can replace this with your actual API call)
   useEffect(() => {

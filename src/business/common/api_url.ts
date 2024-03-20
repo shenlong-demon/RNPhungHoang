@@ -7,5 +7,8 @@ const API_URL = {
   GET_BRANDS: (): string => {
     return `${ENV.HOST}/brand`;
   },
+  GET_GROUPS: (): string => {
+    return `${ENV.HOST}/group`;
+  },
 };
 export {API_URL};
