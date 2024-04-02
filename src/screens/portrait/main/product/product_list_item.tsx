@@ -7,21 +7,21 @@ type Props = {
   item: Product;
   index: number;
 
-  onEdit: () => void;
+  onClick: () => void;
 };
 
 
-export const ProductListItem: FC<Props> = ({item, index, onEdit}) => {
+export const ProductListItem: FC<Props> = ({item, index, onClick}) => {
   return (
-    <View.V alignChildren={'center|vertical'}>
-      <View.V>
+    <View.Row>
+      <View.Row>
         <Label.T text={item.name} />
         <Label.T text={`${item.quantity}`} />
-      </View.V>
+      </View.Row>
       <View.V>
-        <Button.B onPress={onEdit} label={'Edit'} />
+        <Button.B onPress={onClick} label={'Edit'} />
       </View.V>
-    </View.V>
+    </View.Row>
   );
 };
 export default memo(ProductListItem);

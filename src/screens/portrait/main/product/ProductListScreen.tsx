@@ -1,14 +1,21 @@
 import React, {FC, memo, useCallback, useState} from 'react';
-import {View} from '@core/components';
-import {Button, FlatList, Text} from 'react-native';
-import {Product, STATUS, useProductFacade} from '@src/business';
-import {ProductListItem} from '@src/screens/portrait/main/product/product_list_item';
+import {Label, View} from '@core/components';
+import {Brand, Group, Product, useProductFacade} from '@src/business';
+import {useNavigation} from "@core/navigation";
+import {SelectBrandAndGroupView} from "@src/screens/portrait/shared_components";
+import {FlatList} from "react-native";
+import {ProductListItem} from "@src/screens/portrait/main/product/product_list_item";
+import {Logger} from "@core/common";
+import {ProductFilterRequestDto} from "@src/business/service/requests";
 
 type Props = {};
 
 export const ProductListScreen: FC<Props> = memo(({}) => {
-    const {products} = useProductFacade();
-  const onEdit = useCallback(async (item: Product): Promise<void> => {}, []);
+    const {navigate} = useNavigation();
+    const productFacade = useProductFacade();
+    const [products, setProducts] = useState<Product[]>([]);
+    const onClick = useCallback(async (item: Product): Promise<void> => {}, []);
+    const [pageIndex, setPageIndex] = useState<number>(0);
 
   const renderProductItem = useCallback(
     (data: {item: Product; index: number}): any => {
@@ -16,19 +23,40 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
         <ProductListItem
           item={data.item}
           index={data.index}
-          onEdit={() => onEdit(data.item)}
+          onClick={() => onClick(data.item)}
         />
       );
     },
     [],
   );
+
+  const filterProductsBy = async (brand: Brand | null, group: Group | null): Promise<void> => {
+      const request: ProductFilterRequestDto = {
+          brandId: brand?.id,
+          groupId: group?.id,
+          offset: pageIndex
+      };
+    const prs: Product[] = await productFacade.getProductsByBrandAndGroup(request);
+    Logger.log(() => [`ProductListScreen filterProductsBy request`, request, prs, prs.length]);
+    setProducts(prs);
+  };
+  const onFilterChanged = (brand: Brand | null, group: Group | null) => {
+    filterProductsBy(brand, group);
+  };
+
   return (
-    <View.V>
-      <FlatList
-        data={products}
-        keyExtractor={item => item.id}
-        renderItem={renderProductItem}
-      />
+    <View.V styles={{flex: 1}}>
+        <SelectBrandAndGroupView onChanged={onFilterChanged} />
+
+        <FlatList
+            style={{flex: 1}}
+            data={products}
+            keyExtractor={item => item.id}
+            renderItem={renderProductItem}
+        />
+
+        {/*<Button.B style={{width: 50, height: 50, backgroundColor: 'red'}} onPress={() => {navigate(Route.PRODUCT_UPDATE)}} />*/}
+
     </View.V>
   );
 });

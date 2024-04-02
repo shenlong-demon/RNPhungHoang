@@ -1,16 +1,15 @@
-import React, {FC, memo} from 'react';
-import {View} from '@core/components';
+import React, {FC} from 'react';
+import {Button, Input, View} from '@core/components';
+import {SelectBrandAndGroupView} from "@src/screens/portrait/shared_components";
 
 type Props = {};
-export const UpdateProductScreen: FC<Props> = memo(({}) => {
+export const UpdateProductScreen: FC<Props> = (({}) => {
     return <View.V>
-        {/*<Picker*/}
-        {/*    selectedValue={selectedValue}*/}
-        {/*    onValueChange={(itemValue) => setSelectedValue(itemValue)}*/}
-        {/*>*/}
-        {/*    <Picker.Item label="Option 1" value="option1" />*/}
-        {/*    <Picker.Item label="Option 2" value="option2" />*/}
-        {/*    <Picker.Item label="Option 3" value="option3" />*/}
-        {/*</Picker>*/}
+        <Input.Text />
+        <Input.Text />
+        <Input.Text />
+        <SelectBrandAndGroupView/>
+        <Input.Text />
+        <Button.Submit />
     </View.V>;
 });

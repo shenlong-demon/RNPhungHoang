@@ -1,9 +1,28 @@
-import React, {FC, memo} from 'react';
-import {Text, TextProps} from 'react-native';
+import React, {FC, memo, useMemo} from 'react';
+import {StyleSheet, Text, TextProps, ViewStyle} from 'react-native';
+import {StyleProp} from "react-native/Libraries/StyleSheet/StyleSheet";
+import {TextStyle} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 type Props = {
+  style?: StyleProp<TextStyle> | undefined;
   text: string;
 } & TextProps;
-const TextLabel: FC<Props> = ({text}) => {
-  return <Text>{text}</Text>;
+const TextLabel: FC<Props> = ({style, text, ...rest}) => {
+
+  const finalStyle = useMemo((): StyleProp<ViewStyle> => {
+    return StyleSheet.flatten([commonStyle.label, style]);
+  }, []);
+  return <Text style={finalStyle} {...rest}>{text}</Text>;
 };
+
+TextLabel.displayName = 'Label.TextLabel';
+
 export default memo(TextLabel);
+
+const commonStyle = StyleSheet.create({
+  label: {
+    height: 40,
+    color: 'black',
+    textAlignVertical: 'center',
+    margin: 5
+  }
+});

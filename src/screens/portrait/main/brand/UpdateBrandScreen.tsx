@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import {View, TextInput, Button, FlatList, Text} from 'react-native';
 import {Brand, STATUS, useAuthFacade, useDataFacade} from '@src/business';
 import {AppUtility} from '@src/business/common/app_utility';
@@ -57,6 +57,22 @@ export const UpdateBrandScreen = () => {
     // setBrands(updatedBrands);
   };
 
+  const list = useMemo(() => {
+      return <FlatList
+          data={brands}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({item}) => (
+              <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                  <Text>{item.name}</Text>
+                  <View style={{flexDirection: 'row'}}>
+                      <Button title="Edit" onPress={() => handleEditBrand(item)} />
+                      <Button title="Delete" onPress={() => handleDeleteBrand(item)} />
+                  </View>
+              </View>
+          )}
+      />;
+  }, [brands]);
+
   return (
     <View style={{flex: 1}}>
       {/* Brand form */}
@@ -78,19 +94,7 @@ export const UpdateBrandScreen = () => {
       </View>
 
       {/* Brand list */}
-      <FlatList
-        data={brands}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => (
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text>{item.name}</Text>
-            <View style={{flexDirection: 'row'}}>
-              <Button title="Edit" onPress={() => handleEditBrand(item)} />
-              <Button title="Delete" onPress={() => handleDeleteBrand(item)} />
-            </View>
-          </View>
-        )}
-      />
+        {list}
     </View>
   );
 };

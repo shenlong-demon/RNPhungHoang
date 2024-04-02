@@ -1,7 +1,8 @@
 import React, {FC, memo, useMemo} from 'react';
-import {StyleProp, ViewStyle, View, StyleSheet} from 'react-native';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {TouchableOpacity} from "react-native-gesture-handler";
 
-type Props = {
+export type ViewContainerProps = {
   styles?: StyleProp<ViewStyle>;
   children?: JSX.Element[] | JSX.Element;
   position?: 'left' | 'right' | 'top' | 'bottom' | 'center' | undefined;
@@ -11,17 +12,28 @@ type Props = {
     | 'right'
     | 'vertical'
     | 'horizontal'
+    | 'center|horizontal'
     | 'center|vertical'
     | undefined;
+  onPress?: (() => void) | undefined;
 };
-const ViewContainer: FC<Props> = ({
+
+let randomColors = ['red', 'yellow', 'green', 'blue'];
+let randomColorIndex: number = 0;
+const ViewContainer: FC<ViewContainerProps> = ({
   styles,
   children,
   position,
   alignChildren,
+    onPress,
+    ...rest
 }) => {
+  randomColorIndex += 1;
+  if(randomColorIndex > 100){
+    randomColorIndex = 0;
+  }
   const positionStyle = useMemo((): StyleProp<ViewStyle> => {
-    const pos: any = {};
+    let pos: any = {};
     if (!!position) {
       pos.position = 'absolute';
       const positionStr: string = position.toLowerCase();
@@ -42,7 +54,7 @@ const ViewContainer: FC<Props> = ({
   }, []);
 
   const alignChildrenStyle = useMemo((): StyleProp<ViewStyle> => {
-    const align: any = {};
+    let align: any = {};
     if (!!alignChildren) {
       const alignChildrenStr: string = alignChildren.toLowerCase();
       if (alignChildrenStr.indexOf('center') >= 0) {
@@ -51,17 +63,32 @@ const ViewContainer: FC<Props> = ({
         }
         if (alignChildrenStr.indexOf('horizontal') >= 0) {
           align.justifyContent = 'center';
+          align.flexDirection = 'row';
         }
       }
     }
 
     return align;
   }, []);
-  const contentStyle = useMemo((): StyleProp<ViewStyle> => {
-    return StyleSheet.flatten([styles, positionStyle, alignChildrenStyle]);
+
+
+  const finalStyles = useMemo((): StyleProp<ViewStyle> => {
+    return StyleSheet.flatten([commonStyle.view, styles, positionStyle, alignChildrenStyle]);
   }, []);
-  return <View style={contentStyle}>{children}</View>;
+
+  const view = () => {
+    return <View style={finalStyles}  {...rest}>{children}</View>;
+  };
+
+
+  return (!!onPress ? <TouchableOpacity >{view()}</TouchableOpacity> : view());
 };
 ViewContainer.displayName = 'View.Container';
 
+const commonStyle = StyleSheet.create({
+  view: {
+    paddingLeft: 10,
+    paddingRight: 10,
+  }
+});
 export default memo(ViewContainer);

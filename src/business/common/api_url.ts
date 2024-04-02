@@ -10,5 +10,8 @@ const API_URL = {
   GET_GROUPS: (): string => {
     return `${ENV.HOST}/group`;
   },
+    GET_PRODUCTS_BY() {
+      return `${ENV.HOST}/product/filter`;
+    }
 };
 export {API_URL};

@@ -1,20 +1,21 @@
-import {LoginFacade} from '@src/business/facade';
 import {Fto} from '@core/common';
-import {useNavigation} from '@core/navigation';
-import {Route} from '@src/screens/portrait/Route';
-import {LoginModel, Product, useAuthContext, User, useSettingContextFacade} from '@src/business';
-import {Animated} from "react-native";
-import Value = Animated.Value;
-import {useState} from "react";
+import {Product} from '@src/business';
+import {ProductFacade} from "@src/business/facade";
+import {ProductFilterRequestDto} from "@src/business/service/requests";
 
 type ProductFacadeResult = {
-    products: Product[]
+    getProductsByBrandAndGroup :(filter: ProductFilterRequestDto) => Promise<Product[]>
 };
 
 export const useProductFacade = (): ProductFacadeResult => {
-   const [products, setProducts] = useState<Product[]>([]);
+    const productFacade: ProductFacade = ProductFacade.shared();
+
+    const getProductsByBrandAndGroup = async(filter: ProductFilterRequestDto) : Promise<Product[]> => {
+        const fto: Fto<Product[]> = await productFacade.getProductsBy(filter);
+        return fto.data;
+    };
 
    return {
-       products
+       getProductsByBrandAndGroup
    };
 };

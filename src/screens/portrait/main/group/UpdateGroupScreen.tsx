@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Button, FlatList, Text, TextInput, View} from 'react-native';
 import {DataContextResult, Group, STATUS, useDataContext} from '@src/business';
 
@@ -42,6 +42,22 @@ export const UpdateGroupScreen = () => {
         // setBrands(updatedBrands);
     };
 
+    const list = useMemo(() => {
+        return <FlatList
+            data={groups}
+            keyExtractor={item => item.id.toString()}
+            renderItem={({item}) => (
+                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <Text>{item.name}</Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <Button title="Edit" onPress={() => handleEditBrand(item)} />
+                        <Button title="Delete" onPress={() => handleDeleteBrand(item)} />
+                    </View>
+                </View>
+            )}
+        />
+    } , [groups]);
+
     return (
         <View style={{flex: 1}}>
             {/* Group form */}
@@ -62,20 +78,7 @@ export const UpdateGroupScreen = () => {
                 />
             </View>
 
-            {/* Group list */}
-            <FlatList
-                data={groups}
-                keyExtractor={item => item.id.toString()}
-                renderItem={({item}) => (
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text>{item.name}</Text>
-                        <View style={{flexDirection: 'row'}}>
-                            <Button title="Edit" onPress={() => handleEditBrand(item)} />
-                            <Button title="Delete" onPress={() => handleDeleteBrand(item)} />
-                        </View>
-                    </View>
-                )}
-            />
+            {list}
         </View>
     );
 };
