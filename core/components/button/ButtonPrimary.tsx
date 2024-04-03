@@ -1,16 +1,12 @@
 import React, {FC, memo, useMemo} from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  TouchableOpacityProps,
-} from 'react-native';
+import {StyleSheet, TouchableOpacity, TouchableOpacityProps,} from 'react-native';
 import {Label} from '@core/components';
-import {CONSTANTS} from '@core/common';
+
 export type ButtonProps = {
   label?: string;
 } & TouchableOpacityProps;
-const ButtonPrimary: FC<ButtonProps> = ({label, ...rest}) => {
-  const buttonStyle = useMemo(() => StyleSheet.flatten([styles.button]), []);
+const ButtonPrimary: FC<ButtonProps> = ({style, label, ...rest}) => {
+  const buttonStyle = useMemo(() => StyleSheet.flatten([commonStyles.button, style]), []);
 
   return (
     <TouchableOpacity style={buttonStyle} {...rest}>
@@ -21,7 +17,7 @@ const ButtonPrimary: FC<ButtonProps> = ({label, ...rest}) => {
 
 export default memo(ButtonPrimary);
 
-const styles = StyleSheet.create({
+const commonStyles = StyleSheet.create({
   container: {},
   button: {
     height: 48,

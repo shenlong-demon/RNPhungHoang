@@ -8,6 +8,7 @@ import POSSellerScreen from '@src/screens/portrait/main/pos';
 import {DataContextProvider, SettingContextProvider, useAuthContext} from "@src/business";
 import {ProductListScreen, UpdateProductScreen} from "@src/screens/portrait/main/product";
 import {UpdateGroupScreen} from "@src/screens/portrait/main/group";
+import { Label } from '@core/components';
 
 type Props = {};
 export const PortraitApp: FC<Props> = memo(({}) => {
@@ -43,7 +44,13 @@ export const PortraitApp: FC<Props> = memo(({}) => {
                       screens={[
                           {name: Route.MAIN, component: MainScreen},
                           {name: Route.STORE, component: StoreScreen},
-                          {name: Route.PRODUCT, component: product},
+                          {name: Route.PRODUCT, component: product, options: {
+                                  headerRight: () => (
+                                      <Label.T
+                                          text="Info"
+                                      />
+                                  ),
+                              }},
                           {name: Route.POS_SELLER, component: operation},
                           {name: Route.BRANCH, component: UpdateBrandScreen},
                           {name: Route.GROUP, component: UpdateGroupScreen},

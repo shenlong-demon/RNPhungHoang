@@ -1,5 +1,5 @@
 import React, {FC, memo, useCallback, useState} from 'react';
-import {Label, View} from '@core/components';
+import {Button, View} from '@core/components';
 import {Brand, Group, Product, useProductFacade} from '@src/business';
 import {useNavigation} from "@core/navigation";
 import {SelectBrandAndGroupView} from "@src/screens/portrait/shared_components";
@@ -7,6 +7,7 @@ import {FlatList} from "react-native";
 import {ProductListItem} from "@src/screens/portrait/main/product/product_list_item";
 import {Logger} from "@core/common";
 import {ProductFilterRequestDto} from "@src/business/service/requests";
+import {Route} from "@src/screens/portrait/Route";
 
 type Props = {};
 
@@ -14,8 +15,13 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
     const {navigate} = useNavigation();
     const productFacade = useProductFacade();
     const [products, setProducts] = useState<Product[]>([]);
-    const onClick = useCallback(async (item: Product): Promise<void> => {}, []);
+
     const [pageIndex, setPageIndex] = useState<number>(0);
+
+
+    const onClick = useCallback(async (item: Product): Promise<void> => {
+        navigate(Route.PRODUCT_UPDATE, item)
+    }, []);
 
   const renderProductItem = useCallback(
     (data: {item: Product; index: number}): any => {
@@ -54,7 +60,7 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
             keyExtractor={item => item.id}
             renderItem={renderProductItem}
         />
-
+        <Button.FloatCirle position={'bottom|right'} />
         {/*<Button.B style={{width: 50, height: 50, backgroundColor: 'red'}} onPress={() => {navigate(Route.PRODUCT_UPDATE)}} />*/}
 
     </View.V>

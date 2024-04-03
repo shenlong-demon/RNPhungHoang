@@ -14,7 +14,7 @@ type Props = {
 export const ProductListItem: FC<Props> = ({item, index, onClick}) => {
   return (
     <View.Row>
-      <View.Row>
+      <View.Row styles={{flex: 1, justifyContent: 'space-between'}}>
         <Label.T text={item.name} />
         <Label.T text={`${item.quantity}`} />
       </View.Row>

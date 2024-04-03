@@ -1,6 +1,7 @@
 import React, {FC, memo, useMemo} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {TouchableOpacity} from "react-native-gesture-handler";
+import {PositionUtil} from "@core/components/common";
 
 export type ViewContainerProps = {
   styles?: StyleProp<ViewStyle>;
@@ -33,24 +34,7 @@ const ViewContainer: FC<ViewContainerProps> = ({
     randomColorIndex = 0;
   }
   const positionStyle = useMemo((): StyleProp<ViewStyle> => {
-    let pos: any = {};
-    if (!!position) {
-      pos.position = 'absolute';
-      const positionStr: string = position.toLowerCase();
-      if (positionStr.indexOf('top') >= 0) {
-        pos.top = 0;
-      }
-      if (positionStr.indexOf('left') >= 0) {
-        pos.left = 0;
-      }
-      if (positionStr.indexOf('right') >= 0) {
-        pos.right = 0;
-      }
-      if (positionStr.indexOf('bottom') >= 0) {
-        pos.bottom = 0;
-      }
-    }
-    return pos;
+    return PositionUtil.positionStyle(position);
   }, []);
 
   const alignChildrenStyle = useMemo((): StyleProp<ViewStyle> => {
@@ -87,8 +71,8 @@ ViewContainer.displayName = 'View.Container';
 
 const commonStyle = StyleSheet.create({
   view: {
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 5,
+    paddingRight: 5,
   }
 });
 export default memo(ViewContainer);

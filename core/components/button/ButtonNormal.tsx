@@ -9,11 +9,11 @@ import {CONSTANTS} from '@core/common';
 export type ButtonProps = {
   label?: string;
 } & TouchableOpacityProps;
-const ButtonNormal: FC<ButtonProps> = ({label, ...rest}) => {
-  const buttonStyle = useMemo(() => StyleSheet.flatten([styles.button]), []);
+const ButtonNormal: FC<ButtonProps> = ({style, label, ...rest}) => {
+  const finalStyle = useMemo(() => StyleSheet.flatten([styles.button, style]), []);
 
   return (
-    <TouchableOpacity style={buttonStyle} {...rest}>
+    <TouchableOpacity style={finalStyle} {...rest}>
       {!!label ? <Label.T text={label} /> : null}
     </TouchableOpacity>
   );
@@ -29,5 +29,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 24,
+    backgroundColor: 'red'
   },
 });

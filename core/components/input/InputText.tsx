@@ -8,16 +8,24 @@ import {
 } from 'react-native';
 
 export type InputTextProps = {
-  style?: StyleProp<ViewStyle>;
+  styles?: StyleProp<ViewStyle>;
 } & TextInputProps;
-const InputText: FC<InputTextProps> = ({style, ...rest}) => {
-  const inputStyle = {};
+const InputText: FC<InputTextProps> = ({styles, ...rest}) => {
 
-  const styles = useMemo(
-    () => StyleSheet.flatten([style, inputStyle]),
-    [style, inputStyle],
+  const finalStyles = useMemo(
+    () => StyleSheet.flatten([commonStyle.input, styles]),
+    [],
   );
 
-  return <TextInput {...rest} style={styles} />;
+  return <TextInput {...rest} style={finalStyles} />;
 };
 export default memo(InputText);
+
+const commonStyle = StyleSheet.create({
+  input: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: 'black',
+    flex: 1,
+    height: 40
+  }
+});
