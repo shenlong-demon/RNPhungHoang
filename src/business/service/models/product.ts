@@ -1,4 +1,4 @@
-import {STATUS} from '@src/business';
+import {Brand, Group, STATUS} from '@src/business';
 
 export type Product = {
   id: string;
@@ -11,4 +11,6 @@ export type Product = {
   status: STATUS;
   brandId: number;
   groupId: number;
+  brand: Brand;
+  group: Group;
 };

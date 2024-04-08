@@ -23,9 +23,12 @@ export default memo(InputText);
 
 const commonStyle = StyleSheet.create({
   input: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'black',
+    borderBottomWidth: 0.3,
+    borderBottomColor: 'gray',
     flex: 1,
-    height: 40
+    height: 40,
+    paddingBottom: -10,
+    marginLeft: 10,
+    marginRight: 10,
   }
 });

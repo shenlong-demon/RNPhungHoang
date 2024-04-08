@@ -60,7 +60,7 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
             keyExtractor={item => item.id}
             renderItem={renderProductItem}
         />
-        <Button.FloatCirle position={'bottom|right'} />
+        <Button.FloatCirle position={'bottom|right'} onPress={() => navigate(Route.PRODUCT_UPDATE)} />
         {/*<Button.B style={{width: 50, height: 50, backgroundColor: 'red'}} onPress={() => {navigate(Route.PRODUCT_UPDATE)}} />*/}
 
     </View.V>

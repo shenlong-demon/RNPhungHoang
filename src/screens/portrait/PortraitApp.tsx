@@ -44,13 +44,7 @@ export const PortraitApp: FC<Props> = memo(({}) => {
                       screens={[
                           {name: Route.MAIN, component: MainScreen},
                           {name: Route.STORE, component: StoreScreen},
-                          {name: Route.PRODUCT, component: product, options: {
-                                  headerRight: () => (
-                                      <Label.T
-                                          text="Info"
-                                      />
-                                  ),
-                              }},
+                          {name: Route.PRODUCT, component: product},
                           {name: Route.POS_SELLER, component: operation},
                           {name: Route.BRANCH, component: UpdateBrandScreen},
                           {name: Route.GROUP, component: UpdateGroupScreen},

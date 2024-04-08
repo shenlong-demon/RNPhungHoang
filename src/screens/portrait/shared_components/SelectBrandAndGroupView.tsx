@@ -4,12 +4,19 @@ import {Dropdown} from "react-native-element-dropdown";
 import {Brand, Group, useDataContext} from "@src/business";
 import {StyleSheet} from "react-native";
 type Props = {
+    defaultValues?: {brand: Brand | null, group: Group | null};
     onChanged : (brand: Brand | null, group: Group | null) => void;
 };
-export const SelectBrandAndGroupView: FC<Props> = ({onChanged }) => {
+export const SelectBrandAndGroupView: FC<Props> = ({defaultValues, onChanged }) => {
     const {brands, groups} = useDataContext();
-    const [brand, setBrand] = useState<Brand | null>(null);
-    const [group, setGroup] = useState<Group | null>(null);
+    const [brand, setBrand] = useState<Brand | null>(defaultValues?.brand || null);
+    const [group, setGroup] = useState<Group | null>(defaultValues?.group || null);
+
+
+    useEffect(() => {
+        onChanged(brand, group);
+    }, [brand, group]);
+
 
     const renderBrandItem = useCallback((brand: Brand | null) => {
         return <View.Row>
@@ -20,13 +27,12 @@ export const SelectBrandAndGroupView: FC<Props> = ({onChanged }) => {
         return <View.Row>
             <Label.T text={group?.name || ''} />
         </View.Row>
-    }, []);
-    useEffect(() => {
-        onChanged(brand, group);
-    }, [brand, group]);
+    }, [])
+
 
     return <View.Row>
         <Dropdown
+            mode={'modal'}
             style={styles.dropdown}
             data={brands}
             search
@@ -35,13 +41,14 @@ export const SelectBrandAndGroupView: FC<Props> = ({onChanged }) => {
             valueField="id"
             placeholder="Select brand"
             searchPlaceholder="Search..."
-            value={null}
+            value={brand}
             onChange={item => {
                 setBrand(item);
             }}
             renderItem={renderBrandItem}
         />
         <Dropdown
+            mode={'modal'}
             style={styles.dropdown}
             data={groups}
             search
@@ -50,7 +57,7 @@ export const SelectBrandAndGroupView: FC<Props> = ({onChanged }) => {
             valueField="id"
             placeholder="Select group"
             searchPlaceholder="Search..."
-            value={null}
+            value={group}
             onChange={item => {
                 setGroup(item);
             }}

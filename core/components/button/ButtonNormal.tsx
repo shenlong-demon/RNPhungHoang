@@ -25,10 +25,10 @@ const styles = StyleSheet.create({
   container: {},
   button: {
     height: 48,
-    borderRadius: 24,
+    borderWidth: 0.5,
+    borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 24,
-    backgroundColor: 'red'
   },
 });

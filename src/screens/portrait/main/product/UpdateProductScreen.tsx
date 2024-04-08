@@ -1,10 +1,27 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {Button, Input, Label, View} from '@core/components';
 import {SelectBrandAndGroupView} from "@src/screens/portrait/shared_components";
-import {Brand, Group} from "@src/business";
+import {Brand, Group, Product, STATUS} from "@src/business";
+import {useNavigation} from "@core/navigation";
+import {CONSTANTS} from "@core/common";
 
 type Props = {};
 export const UpdateProductScreen: FC<Props> = (({}) => {
+    const {getParam} = useNavigation();
+    const productParam: Product | null = getParam();
+    const [product, setProduct] = useState<Product | null>(productParam || {
+        id: CONSTANTS.STR_EMPTY,
+        name: CONSTANTS.STR_EMPTY,
+        otherName: CONSTANTS.STR_EMPTY,
+        quantity: 0,
+        price: 0,
+        groupId: 0,
+        group: null,
+        brandId: 0,
+        brand: null,
+        status: STATUS.ACTIVE
+    });
+
 
     const onBrandAndGroupChange = (brand: Brand | null, group: Group | null): void => {
 
@@ -19,6 +36,9 @@ export const UpdateProductScreen: FC<Props> = (({}) => {
             <Label.T text={'Code'} />
             <Input.Text />
         </View.Row>
+
+        <SelectBrandAndGroupView defaultValues={{brand: product?.brand || null, group: product?.group || null}} onChanged={onBrandAndGroupChange}/>
+
         <View.Row>
             <Label.T text={'Price'} />
             <Input.Text />
@@ -28,7 +48,6 @@ export const UpdateProductScreen: FC<Props> = (({}) => {
             <Input.Text />
         </View.Row>
 
-        <SelectBrandAndGroupView onChanged={onBrandAndGroupChange}/>
 
 
         <Button.Submit />
