@@ -1,5 +1,5 @@
-import {Brand, Group, useDataFacade} from '@src/business';
-import React, {useContext, useEffect, useState,} from 'react';
+import { Brand, Group, useDataFacade } from '@src/business';
+import React, { useContext, useEffect, useState } from 'react';
 
 export type DataContextResult = {
   brands: Brand[];
@@ -17,18 +17,17 @@ export const useDataContextFacade = (): DataContextResult => {
   }, []);
 
   const loadBrands = async (): Promise<void> => {
-      const brs: Brand[] = await dataFacade.getBrands();
-      setBrands(brs);
+    const brs: Brand[] = await dataFacade.getBrands();
+    setBrands(brs);
   };
   const loadGroups = async (): Promise<void> => {
-      const grs: Group[] = await dataFacade.getGroups();
-      setGroups(grs);
+    const grs: Group[] = await dataFacade.getGroups();
+    setGroups(grs);
   };
-
 
   return {
     brands,
-    groups
+    groups,
   };
 };
 
@@ -37,13 +36,11 @@ const DefaultDataContextResult: DataContextResult = {
   groups: [],
 };
 
-const DataContext = React.createContext<DataContextResult>(
-  DefaultDataContextResult,
-);
+const DataContext = React.createContext<DataContextResult>(DefaultDataContextResult);
 
 export const useDataContext = () => useContext(DataContext);
 
-export const DataContextProvider = ({children}) => {
+export const DataContextProvider = ({ children }) => {
   const facade = useDataContextFacade();
   return <DataContext.Provider value={facade}>{children}</DataContext.Provider>;
 };

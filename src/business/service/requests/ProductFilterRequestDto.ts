@@ -1,3 +1,3 @@
-import {ProductFilterRequestSdo} from "@src/business/repository/requests";
+import { ProductFilterRequestSdo } from '@src/business/repository/requests';
 
 export type ProductFilterRequestDto = ProductFilterRequestSdo;

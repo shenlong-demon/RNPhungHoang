@@ -1,10 +1,11 @@
-import {ApiResult, BaseRepo, Dto, Sdo} from '@core/common';
-import {API_URL} from '@src/business';
+import { ApiResult, BaseRepo, Sdo } from '@core/common';
+import { API_URL } from '@src/business';
 
 export class AuthRepo extends BaseRepo<AuthRepo> {
   constructor() {
     super();
   }
+
   public static shared(): AuthRepo {
     return this.Instance(AuthRepo);
   }

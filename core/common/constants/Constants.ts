@@ -1,4 +1,4 @@
 const CONSTANTS = {
-    STR_EMPTY: '',
+  STR_EMPTY: '',
 };
-export {CONSTANTS};
+export { CONSTANTS };

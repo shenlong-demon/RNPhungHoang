@@ -1,5 +1,5 @@
-export  const useBaseFacade = <R>(hook: () => R): R =>{
-    const hookResult: R = hook();
+export const useBaseFacade = <R>(hook: () => R): R => {
+  const hookResult: R = hook();
 
-    return hookResult;
+  return hookResult;
 };

@@ -1,9 +1,9 @@
-import {Brand, Setting, useDataFacade} from '@src/business';
-import React, {useContext, useEffect, useState,} from 'react';
+import { Setting } from '@src/business';
+import React, { useContext, useState } from 'react';
 
 export type SettingContextResult = {
   setting: Setting | null;
-  setSetting: (setting :Setting) => void;
+  setSetting: (setting: Setting) => void;
 };
 
 export const useSettingContextFacade = (): SettingContextResult => {
@@ -11,22 +11,20 @@ export const useSettingContextFacade = (): SettingContextResult => {
 
   return {
     setting,
-    setSetting
+    setSetting,
   };
 };
 
 const DefaultSettingContextResult: SettingContextResult = {
   setting: null,
-  setSetting : (_setting: Setting): void => {}
+  setSetting: (_setting: Setting): void => {},
 };
 
-const SettingContext = React.createContext<SettingContextResult>(
-  DefaultSettingContextResult,
-);
+const SettingContext = React.createContext<SettingContextResult>(DefaultSettingContextResult);
 
 export const useSettingContext = () => useContext(SettingContext);
 
-export const SettingContextProvider = ({children}) => {
+export const SettingContextProvider = ({ children }) => {
   const facade = useSettingContextFacade();
   return <SettingContext.Provider value={facade}>{children}</SettingContext.Provider>;
 };

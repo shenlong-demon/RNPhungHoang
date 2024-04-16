@@ -1,12 +1,13 @@
-import {CONSTANTS, Logger, Singleton} from '../index';
-import {ApiResult} from './ApiResult';
-import Axios, {AxiosResponse} from 'axios';
+import { CONSTANTS, Logger, Singleton } from '../index';
+import { ApiResult } from './ApiResult';
+import Axios, { AxiosResponse } from 'axios';
 
 export class WebApi extends Singleton<WebApi> {
   private getToken: (() => Promise<string>) | null = null;
   private readonly api = Axios.create({
     timeout: 60 * 1000,
   });
+
   constructor() {
     super();
   }
@@ -24,7 +25,7 @@ export class WebApi extends Singleton<WebApi> {
     const headers = await this.createHeader();
     let res: ApiResult;
     try {
-      const response: AxiosResponse = await this.api.post(url, data, {headers});
+      const response: AxiosResponse = await this.api.post(url, data, { headers });
       res = this.handle(response);
       Logger.log(() => [`POST ${url}`, headers, data, response, res]);
     } catch (ex) {
@@ -33,12 +34,13 @@ export class WebApi extends Singleton<WebApi> {
     }
     return res;
   }
+
   public async get(url: string): Promise<ApiResult> {
     Logger.log(() => [`GET ${url}`]);
     const headers = await this.createHeader();
     let res: ApiResult;
     try {
-      const response: AxiosResponse = await this.api.get(url, {headers});
+      const response: AxiosResponse = await this.api.get(url, { headers });
       res = this.handle(response);
       Logger.log(() => [`GET ${url}`, headers, response, res]);
     } catch (ex) {
@@ -49,7 +51,7 @@ export class WebApi extends Singleton<WebApi> {
   }
 
   private handle(response: AxiosResponse): ApiResult {
-    return {...response.data};
+    return { ...response.data };
   }
 
   private catchException(error: any | null): ApiResult {
@@ -67,16 +69,12 @@ export class WebApi extends Singleton<WebApi> {
     return res;
   }
 
-  private async createHeader(
-    contentType?: string | undefined,
-  ): Promise<Record<string, string>> {
+  private async createHeader(contentType?: string | undefined): Promise<Record<string, string>> {
     let header = {
       ['Content-Type']: !!contentType ? contentType : 'application/json',
     };
 
-    const token: string = !!this.getToken
-      ? await this.getToken()
-      : CONSTANTS.STR_EMPTY;
+    const token: string = !!this.getToken ? await this.getToken() : CONSTANTS.STR_EMPTY;
     header = {
       ...header,
       ...(!!token

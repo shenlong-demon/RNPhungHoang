@@ -1,6 +1,6 @@
 import React from 'react';
 import ViewContainer from './ViewContainer';
-import ViewRow from "@core/components/view/ViewRow";
+import ViewRow from '@core/components/view/ViewRow';
 
 const View = () => <React.Fragment />;
 

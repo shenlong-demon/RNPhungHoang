@@ -1,15 +1,11 @@
-import React, {FC, memo, useMemo} from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  TouchableOpacityProps,
-} from 'react-native';
-import {Label} from '@core/components';
-import {CONSTANTS} from '@core/common';
+import React, { FC, memo, useMemo } from 'react';
+import { StyleSheet, TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { Label } from '@core/components';
+
 export type ButtonProps = {
   label?: string;
 } & TouchableOpacityProps;
-const ButtonNormal: FC<ButtonProps> = ({style, label, ...rest}) => {
+const ButtonNormal: FC<ButtonProps> = ({ style, label, ...rest }) => {
   const finalStyle = useMemo(() => StyleSheet.flatten([styles.button, style]), []);
 
   return (

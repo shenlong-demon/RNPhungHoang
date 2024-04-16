@@ -1,1 +1,1 @@
-export {HistoryBillListPart as default} from './HistoryBillListPart';
+export { HistoryBillListPart as default } from './HistoryBillListPart';

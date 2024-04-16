@@ -1,9 +1,10 @@
-import {Singleton} from '../index';
-import {Dto} from './Dto';
-import {Fto} from './Fto';
+import { Singleton } from '../index';
+import { Dto } from './Dto';
+import { Fto } from './Fto';
 
 export default class BaseFacade<T> extends Singleton<T> {
   protected handler: any | null;
+
   constructor(handler?: any | null | undefined) {
     super();
     this.handler = handler || null;
@@ -16,12 +17,13 @@ export default class BaseFacade<T> extends Singleton<T> {
       isSuccess: dto.isSuccess,
     };
   }
-  protected failed(code: string, message?: string | null | undefined ): Fto<null> {
+
+  protected failed(code: string, message?: string | null | undefined): Fto<null> {
     return {
       code: code,
       data: null,
       isSuccess: false,
-      message: message
+      message: message,
     };
   }
 }

@@ -1,3 +1,1 @@
-export type Setting = {
-
-};
+export type Setting = {};

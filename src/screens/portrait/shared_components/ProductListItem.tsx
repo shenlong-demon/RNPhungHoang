@@ -1,21 +1,22 @@
-import React, {FC, memo, useEffect} from "react";
-import {View} from "@core/components";
-import {Product} from "@src/business";
-import Label from "@core/components/label/Label";
+import React, { FC, memo, useEffect } from 'react';
+import { View } from '@core/components';
+import { Product } from '@src/business';
+import Label from '@core/components/label/Label';
 
 type Props = {
-    item: Product;
-    index: number;
+  item: Product;
+  index: number;
 
-    onClick: (item: Product) => void;
+  onClick: (item: Product) => void;
 };
- const ProductListItem: FC<Props> = ({item, index, onClick }) => {
-    useEffect(() => {
-    }, []);
+const ProductListItem: FC<Props> = ({ item, index, onClick }) => {
+  useEffect(() => {}, []);
 
-    return <View.Row  style={{flex:1, justifyContent: 'space-between'}}>
-        <Label.T text={item.name} />
-        <Label.T text={`${item.price}`} />
+  return (
+    <View.Row style={{ flex: 1, justifyContent: 'space-between' }}>
+      <Label.T text={item.name} />
+      <Label.T text={`${item.price}`} />
     </View.Row>
+  );
 };
- export default memo(ProductListItem);
+export default memo(ProductListItem);

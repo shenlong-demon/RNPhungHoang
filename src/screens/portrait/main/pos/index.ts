@@ -1,1 +1,1 @@
-export {POSSellerScreen as default} from './POSSellerScreen';
+export { POSSellerScreen as default } from './POSSellerScreen';

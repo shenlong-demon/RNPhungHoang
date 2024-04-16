@@ -1,4 +1,3 @@
-
 export class Singleton<T> {
   private static instance: any | null = null;
 

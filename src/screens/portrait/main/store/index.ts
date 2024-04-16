@@ -1,1 +1,1 @@
-export {StoreScreen as default} from './StoreScreen';
+export { StoreScreen as default } from './StoreScreen';

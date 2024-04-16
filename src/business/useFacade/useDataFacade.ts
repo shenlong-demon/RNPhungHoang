@@ -1,11 +1,10 @@
-import {DataFacade} from '@src/business/facade';
-import {Fto} from '@core/common';
-import {useNavigation} from '@core/navigation';
-import {Brand, Group} from '@src/business';
+import { DataFacade } from '@src/business/facade';
+import { Fto } from '@core/common';
+import { Brand, Group } from '@src/business';
 
 type DataFacadeResult = {
   getBrands: () => Promise<Brand[]>;
-   getGroups : () => Promise<Group[]>;
+  getGroups: () => Promise<Group[]>;
 };
 
 export const useDataFacade = (): DataFacadeResult => {
@@ -19,5 +18,5 @@ export const useDataFacade = (): DataFacadeResult => {
     return fto.data;
   };
 
-  return {getBrands, getGroups};
+  return { getBrands, getGroups };
 };

@@ -1,11 +1,11 @@
-import {Brand, Setting, useDataFacade, User} from '@src/business';
-import React, {useContext, useEffect, useState,} from 'react';
-import {LoginFacade} from "@src/business/facade";
-import {Logger} from "@core/common";
+import { User } from '@src/business';
+import React, { useContext, useEffect, useState } from 'react';
+import { LoginFacade } from '@src/business/facade';
+import { Logger } from '@core/common';
 
 export type AuthContextResult = {
   user: User | null;
-  setUser: ( user: User | null) => void;
+  setUser: (user: User | null) => void;
 };
 
 export const useAuthContextFacade = (): AuthContextResult => {
@@ -13,7 +13,7 @@ export const useAuthContextFacade = (): AuthContextResult => {
   const facade: LoginFacade = LoginFacade.shared();
   useEffect(() => {
     loadUserInCache();
-  } , []);
+  }, []);
 
   const loadUserInCache = async (): Promise<void> => {
     const user: User | null = await facade.isLoggedIn();
@@ -24,22 +24,20 @@ export const useAuthContextFacade = (): AuthContextResult => {
 
   return {
     user,
-    setUser
+    setUser,
   };
 };
 
 const DefaultAuthContextResult: AuthContextResult = {
   user: null,
-  setUser : (_user: User): void => {}
+  setUser: (_user: User): void => {},
 };
 
-const AuthContext = React.createContext<AuthContextResult>(
-  DefaultAuthContextResult,
-);
+const AuthContext = React.createContext<AuthContextResult>(DefaultAuthContextResult);
 
 export const useAuthContext = () => useContext(AuthContext);
 
-export const AuthContextProvider = ({children}) => {
+export const AuthContextProvider = ({ children }) => {
   const facade = useAuthContextFacade();
   return <AuthContext.Provider value={facade}>{children}</AuthContext.Provider>;
 };

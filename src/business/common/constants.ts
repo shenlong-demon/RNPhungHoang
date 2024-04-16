@@ -6,5 +6,5 @@ export enum STATUS {
 
 export enum LOCAL_STORAGE_KEY {
   USER = 'USER',
-  SETTING = 'SETTING'
+  SETTING = 'SETTING',
 }

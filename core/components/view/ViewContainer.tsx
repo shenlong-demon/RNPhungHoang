@@ -1,7 +1,7 @@
-import React, {FC, memo, useMemo} from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {TouchableOpacity} from "react-native-gesture-handler";
-import {PositionUtil} from "@core/components/common";
+import React, { FC, memo, useMemo } from 'react';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { PositionUtil } from '@core/components/common';
 
 export type ViewContainerProps = {
   style?: StyleProp<ViewStyle>;
@@ -21,16 +21,9 @@ export type ViewContainerProps = {
 
 let randomColors = ['red', 'yellow', 'green', 'blue'];
 let randomColorIndex: number = 0;
-const ViewContainer: FC<ViewContainerProps> = ({
-  style,
-  children,
-  position,
-  alignChildren,
-    onPress,
-    ...rest
-}) => {
+const ViewContainer: FC<ViewContainerProps> = ({ style, children, position, alignChildren, onPress, ...rest }) => {
   randomColorIndex += 1;
-  if(randomColorIndex > 100){
+  if (randomColorIndex > 100) {
     randomColorIndex = 0;
   }
   const positionStyle = useMemo((): StyleProp<ViewStyle> => {
@@ -55,17 +48,19 @@ const ViewContainer: FC<ViewContainerProps> = ({
     return align;
   }, []);
 
-
   const finalStyles = useMemo((): StyleProp<ViewStyle> => {
     return StyleSheet.flatten([commonStyle.view, style, positionStyle, alignChildrenStyle]);
   }, [style]);
 
   const view = () => {
-    return <View style={finalStyles}  {...rest}>{children}</View>;
+    return (
+      <View style={finalStyles} {...rest}>
+        {children}
+      </View>
+    );
   };
 
-
-  return (!!onPress ? <TouchableOpacity >{view()}</TouchableOpacity> : view());
+  return !!onPress ? <TouchableOpacity>{view()}</TouchableOpacity> : view();
 };
 ViewContainer.displayName = 'View.Container';
 
@@ -74,6 +69,6 @@ const commonStyle = StyleSheet.create({
     // flex: 1,
     paddingLeft: 5,
     paddingRight: 5,
-  }
+  },
 });
 export default memo(ViewContainer);

@@ -1,6 +1,6 @@
-import {CONSTANTS, Singleton} from '../index';
-import {Sdo} from './Sdo';
-import {Dto} from './Dto';
+import { CONSTANTS, Singleton } from '../index';
+import { Sdo } from './Sdo';
+import { Dto } from './Dto';
 
 export class BaseService<T> extends Singleton<T> {
   constructor() {
@@ -15,6 +15,7 @@ export class BaseService<T> extends Singleton<T> {
       isSuccess: `${sdo.code}` === `0`,
     };
   }
+
   protected populateData<T>(sdo: Sdo<T>, data: T | null): Dto<T> {
     return {
       code: sdo.code,

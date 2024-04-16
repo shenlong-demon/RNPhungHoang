@@ -1,20 +1,9 @@
-import React, {FC, memo, useMemo} from 'react';
-import {
-  StyleProp,
-  StyleSheet,
-  TextInput,
-  TextInputProps,
-  ViewStyle,
-} from 'react-native';
+import React, { FC, memo, useMemo } from 'react';
+import { StyleSheet, TextInput, TextInputProps } from 'react-native';
 
-export type InputTextProps = {
-} & TextInputProps;
-const InputText: FC<InputTextProps> = ({style, ...rest}) => {
-
-  const finalStyles = useMemo(
-    () => StyleSheet.flatten([commonStyle.input, style]),
-    [style],
-  );
+export type InputTextProps = {} & TextInputProps;
+const InputText: FC<InputTextProps> = ({ style, ...rest }) => {
+  const finalStyles = useMemo(() => StyleSheet.flatten([commonStyle.input, style]), [style]);
 
   return <TextInput {...rest} style={finalStyles} />;
 };
@@ -28,7 +17,7 @@ const commonStyle = StyleSheet.create({
     height: 40,
     // paddingLeft: 10,
     // paddingRight: 10,
-    fontWeight:'bold',
-    fontSize: 18
-  }
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
 });

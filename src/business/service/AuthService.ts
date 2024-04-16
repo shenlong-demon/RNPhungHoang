@@ -1,12 +1,14 @@
-import {BaseService, Dto, Sdo} from '@core/common';
-import {AuthRepo} from "@src/business/repository/AuthRepo";
-import {LoginModel, Setting, User} from "@src/business";
+import { BaseService, Dto, Sdo } from '@core/common';
+import { AuthRepo } from '@src/business/repository/AuthRepo';
+import { LoginModel, Setting, User } from '@src/business';
 
 export class AuthService extends BaseService<AuthService> {
   private authRepo: AuthRepo = AuthRepo.shared();
+
   constructor() {
     super();
   }
+
   public static shared(): AuthService {
     return this.Instance(AuthService);
   }
@@ -21,8 +23,8 @@ export class AuthService extends BaseService<AuthService> {
       setting = sdo.data.setting as Setting;
       loginModel = {
         user,
-        setting
-      }
+        setting,
+      };
     }
 
     return this.populateData<LoginModel>(sdo, loginModel);

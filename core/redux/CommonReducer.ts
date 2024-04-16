@@ -1,5 +1,5 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {RootState} from '@core/redux/Store';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '@core/redux/Store';
 
 export interface CommonState {
   isLoading: boolean;
@@ -24,7 +24,7 @@ export const commonSlice = createSlice({
   },
 });
 
-export const {setLoading} = commonSlice.actions;
+export const { setLoading } = commonSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

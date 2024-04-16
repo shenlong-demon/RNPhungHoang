@@ -1,1 +1,1 @@
-export * from './UpdateGroupScreen'
+export * from './UpdateGroupScreen';

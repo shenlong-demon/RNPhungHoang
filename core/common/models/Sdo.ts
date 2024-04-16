@@ -4,4 +4,4 @@ export type Sdo<T> = {
   code: string;
 
   isSuccess: boolean;
-}
+};

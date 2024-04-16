@@ -1,4 +1,4 @@
-import {ENV} from '@src/business';
+import { ENV } from '@src/business';
 
 const API_URL = {
   LOGIN: (): string => {
@@ -10,13 +10,14 @@ const API_URL = {
   GET_GROUPS: (): string => {
     return `${ENV.HOST}/group`;
   },
-    GET_PRODUCTS_BY() {
-      return `${ENV.HOST}/product/filter`;
-    },
-    CREATE_PRODUCT() {
-      return `${ENV.HOST}/product/create`;
-    },UPDATE_PRODUCT(id: string) {
-      return `${ENV.HOST}/product/update/${id}`;
-    },
+  GET_PRODUCTS_BY() {
+    return `${ENV.HOST}/product/filter`;
+  },
+  CREATE_PRODUCT() {
+    return `${ENV.HOST}/product/create`;
+  },
+  UPDATE_PRODUCT(id: string) {
+    return `${ENV.HOST}/product/update/${id}`;
+  },
 };
-export {API_URL};
+export { API_URL };
