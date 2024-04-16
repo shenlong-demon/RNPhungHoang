@@ -8,13 +8,13 @@ import { CONSTANTS } from '@core/common';
 
 type InputTextFormProps = BaseFormProps &
   InputTextProps & {
-    defaultValue?: string;
+    defaultValue?: string | number;
   } & UseControllerProps;
 const InputTextForm: FC<InputTextFormProps> = (props: InputTextFormProps) => {
   const { name, rules, label, defaultValue, ...inputProps } = props;
   const formContext = useFormContext();
   const { formState } = formContext;
-  const { field } = useController({ ...props, defaultValue });
+  const { field } = useController({ ...props, defaultValue: props.defaultValue });
   const hasError = Boolean(formState?.errors[props.name]);
   const message: string = !!hasError ? `${formState.errors[props.name].message}` : CONSTANTS.STR_EMPTY;
 

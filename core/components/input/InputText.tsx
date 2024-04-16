@@ -11,13 +11,15 @@ export default memo(InputText);
 
 const commonStyle = StyleSheet.create({
   input: {
-    borderBottomWidth: 1,
-    borderBottomColor: 'gray',
+    borderWidth: 1,
+    borderColor: 'gray',
     // flex: 1,
     height: 40,
-    // paddingLeft: 10,
+    paddingLeft: 10,
     // paddingRight: 10,
     fontWeight: 'bold',
     fontSize: 18,
+    textAlignVertical: 'center',
+    verticalAlign: 'middle',
   },
 });

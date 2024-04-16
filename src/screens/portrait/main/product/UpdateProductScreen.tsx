@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Button, Form, Input, Label, View } from '@core/components';
+import { Button, Form, View } from '@core/components';
 import { Brand, Group, Product, useDataContext, useProductFacade } from '@src/business';
 import { useNavigation } from '@core/navigation';
 import { Logger } from '@core/common';
@@ -24,8 +24,6 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
     // submitProduct(product)
   };
 
-  const onBrandAndGroupChange = (brand: Brand | null, group: Group | null): void => {};
-
   return (
     <Form.View onSubmit={onSubmit} onError={onError}>
       <Form.InputText
@@ -35,11 +33,13 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
         name={'name'}
         rules={{ required: 'Name is required!' }}
       />
-
-      <View.Row>
-        <Label.T text={'Code'} />
-        <Input.Text />
-      </View.Row>
+      <Form.InputText
+        label={`Other name`}
+        placeholder={'Please input other name'}
+        defaultValue={product?.otherName}
+        name={'otherName'}
+      />
+      <Form.InputText label={`Code`} placeholder={'Please input code'} defaultValue={product?.code} name={'code'} />
       <View.Row>
         <DropdownSingleSelectForm
           placeholder={'Select group'}
@@ -63,14 +63,39 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
         />
       </View.Row>
 
-      <View.Row>
-        <Label.T text={'Price'} />
-        <Input.Text />
-      </View.Row>
-      <View.Row>
-        <Label.T text={'Quantity'} />
-        <Input.Text />
-      </View.Row>
+      <Form.InputText
+        keyboardType={'numeric'}
+        label={`Price`}
+        placeholder={'Please input price'}
+        defaultValue={`${product?.price}`}
+        name={'price'}
+        rules={{
+          valueAsNumber: true,
+          required: 'Price is required!',
+          min: 0,
+
+          pattern: {
+            value: /^[-+]?[1-9]\d*$/,
+            message: 'Price must be number',
+          },
+        }}
+      />
+      <Form.InputText
+        keyboardType={'numeric'}
+        label={`Quantity`}
+        placeholder={'Please input quantity'}
+        defaultValue={`${product?.quantity}`}
+        name={'quantity'}
+        rules={{
+          required: 'Quantity is required!',
+          valueAsNumber: true,
+          min: 0,
+          pattern: {
+            value: /^[-+]?[1-9]\d*$/,
+            message: 'Quantity must be number',
+          },
+        }}
+      />
 
       <Button.Submit />
     </Form.View>

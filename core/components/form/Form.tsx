@@ -7,7 +7,7 @@ import DropdownSingleSelectForm from './DropdownSingleSelectForm';
 export type BaseFormProps = {
   label?: string;
   name: string;
-  rules: any;
+  rules?: any;
 };
 
 const Form = () => <React.Fragment />;
