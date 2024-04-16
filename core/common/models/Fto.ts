@@ -1,5 +1,6 @@
 export type Fto<T> = {
-  code: number;
+  code: string;
   data: T | null | undefined;
   isSuccess : boolean;
+  message?: string | null | undefined;
 };

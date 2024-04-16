@@ -16,4 +16,12 @@ export default class BaseFacade<T> extends Singleton<T> {
       isSuccess: dto.isSuccess,
     };
   }
+  protected failed(code: string, message?: string | null | undefined ): Fto<null> {
+    return {
+      code: code,
+      data: null,
+      isSuccess: false,
+      message: message
+    };
+  }
 }

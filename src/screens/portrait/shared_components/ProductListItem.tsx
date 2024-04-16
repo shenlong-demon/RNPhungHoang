@@ -13,7 +13,7 @@ type Props = {
     useEffect(() => {
     }, []);
 
-    return <View.Row  styles={{flex:1, justifyContent: 'space-between'}}>
+    return <View.Row  style={{flex:1, justifyContent: 'space-between'}}>
         <Label.T text={item.name} />
         <Label.T text={`${item.price}`} />
     </View.Row>

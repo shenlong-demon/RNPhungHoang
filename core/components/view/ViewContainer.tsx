@@ -4,7 +4,7 @@ import {TouchableOpacity} from "react-native-gesture-handler";
 import {PositionUtil} from "@core/components/common";
 
 export type ViewContainerProps = {
-  styles?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   children?: JSX.Element[] | JSX.Element;
   position?: 'left' | 'right' | 'top' | 'bottom' | 'center' | undefined;
   alignChildren?:
@@ -22,7 +22,7 @@ export type ViewContainerProps = {
 let randomColors = ['red', 'yellow', 'green', 'blue'];
 let randomColorIndex: number = 0;
 const ViewContainer: FC<ViewContainerProps> = ({
-  styles,
+  style,
   children,
   position,
   alignChildren,
@@ -57,8 +57,8 @@ const ViewContainer: FC<ViewContainerProps> = ({
 
 
   const finalStyles = useMemo((): StyleProp<ViewStyle> => {
-    return StyleSheet.flatten([commonStyle.view, styles, positionStyle, alignChildrenStyle]);
-  }, []);
+    return StyleSheet.flatten([commonStyle.view, style, positionStyle, alignChildrenStyle]);
+  }, [style]);
 
   const view = () => {
     return <View style={finalStyles}  {...rest}>{children}</View>;
@@ -71,6 +71,7 @@ ViewContainer.displayName = 'View.Container';
 
 const commonStyle = StyleSheet.create({
   view: {
+    // flex: 1,
     paddingLeft: 5,
     paddingRight: 5,
   }

@@ -2,15 +2,15 @@ import React, {FC, memo, useMemo} from 'react';
 import {StyleSheet, Text, TextProps, ViewStyle} from 'react-native';
 import {StyleProp} from "react-native/Libraries/StyleSheet/StyleSheet";
 import {TextStyle} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
-type Props = {
+export type TextLabelProps = {
   style?: StyleProp<TextStyle> | undefined;
   text: string;
 } & TextProps;
-const TextLabel: FC<Props> = ({style, text, ...rest}) => {
+const TextLabel: FC<TextLabelProps> = ({style, text, ...rest}) => {
 
   const finalStyle = useMemo((): StyleProp<ViewStyle> => {
     return StyleSheet.flatten([commonStyle.label, style]);
-  }, []);
+  }, [style]);
   return <Text style={finalStyle} {...rest}>{text}</Text>;
 };
 

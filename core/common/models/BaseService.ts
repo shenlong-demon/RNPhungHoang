@@ -12,7 +12,7 @@ export class BaseService<T> extends Singleton<T> {
       code: sdo.code,
       data: sdo.data as T,
       message: sdo.message,
-      isSuccess: sdo.code === 0,
+      isSuccess: `${sdo.code}` === `0`,
     };
   }
   protected populateData<T>(sdo: Sdo<T>, data: T | null): Dto<T> {
@@ -26,7 +26,7 @@ export class BaseService<T> extends Singleton<T> {
 
   protected successDto<T>(data: T): Dto<T> {
     return {
-      code: 0,
+      code: `0`,
       data,
       message: CONSTANTS.STR_EMPTY,
       isSuccess: true,

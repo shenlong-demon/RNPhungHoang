@@ -4,17 +4,17 @@ import ViewContainer, {ViewContainerProps} from "@core/components/view/ViewConta
 
 type Props = ViewContainerProps;
 const ViewRpw: FC<Props> = ({
-                                      styles,
+                                      style,
                                       children,
                                       position,
                                       alignChildren,
                                     ...rest
                                   }) => {
     const finalStyle = useMemo((): StyleProp<ViewStyle> => {
-        return StyleSheet.flatten([commonStyle.row, styles]);
+        return StyleSheet.flatten([commonStyle.row, style]);
     }, []);
 
-    return <ViewContainer styles={finalStyle} {...rest}  >{children}</ViewContainer>;
+    return <ViewContainer style={finalStyle} {...rest}  >{children}</ViewContainer>;
 };
 ViewRpw.displayName = 'View.Row';
 

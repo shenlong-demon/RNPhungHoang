@@ -14,6 +14,6 @@ export const LoginScreen: FC<Props> = memo(({}) => {
   return <View.V position={'right'} alignChildren={'center|vertical'} styles={{backgroundColor: 'red'}}>
     <Input.Text onChangeText={setPhone} />
     <Input.Password onChangeText={setPassword}/>
-    <Button.Submit label={'Login'} onPress={submit} />
+    <Button.B label={'Login'} onPress={submit} />
   </View.V>;
 });

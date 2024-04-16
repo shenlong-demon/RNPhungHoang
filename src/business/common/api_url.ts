@@ -12,6 +12,11 @@ const API_URL = {
   },
     GET_PRODUCTS_BY() {
       return `${ENV.HOST}/product/filter`;
-    }
+    },
+    CREATE_PRODUCT() {
+      return `${ENV.HOST}/product/create`;
+    },UPDATE_PRODUCT(id: string) {
+      return `${ENV.HOST}/product/update/${id}`;
+    },
 };
 export {API_URL};

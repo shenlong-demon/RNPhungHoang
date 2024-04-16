@@ -1,43 +1,54 @@
-import React, {FC, useState} from 'react';
-import {Button, Input, Label, View} from '@core/components';
+import React, {FC, useCallback, useState} from 'react';
+import {Button, Form, Input, Label, View} from '@core/components';
 import {SelectBrandAndGroupView} from "@src/screens/portrait/shared_components";
-import {Brand, Group, Product, STATUS} from "@src/business";
+import {Brand, Group, Product, STATUS, useDataContext, useProductFacade} from "@src/business";
 import {useNavigation} from "@core/navigation";
-import {CONSTANTS} from "@core/common";
+import {CONSTANTS, Logger} from "@core/common";
+import DropdownSingleSelectForm from "@core/components/form/DropdownSingleSelectForm";
+import GroupSelectItem from "@src/screens/portrait/shared_components/GroupSelectItem";
+import BrandSelectItem from "@src/screens/portrait/shared_components/BrandSelectItem";
 
 type Props = {};
+type FormValues = Product & {};
 export const UpdateProductScreen: FC<Props> = (({}) => {
     const {getParam} = useNavigation();
-    const productParam: Product | null = getParam();
-    const [product, setProduct] = useState<Product | null>(productParam || {
-        id: CONSTANTS.STR_EMPTY,
-        name: CONSTANTS.STR_EMPTY,
-        otherName: CONSTANTS.STR_EMPTY,
-        quantity: 0,
-        price: 0,
-        groupId: 0,
-        group: null,
-        brandId: 0,
-        brand: null,
-        status: STATUS.ACTIVE
-    });
+    const {submitProduct} = useProductFacade();
+    const product: Product | null = getParam();
+    const {groups, brands} = useDataContext();
 
+    const onSubmit = (data: FormValues) => {
+        Logger.log(() => [`UpdateProductScreen onSubmit data`, data]);
+        // submitProduct(product)
+    };
+    const onError = (errors: any, e: any) => {
+        Logger.log(() => [`UpdateProductScreen onError errors`, errors, e]);
+        // submitProduct(product)
+    };
 
     const onBrandAndGroupChange = (brand: Brand | null, group: Group | null): void => {
 
     }
 
-    return <View.V>
-        <View.Row>
-            <Label.T text={'Name'} />
-            <Input.Text />
-        </View.Row>
+
+    return <Form.View onSubmit={onSubmit} onError={onError}>
+        <Form.InputText label={`Product name`} placeholder={'Please input product name'} defaultValue={product?.name} name={'name'} rules={{ required: 'Name is required!' }} />
+
         <View.Row>
             <Label.T text={'Code'} />
             <Input.Text />
         </View.Row>
+        <View.Row>
+            <DropdownSingleSelectForm placeholder={'Select group'} name={'group'} data={groups} rules={{ required: 'Group is required!' }}
+                labelField={'name'} valueField={'id'}  renderItem={(group: Group) => <GroupSelectItem group={group}
+            />}
+                                      defaultValue={product?.group}
+            />
+            <DropdownSingleSelectForm placeholder={'Select brand'}  name={'brand'} data={brands} rules={{ required: 'Brand is required!' }}
+                labelField={'name'} valueField={'id'}  renderItem={(brand: Brand) => <BrandSelectItem brand={brand}  />}
+                                      defaultValue={product?.brand}
+            />
+        </View.Row>
 
-        <SelectBrandAndGroupView defaultValues={{brand: product?.brand || null, group: product?.group || null}} onChanged={onBrandAndGroupChange}/>
 
         <View.Row>
             <Label.T text={'Price'} />
@@ -48,8 +59,6 @@ export const UpdateProductScreen: FC<Props> = (({}) => {
             <Input.Text />
         </View.Row>
 
-
-
         <Button.Submit />
-    </View.V>;
+    </Form.View>;
 });

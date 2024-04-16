@@ -51,7 +51,7 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
   };
 
   return (
-    <View.V styles={{flex: 1}}>
+    <View.V style={{flex: 1}}>
         <SelectBrandAndGroupView onChanged={onFilterChanged} />
 
         <FlatList

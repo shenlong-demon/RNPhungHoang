@@ -12,4 +12,7 @@ yarn add @react-navigation/native@6.1.6 \
  redux@4.2.1 \
  redux-thunk@2.4.2 \
  react-native-uuid@2.0.1 \
- @react-native-async-storage/async-storage@1.22.3
+ @react-native-async-storage/async-storage@1.22.3 \
+ react-hook-form@7.51.3 \
+ react-native-element-dropdown@2.10.4
+
