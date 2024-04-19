@@ -45,6 +45,7 @@ const ElementDropdown: FC<ElementDropdownProps> = (props: ElementDropdownProps) 
         setValue(item);
       }}
       renderItem={props.renderItem}
+      selectedTextStyle={{ fontWeight: 'bold', fontSize: 18 }}
     />
   );
 };
