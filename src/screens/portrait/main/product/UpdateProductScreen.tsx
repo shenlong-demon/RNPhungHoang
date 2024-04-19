@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import { Button, Form, View } from '@core/components';
-import { Brand, Group, Product, useDataContext, useProductFacade } from '@src/business';
+import { Brand, Group, Product, STATUS, useDataContext, useProductFacade } from '@src/business';
 import { useNavigation } from '@core/navigation';
 import { Logger } from '@core/common';
 import DropdownSingleSelectForm from '@core/components/form/DropdownSingleSelectForm';
 import GroupSelectItem from '@src/screens/portrait/shared_components/GroupSelectItem';
 import BrandSelectItem from '@src/screens/portrait/shared_components/BrandSelectItem';
+import StatusDropdownForm from '@src/screens/portrait/shared_components/StatusDropdownForm';
 
 type Props = {};
 type FormValues = Product & {};
@@ -96,7 +97,9 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
           },
         }}
       />
-
+      <View.Row>
+        <StatusDropdownForm name={'status'} defaultValue={!!product ? product.status : STATUS.ACTIVE} />
+      </View.Row>
       <Button.Submit />
     </Form.View>
   );

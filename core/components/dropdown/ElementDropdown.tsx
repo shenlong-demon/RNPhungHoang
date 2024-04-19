@@ -1,8 +1,11 @@
 import React, { FC, memo, useEffect, useMemo, useState } from 'react';
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import { DropdownProps } from 'react-native-element-dropdown/src/components/Dropdown/model';
 
-export type DropdownProps = {
+export type ElementDropdownProps = Omit<DropdownProps<any>, 'onChange'> & {
+  onChange?: ((newValue: any | null) => void) | undefined;
+} & {
   data: any[];
   labelField: string;
   valueField: string;
@@ -14,10 +17,8 @@ export type DropdownProps = {
   renderItem: (item: any) => any;
   defaultValue?: any | null | undefined;
   style?: StyleProp<ViewStyle>;
-
-  onChange?: (newValue: any | null) => void;
 };
-const ElementDropdown: FC<DropdownProps> = (props: DropdownProps) => {
+const ElementDropdown: FC<ElementDropdownProps> = (props: ElementDropdownProps) => {
   const [value, setValue] = useState<any | null>(props.defaultValue || null);
   const finalStyles = useMemo((): StyleProp<ViewStyle> => {
     return StyleSheet.flatten([commonStyle.view, props.style || {}]);
@@ -29,6 +30,7 @@ const ElementDropdown: FC<DropdownProps> = (props: DropdownProps) => {
 
   return (
     <Dropdown
+      {...props}
       mode={'modal'}
       maxHeight={300}
       style={finalStyles}

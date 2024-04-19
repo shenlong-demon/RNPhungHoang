@@ -9,7 +9,7 @@ export type TextLabelProps = {
 } & TextProps;
 const TextLabel: FC<TextLabelProps> = ({ style, text, ...rest }) => {
   const finalStyle = useMemo((): StyleProp<ViewStyle> => {
-    return StyleSheet.flatten([commonStyle.label, style]);
+    return StyleSheet.flatten([{ ...commonStyle.label }, style]);
   }, [style]);
   return (
     <Text style={finalStyle} {...rest}>
