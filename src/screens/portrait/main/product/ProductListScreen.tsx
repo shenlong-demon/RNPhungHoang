@@ -8,11 +8,12 @@ import { ProductListItem } from '@src/screens/portrait/main/product/product_list
 import { Logger } from '@core/common';
 import { ProductFilterRequestDto } from '@src/business/service/requests';
 import { Route } from '@src/screens/portrait/Route';
+import { ImagePickerLibrary } from '@core/system';
 
 type Props = {};
 
 export const ProductListScreen: FC<Props> = memo(({}) => {
-  const { navigate } = useNavigation();
+  const {navigate} = useNavigation();
   const productFacade = useProductFacade();
   const [products, setProducts] = useState<Product[]>([]);
 
@@ -23,7 +24,7 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
   }, []);
 
   const renderProductItem = useCallback((data: { item: Product; index: number }): any => {
-    return <ProductListItem item={data.item} index={data.index} onClick={() => onClick(data.item)} />;
+    return <ProductListItem item={data.item} index={data.index} onClick={() => onClick(data.item)}/>;
   }, []);
 
   const filterProductsBy = async (brand: Brand | null, group: Group | null): Promise<void> => {
@@ -40,13 +41,19 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
     filterProductsBy(brand, group);
   };
 
-  return (
-    <View.V style={{ flex: 1 }}>
-      <SelectBrandAndGroupView onChanged={onFilterChanged} />
+  const selectImage = async (): Promise<void> => {
+    const result: any = ImagePickerLibrary.selectImage();
+    Logger.log(() => [`select image`, result]);
+  };
 
-      <FlatList style={{ flex: 1 }} data={products} keyExtractor={(item) => item.id} renderItem={renderProductItem} />
-      <Button.FloatCirle position={'bottom|right'} onPress={() => navigate(Route.PRODUCT_UPDATE)} />
-      {/*<Button.B style={{width: 50, height: 50, backgroundColor: 'red'}} onPress={() => {navigate(Route.PRODUCT_UPDATE)}} />*/}
-    </View.V>
+  return (
+      <View.V style={{flex: 1}}>
+        <SelectBrandAndGroupView onChanged={onFilterChanged}/>
+
+        <FlatList style={{flex: 1}} data={products} keyExtractor={(item) => item.id} renderItem={renderProductItem}/>
+        <Button.FloatCirle position={'bottom|right'} onPress={selectImage}/>
+        {/*<Button.FloatCirle position={'bottom|right'} onPress={() => navigate(Route.PRODUCT_UPDATE)} />*/}
+        {/*<Button.B style={{width: 50, height: 50, backgroundColor: 'red'}} onPress={() => {navigate(Route.PRODUCT_UPDATE)}} />*/}
+      </View.V>
   );
 });

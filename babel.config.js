@@ -1,4 +1,3 @@
-
 module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
   plugins: [
@@ -6,13 +5,23 @@ module.exports = {
       'module-resolver',
       {
         root: ['.'],
-        extensions: ['.ios.ts', '.android.ts', '.ts', '.ios.tsx', '.android.tsx', '.tsx', '.jsx', '.js', '.json'],
+        extensions: [
+          '.ios.ts',
+          '.android.ts',
+          '.ts',
+          '.ios.tsx',
+          '.android.tsx',
+          '.tsx',
+          '.jsx',
+          '.js',
+          '.json',
+        ],
         alias: {
           '@core': './core',
-          '@src': './src'
+          '@src': './src',
         },
       },
     ],
-    "react-native-reanimated/plugin",
+    'react-native-reanimated/plugin',
   ],
 };

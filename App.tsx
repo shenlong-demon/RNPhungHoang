@@ -5,18 +5,18 @@
  * @format
  */
 
-import 'react-native-gesture-handler'
+import 'react-native-gesture-handler';
 import React from 'react';
 import PortraitApp from '@src/screens/portrait';
 import AppContainer from '@core/app';
-import {AuthContextProvider} from "@src/business";
+import {AuthContextProvider} from '@src/business';
 
 function App() {
   return (
     <AppContainer>
-        <AuthContextProvider>
-            <PortraitApp />
-        </AuthContextProvider>
+      <AuthContextProvider>
+        <PortraitApp />
+      </AuthContextProvider>
     </AppContainer>
   );
 }
