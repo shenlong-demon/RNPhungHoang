@@ -1,7 +1,7 @@
-import React, { FC, memo, useMemo } from 'react';
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { PositionUtil } from '@core/components/common';
+import React, {FC, memo, useMemo} from 'react';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {PositionUtil} from '@core/components/common';
 
 export type ViewContainerProps = {
   style?: StyleProp<ViewStyle>;
@@ -21,7 +21,14 @@ export type ViewContainerProps = {
 
 let randomColors = ['red', 'yellow', 'green', 'blue'];
 let randomColorIndex: number = 0;
-const ViewContainer: FC<ViewContainerProps> = ({ style, children, position, alignChildren, onPress, ...rest }) => {
+const ViewContainer: FC<ViewContainerProps> = ({
+  style,
+  children,
+  position,
+  alignChildren,
+  onPress,
+  ...rest
+}) => {
   randomColorIndex += 1;
   if (randomColorIndex > 100) {
     randomColorIndex = 0;
@@ -49,7 +56,12 @@ const ViewContainer: FC<ViewContainerProps> = ({ style, children, position, alig
   }, []);
 
   const finalStyles = useMemo((): StyleProp<ViewStyle> => {
-    return StyleSheet.flatten([commonStyle.view, style, positionStyle, alignChildrenStyle]);
+    return StyleSheet.flatten([
+      commonStyle.view,
+      style,
+      positionStyle,
+      alignChildrenStyle,
+    ]);
   }, [style]);
 
   const view = () => {
