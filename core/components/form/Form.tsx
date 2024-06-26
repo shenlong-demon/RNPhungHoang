@@ -4,7 +4,7 @@ import ButtonSubmitForm from './ButtonSubmitForm';
 import InputTextForm from './InputTextForm';
 import DropdownSingleSelectForm from './DropdownSingleSelectForm';
 import SwitchForm from '@core/components/form/SwitchForm';
-import ImageTextForm from '@core/components/form/ImageForm';
+import ImageForm from '@core/components/form/ImageForm';
 
 export type BaseFormProps = {
   label?: string;
@@ -19,6 +19,6 @@ Form.ButtonSubmit = ButtonSubmitForm;
 Form.InputText = InputTextForm;
 Form.SingleDropdown = DropdownSingleSelectForm;
 Form.Switch = SwitchForm;
-Form.Image = ImageTextForm;
+Form.Image = ImageForm;
 
 export default Form;

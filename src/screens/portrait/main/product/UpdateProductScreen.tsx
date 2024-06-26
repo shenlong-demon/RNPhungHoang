@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Button, Form, View} from '@core/components';
+import {Button, Form, Label, View} from '@core/components';
 import {
   Brand,
   Group,
@@ -13,14 +13,18 @@ import {Logger} from '@core/common';
 import GroupSelectItem from '@src/screens/portrait/shared_components/GroupSelectItem';
 import BrandSelectItem from '@src/screens/portrait/shared_components/BrandSelectItem';
 import StatusDropdownForm from '@src/screens/portrait/shared_components/StatusDropdownForm';
+import {File} from '@core/models';
 
 type Props = {};
-type FormValues = Product & {};
-const IMG = `https://scontent.fhan5-11.fna.fbcdn.net/v/t39.30808-6/439456158_433098369372067_2798707460766262351_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=5f2048&_nc_ohc=-MlkPnwE_coQ7kNvgEq90Ms&_nc_ht=scontent.fhan5-11.fna&oh=00_AfABtdtBzouIxP0YlGc1pHWE_fc_Hxq551smPc5C8msA3g&oe=66306723`;
+type FormValues = Product & {
+  imageFile?: File;
+};
 export const UpdateProductScreen: FC<Props> = ({}) => {
   const {getParam} = useNavigation();
   const {submitProduct} = useProductFacade();
   const product: Product | null = getParam();
+  product!.image =
+    'https://www.adobe.com/content/dam/cc/us/en/creativecloud/design/discover/mascot-logo-design/mascot-logo-design_fb-img_1200x800.jpg';
   const {groups, brands} = useDataContext();
 
   const onSubmit = (data: FormValues) => {
@@ -34,17 +38,19 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
 
   return (
     <Form.View onSubmit={onSubmit} onError={onError}>
+      <Label.T text={'Imager'} />
       <Form.Image
         style={{
           width: 100,
           backgroundColor: 'red',
           aspectRatio: 1,
-          maxHeight: 100,
+          height: 100,
         }}
-        name={'image'}
+        name={'imageFile'}
         canSetSource={true}
-        defaultValue={product?.image || IMG}
+r        defaultValue={{uri: product?.image} as File}
       />
+
       <Form.InputText
         label={'Product name'}
         placeholder={'Please input product name'}

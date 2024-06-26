@@ -1,4 +1,5 @@
 import { BaseService, CONSTANTS, Dto } from '@core/common';
+import { File } from "@core/models";
 
 export class UpdateFileService extends BaseService<UpdateFileService> {
   constructor() {
@@ -9,8 +10,9 @@ export class UpdateFileService extends BaseService<UpdateFileService> {
     return this.Instance(UpdateFileService);
   }
 
-  async uploadImage(image: string): Promise<Dto<string>> {
-    if (!!image) {
+  async uploadImage(imageFile?: File): Promise<Dto<string>> {
+    if (!!imageFile) {
+
     }
     return this.successDto<string>(CONSTANTS.STR_EMPTY);
   }

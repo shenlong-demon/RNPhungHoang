@@ -72,7 +72,11 @@ const ViewContainer: FC<ViewContainerProps> = ({
     );
   };
 
-  return !!onPress ? <TouchableOpacity>{view()}</TouchableOpacity> : view();
+  return !!onPress ? (
+    <TouchableOpacity onPress={onPress}>{view()}</TouchableOpacity>
+  ) : (
+    view()
+  );
 };
 ViewContainer.displayName = 'View.Container';
 

@@ -1,5 +1,4 @@
 import React, {FC, memo} from 'react';
-import {InputTextProps} from '../input/InputText';
 import {
   useController,
   UseControllerProps,
@@ -7,26 +6,20 @@ import {
 } from 'react-hook-form';
 import {StyleSheet} from 'react-native';
 import {Image} from '@core/components';
-import {ImageProps} from '@core/components/image/NormalImage';
+import {File} from '@core/models';
 
-type ImageFormProps = ImageProps &
-  InputTextProps & {
-    defaultValue?: any | null;
-  } & UseControllerProps;
-const ImageTextForm: FC<ImageFormProps> = (props: ImageFormProps) => {
-  const {name, rules, label, defaultValue, ...rest} = props;
+type ImageFormProps = {value?: File} & UseControllerProps;
+const ImageForm: FC<ImageFormProps> = (props: ImageFormProps) => {
+  const {defaultValue, style} = props;
   const {formState} = useFormContext();
-  const {field} = useController({...props, defaultValue: props.defaultValue});
+  const {field} = useController({...props, defaultValue: defaultValue});
 
-  return <Image.I {...rest} imageSource={field.value} />;
+  return (
+    <Image.I {...props} source={field.value} onSourceChanged={field.onChange} />
+  );
 };
-export default memo(ImageTextForm);
+export default memo(ImageForm);
 
 const styles = StyleSheet.create({
-  normal: {},
-  error: {
-    borderWidth: 1,
-    borderColor: 'red',
-    borderBottomColor: 'red',
-  },
+  common: {},
 });

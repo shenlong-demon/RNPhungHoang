@@ -1,13 +1,18 @@
 import React, {FC, memo, useEffect, useMemo, useState} from 'react';
 import {Image, StyleSheet, ViewProps} from 'react-native';
-import {Button, Label, View} from '@core/components';
-import {ImagePickerLibrary} from '@core/system';
+import {View} from '@core/components';
+import {ImageFile, ImagePickerLibrary} from '@core/system';
+import {File} from '@core/models';
 
-export type ImageProps = ImageProps &
-  ViewProps & {
-    onSourceChanged?: (src: any | null) => void;
-    canSetSource?: boolean;
-  };
+export type ImageProps = ViewProps & {
+  source: File | null;
+  onSourceChanged?: (src: File | null) => void;
+  canSetSource?: boolean;
+};
+
+const IMG =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==';
+
 const NormalImage: FC<ImageProps> = ({
   source,
   style,
@@ -15,18 +20,21 @@ const NormalImage: FC<ImageProps> = ({
   canSetSource,
   ...rest
 }) => {
-  const [imageSource, setImageSource] = useState<any | null>(source);
+  const [imageSource, setImageSource] = useState<File | null>(source);
 
   const changeImageSource = async (): Promise<void> => {
-    const result: any = await ImagePickerLibrary.selectImage();
+    const result: ImageFile | null = await ImagePickerLibrary.selectImage();
+    if (!!result) {
+      setImageSource(result);
+    }
   };
-  const capturePhoto = async (): Promise<void> => {
-    const result: any = await ImagePickerLibrary.capture();
-  };
+  // const capturePhoto = async (): Promise<void> => {
+  //   const result: any = await ImagePickerLibrary.capture();
+  // };
 
   useEffect(() => {
     !!onSourceChanged && onSourceChanged(imageSource);
-  }, [imageSource, onSourceChanged]);
+  }, [imageSource]);
 
   const finalStyles = useMemo(
     () => StyleSheet.flatten([{...commonStyle.common}, style]),
@@ -35,24 +43,28 @@ const NormalImage: FC<ImageProps> = ({
 
   const image = useMemo(() => {
     return !imageSource ? null : (
-      <Image source={imageSource || ''} {...rest} style={finalStyles} />
-    );
+      <Image {...rest} source={imageSource} style={finalStyles} />
+    );r
   }, [canSetSource, imageSource]);
 
   return (
-    <View.V style={{flex: 1}} onPress={changeImageSource}>
-      {!imageSource && (
-        <>
-          <View.Row>
-            <Label.Text text={'Photo is not net'} />
-          </View.Row>
-          <View.Row>
-            <Button.B label={'Select Photo'} onPress={changeImageSource} />
-            <Button.B label={'Capture ...'} onPress={capturePhoto} />
-          </View.Row>
-        </>
-      )}
-      {image}
+    <View.V style={finalStyles} onPress={changeImageSource}>
+      {/*{!imageSource && (*/}
+      {/*  <>*/}
+      {/*    <View.Row>*/}
+      {/*      <Label.Text text={'Photo is not net'} />*/}
+      {/*    </View.Row>*/}
+      {/*    <View.Row>*/}
+      {/*      <Button.B label={'Select Photo'} onPress={changeImageSource} />*/}
+      {/*      <Button.B label={'Capture ...'} onPress={capturePhoto} />*/}
+      {/*    </View.Row>*/}
+      {/*  </>*/}
+      {/*)}*/}
+      {/*{image}*/}
+      <Image
+        source={!!imageSource ? {...imageSource} : {uri: IMG}}
+        style={{width: 100, height: 100}}
+      />
     </View.V>
   );
 };
@@ -60,8 +72,10 @@ export default memo(NormalImage);
 
 const commonStyle = StyleSheet.create({
   common: {
-    flex: 1,
     resizeMode: 'contain',
     borderRadius: 10,
+    width: 100,
+    height: 100,
+    backgroundColor: 'yellow',
   },
 });
