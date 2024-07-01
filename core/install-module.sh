@@ -16,5 +16,7 @@ yarn add @react-navigation/native@6.1.6 \
  react-hook-form@7.51.3 \
  react-native-element-dropdown@2.10.4 \
  react-native-image-picker@7.1.2 \
- axios@1.6.8
+ axios@1.6.8 \
+ rn-fetch-blob@0.12.0 \
+ buffer@6.0.3
 

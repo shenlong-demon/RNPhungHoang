@@ -23,13 +23,11 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
   const {getParam} = useNavigation();
   const {submitProduct} = useProductFacade();
   const product: Product | null = getParam();
-  product!.image =
-    'https://www.adobe.com/content/dam/cc/us/en/creativecloud/design/discover/mascot-logo-design/mascot-logo-design_fb-img_1200x800.jpg';
   const {groups, brands} = useDataContext();
 
   const onSubmit = (data: FormValues) => {
     Logger.log(() => [`UpdateProductScreen onSubmit data`, data]);
-    // submitProduct(product)
+    submitProduct(data, data.imageFile);
   };
   const onError = (errors: any, e: any) => {
     Logger.log(() => [`UpdateProductScreen onError errors`, errors, e]);
@@ -48,7 +46,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
         }}
         name={'imageFile'}
         canSetSource={true}
-r        defaultValue={{uri: product?.image} as File}
+        defaultValue={{uri: product?.image} as File}
       />
 
       <Form.InputText

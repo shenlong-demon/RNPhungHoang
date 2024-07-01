@@ -21,6 +21,7 @@ export class ImagePickerLibrary {
     const assets: Asset[] = res.assets || [];
     return assets.map((asset: Asset): ImageFile => {
       return <ImageFile>{
+        name: asset.fileName,
         uri: asset.uri,
         path: asset.originalPath || '',
         type: asset.type || '',
