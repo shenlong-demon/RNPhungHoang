@@ -11,3 +11,5 @@ Add imports at the first line of code
 import "react-native-get-random-values";
 import "react-native-url-polyfill/auto";
 ```
+## react-native-config
+- Add file react-native-config.d.ts into root project
