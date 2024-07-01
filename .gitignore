@@ -130,3 +130,5 @@ dist
 .pnp.*
 android/.gradle/
 android/app/build/
+.env.production
+.env.staging

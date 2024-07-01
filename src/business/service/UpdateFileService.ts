@@ -2,20 +2,25 @@ import 'react-native-get-random-values';
 import 'react-native-url-polyfill/auto';
 import {BaseService, CONSTANTS, Dto, FileUtils, Logger} from '@core/common';
 import {File} from '@core/models';
-import {PutObjectCommand, S3Client} from '@aws-sdk/client-s3';
+import {
+  CompleteMultipartUploadCommandOutput,
+  S3Client,
+} from '@aws-sdk/client-s3';
 import {Upload} from '@aws-sdk/lib-storage';
 import {Buffer} from 'buffer';
+import {ENV} from '@src/business';
 
 export class UpdateFileService extends BaseService<UpdateFileService> {
   private client: S3Client;
-  private readonly BUCKET: string = 'phunghoang';
-  private readonly FOLDER: string = 'stg';
+  private readonly BUCKET: string = ENV.AWS_S3_BUCKET;
+  private readonly FOLDER: string = ENV.ENV;
   constructor() {
     super();
     const config = {
-      region: 'ap-southeast-2',
+      region: ENV.AWS_S3_REGION,
       credentials: {
-
+        accessKeyId: ENV.AWS_S3_ACCESS_KEY_ID,
+        secretAccessKey: ENV.AWS_S3_SECRET_ACCESS_KEY,
       },
     };
     this.client = new S3Client(config);
@@ -26,19 +31,19 @@ export class UpdateFileService extends BaseService<UpdateFileService> {
   }
 
   async uploadImage(imageFile?: File): Promise<Dto<string>> {
-    if (!!imageFile) {
+    if (!!imageFile?.name) {
       const fileData: Buffer = await FileUtils.readBufferFromPath(
         imageFile.uri,
       );
       const upload = new Upload({
         client: this.client,
         params: {
-          Bucket: 'phunghoang',
+          Bucket: this.BUCKET,
           Key: `${this.FOLDER}/` + imageFile.name,
           Body: fileData,
         },
       });
-      const result = await upload.done();
+      const result: CompleteMultipartUploadCommandOutput = await upload.done();
 
       Logger.log(() => [`UpdateFileService uploadImage `, result]);
     }
