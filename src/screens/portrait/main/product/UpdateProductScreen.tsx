@@ -9,7 +9,7 @@ import {
   useProductFacade,
 } from '@src/business';
 import {useNavigation} from '@core/navigation';
-import {Logger} from '@core/common';
+import {CONSTANTS, Logger} from '@core/common';
 import GroupSelectItem from '@src/screens/portrait/shared_components/GroupSelectItem';
 import BrandSelectItem from '@src/screens/portrait/shared_components/BrandSelectItem';
 import StatusDropdownForm from '@src/screens/portrait/shared_components/StatusDropdownForm';
@@ -27,7 +27,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
 
   const onSubmit = (data: FormValues) => {
     Logger.log(() => [`UpdateProductScreen onSubmit data`, data]);
-    submitProduct(data, data.imageFile);
+    submitProduct(product?.id || CONSTANTS.STR_EMPTY, data, data.imageFile);
   };
   const onError = (errors: any, e: any) => {
     Logger.log(() => [`UpdateProductScreen onError errors`, errors, e]);

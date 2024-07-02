@@ -9,6 +9,7 @@ type ProductFacadeResult = {
     filter: ProductFilterRequestDto,
   ) => Promise<Product[]>;
   submitProduct: (
+    id: string,
     product: Product,
     imageFile?: File,
   ) => Promise<Product | null>;
@@ -24,28 +25,34 @@ export const useProductFacade = (): ProductFacadeResult => {
     return fto.data;
   };
 
-  const createProduct = async (product: Product): Promise<Product | null> => {
-    const fto: Fto<Product | null> = await productFacade.createProduct(product);
+  const createProduct = async (
+    product: Product,
+    imageFile?: File,
+  ): Promise<Product | null> => {
+    const fto: Fto<Product | null> = await productFacade.createProduct(product, imageFile);
     return fto.data;
   };
   const updateProduct = async (
+    id: string,
     product: Product,
     imageFile?: File,
   ): Promise<Product | null> => {
     const fto: Fto<Product | null> = await productFacade.updateProduct(
+      id,
       product,
       imageFile,
     );
     return fto.data;
   };
   const submitProduct = async (
+    id: string,
     product: Product,
     imageFile?: File,
   ): Promise<Product | null> => {
-    // if (!!product.id) {
-    //   return createProduct(product);
-    // }
-    return updateProduct(product, imageFile);
+    if (!!product.id) {
+      return createProduct(product);
+    }
+    return updateProduct(id, product, imageFile);
   };
 
   return {

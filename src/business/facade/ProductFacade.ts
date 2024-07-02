@@ -23,9 +23,12 @@ export class ProductFacade extends BaseFacade<ProductFacade> {
     return this.populate<Product[]>(dto);
   }
 
-  async createProduct(product: Product): Promise<Fto<Product | null>> {
+  async createProduct(
+    product: Product,
+    imageFile?: File,
+  ): Promise<Fto<Product | null>> {
     const uploadDto: Dto<string | null> =
-      await this.uploadFileService.uploadImage(product.image);
+      await this.uploadFileService.uploadImage(imageFile);
     if (uploadDto.isSuccess) {
       product.image = uploadDto.data as string;
       const dto: Dto<Product> = await this.productService.createProduct(
@@ -37,14 +40,17 @@ export class ProductFacade extends BaseFacade<ProductFacade> {
   }
 
   async updateProduct(
+    id: string,
     product: Product,
     imageFile?: File,
   ): Promise<Fto<Product | null>> {
     const uploadDto: Dto<string | null> =
       await this.uploadFileService.uploadImage(imageFile);
+
     if (uploadDto.isSuccess) {
       product.image = uploadDto.data as string;
       const dto: Dto<Product> = await this.productService.updateProduct(
+        id,
         product,
       );
       return this.populate<Product>(dto);

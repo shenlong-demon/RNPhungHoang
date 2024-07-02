@@ -2,10 +2,7 @@ import 'react-native-get-random-values';
 import 'react-native-url-polyfill/auto';
 import {BaseService, CONSTANTS, Dto, FileUtils, Logger} from '@core/common';
 import {File} from '@core/models';
-import {
-  CompleteMultipartUploadCommandOutput,
-  S3Client,
-} from '@aws-sdk/client-s3';
+import {S3Client} from '@aws-sdk/client-s3';
 import {Upload} from '@aws-sdk/lib-storage';
 import {Buffer} from 'buffer';
 import {ENV} from '@src/business';
@@ -31,6 +28,7 @@ export class UpdateFileService extends BaseService<UpdateFileService> {
   }
 
   async uploadImage(imageFile?: File): Promise<Dto<string>> {
+    let image: string = CONSTANTS.STR_EMPTY;
     if (!!imageFile?.name) {
       const fileData: Buffer = await FileUtils.readBufferFromPath(
         imageFile.uri,
@@ -41,12 +39,13 @@ export class UpdateFileService extends BaseService<UpdateFileService> {
           Bucket: this.BUCKET,
           Key: `${this.FOLDER}/` + imageFile.name,
           Body: fileData,
+          // ACL: 'public-read', // Set the ACL to public-read to make the file publicly accessible
         },
       });
-      const result: CompleteMultipartUploadCommandOutput = await upload.done();
-
-      Logger.log(() => [`UpdateFileService uploadImage `, result]);
+      const resultr = await upload.done();
+      Logger.log(() => [`UpdateFileService uploadImage `, resultr]);
+      image = resultr.Location || CONSTANTS.STR_EMPTY;
     }
-    return this.successDto<string>(CONSTANTS.STR_EMPTY);
+    return this.successDto<string>(image);
   }
 }
