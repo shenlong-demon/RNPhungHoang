@@ -7,7 +7,6 @@ import {FlatList} from 'react-native';
 import {ProductListItem} from '@src/screens/portrait/main/product/product_list_item';
 import {Logger} from '@core/common';
 import {Route} from '@src/screens/portrait/Route';
-import {ImagePickerLibrary} from '@core/system';
 import {ProductFilterRequest} from '@src/business/model';
 
 type Props = {};
@@ -19,7 +18,7 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
 
   const [pageIndex, setPageIndex] = useState<number>(0);
 
-  const onClick = useCallback(async (item: Product): Promise<void> => {
+  const onClick = useCallback(async (item: Product | null): Promise<void> => {
     navigate(Route.PRODUCT_UPDATE, item);
   }, []);
 
@@ -58,11 +57,6 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
     filterProductsBy(brand, group);
   };
 
-  const selectImage = async (): Promise<void> => {
-    const result: any = ImagePickerLibrary.selectImage();
-    Logger.log(() => [`select image`, result]);
-  };
-
   return (
     <View.V style={{flex: 1}}>
       <SelectBrandAndGroupView onChanged={onFilterChanged} />
@@ -73,7 +67,10 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
         keyExtractor={item => item.id}
         renderItem={renderProductItem}
       />
-      <Button.FloatCirle position={'bottom|right'} onPress={selectImage} />
+      <Button.FloatCirle
+        position={'bottom|right'}
+        onPress={() => onClick(null)}
+      />
       {/*<Button.FloatCirle position={'bottom|right'} onPress={() => navigate(Route.PRODUCT_UPDATE)} />*/}
       {/*<Button.B style={{width: 50, height: 50, backgroundColor: 'red'}} onPress={() => {navigate(Route.PRODUCT_UPDATE)}} />*/}
     </View.V>

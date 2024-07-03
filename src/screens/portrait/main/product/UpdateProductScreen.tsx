@@ -41,13 +41,13 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
           brandId: data.brand.id,
           groupId: data.group.id,
           image: product.image,
+          status: data.status,
         } as UpdateProductRequest,
         data.imageFile,
       );
     } else {
-      dto = await facade.updateProduct(
-        product.id,
-        product.appKey,
+      data.quantity = Number(data.quantity);
+      dto = await facade.createProduct(
         {
           name: data.name,
           code: data.code,
@@ -56,6 +56,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
           quantity: data.quantity,
           brandId: data.brand.id,
           groupId: data.group.id,
+          status: data.status,
         } as CreateProductRequest,
         data.imageFile,
       );
@@ -140,6 +141,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
         }}
       />
       <Form.InputText
+        editable={!product}
         keyboardType={'numeric'}
         label={'Quantity'}
         placeholder={'Please input quantity'}

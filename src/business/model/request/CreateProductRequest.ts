@@ -8,4 +8,5 @@ export type CreateProductRequest = {
   quantity: number;
   brandId: number;
   groupId: number;
+  status: number;
 };
