@@ -1,6 +1,6 @@
-import { BaseService, Dto } from '@core/common';
-import { Brand } from '@src/business';
-import { BrandRepo } from '@src/business/repository';
+import {BaseService, Dto} from '@core/common';
+import {Brand} from '@src/business';
+import {BrandRepo} from '@src/business/repository';
 
 export class BrandService extends BaseService<BrandService> {
   private brandRepo: BrandRepo = BrandRepo.shared();
@@ -14,7 +14,7 @@ export class BrandService extends BaseService<BrandService> {
   }
 
   async getBrands(): Promise<Dto<Brand[]>> {
-    const sdo: Dto<any[]> = await this.brandRepo.getBrands();
-    return this.populate<Brand[]>(sdo);
+    const dto: Dto<any[]> = await this.brandRepo.getBrands();
+    return dto;
   }
 }
