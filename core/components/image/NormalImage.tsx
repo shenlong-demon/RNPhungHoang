@@ -44,7 +44,8 @@ const NormalImage: FC<ImageProps> = ({
   const image = useMemo(() => {
     return !imageSource ? null : (
       <Image {...rest} source={imageSource} style={finalStyles} />
-    );r
+    );
+    r;
   }, [canSetSource, imageSource]);
 
   return (
@@ -62,7 +63,7 @@ const NormalImage: FC<ImageProps> = ({
       {/*)}*/}
       {/*{image}*/}
       <Image
-        source={!!imageSource ? {...imageSource} : {uri: IMG}}
+        source={!!imageSource ? {uri: imageSource.uri} : {uri: IMG}}
         style={{width: 100, height: 100}}
       />
     </View.V>
@@ -70,12 +71,12 @@ const NormalImage: FC<ImageProps> = ({
 };
 export default memo(NormalImage);
 
+
 const commonStyle = StyleSheet.create({
   common: {
     resizeMode: 'contain',
     borderRadius: 10,
     width: 100,
     height: 100,
-    backgroundColor: 'yellow',
   },
 });

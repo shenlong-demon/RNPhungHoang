@@ -1,5 +1,5 @@
-import { ApiResult, BaseRepo, Sdo } from '@core/common';
-import { API_URL } from '@src/business';
+import { ApiResult, BaseRepo, Dto } from "@core/common";
+import { API_URL } from "@src/business";
 
 export class AuthRepo extends BaseRepo<AuthRepo> {
   constructor() {
@@ -10,7 +10,7 @@ export class AuthRepo extends BaseRepo<AuthRepo> {
     return this.Instance(AuthRepo);
   }
 
-  async login(phone: string, password: string): Promise<Sdo<any>> {
+  async login(phone: string, password: string): Promise<Dto<any>> {
     const api: ApiResult = await this.api.post(API_URL.LOGIN(), {
       phone,
       password,

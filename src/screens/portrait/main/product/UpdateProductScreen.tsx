@@ -9,11 +9,12 @@ import {
   useProductFacade,
 } from '@src/business';
 import {useNavigation} from '@core/navigation';
-import {CONSTANTS, Logger} from '@core/common';
+import {Dto, Logger} from '@core/common';
 import GroupSelectItem from '@src/screens/portrait/shared_components/GroupSelectItem';
 import BrandSelectItem from '@src/screens/portrait/shared_components/BrandSelectItem';
 import StatusDropdownForm from '@src/screens/portrait/shared_components/StatusDropdownForm';
 import {File} from '@core/models';
+import {CreateProductRequest, UpdateProductRequest} from '@src/business/model';
 
 type Props = {};
 type FormValues = Product & {
@@ -21,13 +22,45 @@ type FormValues = Product & {
 };
 export const UpdateProductScreen: FC<Props> = ({}) => {
   const {getParam} = useNavigation();
-  const {submitProduct} = useProductFacade();
+  const facade = useProductFacade();
   const product: Product | null = getParam();
   const {groups, brands} = useDataContext();
 
-  const onSubmit = (data: FormValues) => {
-    Logger.log(() => [`UpdateProductScreen onSubmit data`, data]);
-    submitProduct(product?.id || CONSTANTS.STR_EMPTY, data, data.imageFile);
+  const onSubmit = async (data: FormValues) => {
+    let dto: Dto<Product | null>;
+    data.price = Number(data.price);
+    if (product) {
+      dto = await facade.updateProduct(
+        product.id,
+        product.appKey,
+        {
+          name: data.name,
+          code: data.code,
+          otherName: data.otherName,
+          price: data.price,
+          brandId: data.brand.id,
+          groupId: data.group.id,
+          image: product.image,
+        } as UpdateProductRequest,
+        data.imageFile,
+      );
+    } else {
+      dto = await facade.updateProduct(
+        product.id,
+        product.appKey,
+        {
+          name: data.name,
+          code: data.code,
+          otherName: data.otherName,
+          price: data.price,
+          quantity: data.quantity,
+          brandId: data.brand.id,
+          groupId: data.group.id,
+        } as CreateProductRequest,
+        data.imageFile,
+      );
+    }
+    Logger.log(() => [`UpdateProductScreen onSubmit data`, dto]);
   };
   const onError = (errors: any, e: any) => {
     Logger.log(() => [`UpdateProductScreen onError errors`, errors, e]);
@@ -40,7 +73,6 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
       <Form.Image
         style={{
           width: 100,
-          backgroundColor: 'red',
           aspectRatio: 1,
           height: 100,
         }}

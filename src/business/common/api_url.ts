@@ -1,4 +1,4 @@
-import { ENV } from '@src/business';
+import {ENV} from '@src/business';
 
 const API_URL = {
   LOGIN: (): string => {
@@ -16,8 +16,8 @@ const API_URL = {
   CREATE_PRODUCT() {
     return `${ENV.HOST}/product/create`;
   },
-  UPDATE_PRODUCT(id: string) {
+  UPDATE_PRODUCT(id: number) {
     return `${ENV.HOST}/product/update/${id}`;
   },
 };
-export { API_URL };
+export {API_URL};

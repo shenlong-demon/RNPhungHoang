@@ -1,4 +1,4 @@
 export type BaseMode = {
-  id: string;
+  id: number;
   appKey: string;
 };

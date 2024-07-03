@@ -1,7 +1,11 @@
-import {BaseService, Dto, Sdo} from '@core/common';
+import {BaseService, Dto} from '@core/common';
 import {Product} from '@src/business';
 import {ProductRepo} from '@src/business/repository';
-import {ProductFilterRequestDto} from '@src/business/service/requests';
+import {
+  CreateProductRequest,
+  ProductFilterRequest,
+  UpdateProductRequest,
+} from '@src/business/model';
 
 export class ProductService extends BaseService<ProductService> {
   private productRepo: ProductRepo = ProductRepo.shared();
@@ -14,25 +18,24 @@ export class ProductService extends BaseService<ProductService> {
     return this.Instance(ProductService);
   }
 
-  async getProductsBy(
-    filter: ProductFilterRequestDto,
-  ): Promise<Dto<Product[]>> {
-    const sdo: Sdo<Product[]> = await this.productRepo.getProductsBy(filter);
-    return this.populate<Product[]>(sdo);
+  async getProductsBy(filter: ProductFilterRequest): Promise<Dto<Product[]>> {
+    const dto: Dto<Product[]> = await this.productRepo.getProductsBy(filter);
+    return dto;
   }
 
-  async createProduct(product: Product): Promise<Dto<Product>> {
-    const sdo: Sdo<Product | null> = await this.productRepo.createProduct(
-      product,
-    );
-    return this.populateData(sdo, sdo.data);
+  async createProduct(req: CreateProductRequest): Promise<Dto<Product>> {
+    const dto: Dto<Product | null> = await this.productRepo.createProduct(req);
+    return dto;
   }
 
-  async updateProduct(id: string, product: Product): Promise<Dto<Product>> {
-    const sdo: Sdo<Product | null> = await this.productRepo.updateProduct(
+  async updateProduct(
+    id: number,
+    req: UpdateProductRequest,
+  ): Promise<Dto<Product | null>> {
+    const dto: Dto<Product | null> = await this.productRepo.updateProduct(
       id,
-      product,
+      req,
     );
-    return this.populateData(sdo, sdo.data);
+    return dto;
   }
 }

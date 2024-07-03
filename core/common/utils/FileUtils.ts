@@ -7,4 +7,7 @@ export class FileUtils {
     const fileData = Buffer.from(fileBuffer, 'base64');
     return fileData;
   }
+  public static getFileExtension(path: string): string {
+    return path.split('.').pop();
+  }
 }

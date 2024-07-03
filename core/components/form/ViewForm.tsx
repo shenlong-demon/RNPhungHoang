@@ -1,8 +1,15 @@
-import React, { FC, memo } from 'react';
-import { StyleSheet } from 'react-native';
-import ViewContainer, { ViewContainerProps } from '@core/components/view/ViewContainer';
-import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
-import { Logger } from '@core/common';
+import React, {FC, memo} from 'react';
+import {StyleSheet} from 'react-native';
+import ViewContainer, {
+  ViewContainerProps,
+} from '@core/components/view/ViewContainer';
+import {
+  FormProvider,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
+import {Logger} from '@core/common';
 
 type Props = ViewContainerProps & {
   onSubmit: (data: any) => void;
@@ -19,8 +26,8 @@ const ViewForm: FC<Props> = (props: Props) => {
     props.onError(errors, e);
   };
 
-  const methods = useForm({ mode: 'onChange' });
-  const facade: any = { ...methods, onSubmit, onError };
+  const methods = useForm({mode: 'onChange'});
+  const facade: any = {...methods, onSubmit, onError};
 
   return (
     <ViewContainer {...props}>
@@ -31,5 +38,3 @@ const ViewForm: FC<Props> = (props: Props) => {
 ViewForm.displayName = 'View.Dropdown';
 
 export default memo(ViewForm);
-
-const commonStyle = StyleSheet.create({});

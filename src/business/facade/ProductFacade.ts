@@ -1,8 +1,12 @@
 import BaseFacade from '@core/common/models/BaseFacade';
-import {Dto, Fto} from '@core/common';
+import {Dto, Utility} from '@core/common';
 import {Product, ProductService, UpdateFileService} from '@src/business';
-import {ProductFilterRequestDto} from '@src/business/service/requests';
 import {File} from '@core/models';
+import {
+  CreateProductRequest,
+  ProductFilterRequest,
+  UpdateProductRequest,
+} from '@src/business/model';
 
 export class ProductFacade extends BaseFacade<ProductFacade> {
   private productService: ProductService = ProductService.shared();
@@ -16,45 +20,46 @@ export class ProductFacade extends BaseFacade<ProductFacade> {
     return this.Instance(ProductFacade);
   }
 
-  async getProductsBy(
-    filter: ProductFilterRequestDto,
-  ): Promise<Fto<Product[]>> {
+  async getProductsBy(filter: ProductFilterRequest): Promise<Dto<Product[]>> {
     const dto: Dto<Product[]> = await this.productService.getProductsBy(filter);
-    return this.populate<Product[]>(dto);
+    return dto;
   }
 
   async createProduct(
-    product: Product,
+    req: CreateProductRequest,
     imageFile?: File,
-  ): Promise<Fto<Product | null>> {
+  ): Promise<Dto<Product | null>> {
+    const appKey: string = Utility.UUID();
     const uploadDto: Dto<string | null> =
-      await this.uploadFileService.uploadImage(imageFile);
-    if (uploadDto.isSuccess) {
-      product.image = uploadDto.data as string;
-      const dto: Dto<Product> = await this.productService.createProduct(
-        product,
+      await this.uploadFileService.uploadImage(imageFile, appKey);
+    if (uploadDto.next()) {
+      req.appKey = appKey;
+      req.image = uploadDto.data as string;
+      const dto: Dto<Product | null> = await this.productService.createProduct(
+        req,
       );
-      return this.populate<Product>(dto);
+      return dto;
     }
-    return this.failed(uploadDto.code, uploadDto.message);
+    return uploadDto.bypass();
   }
 
   async updateProduct(
-    id: string,
-    product: Product,
+    id: number,
+    appKey: string,
+    req: UpdateProductRequest,
     imageFile?: File,
-  ): Promise<Fto<Product | null>> {
+  ): Promise<Dto<Product | null>> {
     const uploadDto: Dto<string | null> =
-      await this.uploadFileService.uploadImage(imageFile);
+      await this.uploadFileService.uploadImage(imageFile, appKey);
 
-    if (uploadDto.isSuccess) {
-      product.image = uploadDto.data as string;
+    if (uploadDto.next()) {
+      req.image = uploadDto.data as string;
       const dto: Dto<Product> = await this.productService.updateProduct(
         id,
-        product,
+        req,
       );
-      return this.populate<Product>(dto);
+      return dto;
     }
-    return this.failed(uploadDto.code, uploadDto.message);
+    return uploadDto.bypass();
   }
 }

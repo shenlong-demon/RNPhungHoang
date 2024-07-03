@@ -1,5 +1,5 @@
-import { ApiResult, BaseRepo, Sdo } from '@core/common';
-import { API_URL } from '@src/business';
+import {ApiResult, BaseRepo, Dto} from '@core/common';
+import {API_URL} from '@src/business';
 
 export class GroupRepo extends BaseRepo<GroupRepo> {
   constructor() {
@@ -10,7 +10,7 @@ export class GroupRepo extends BaseRepo<GroupRepo> {
     return this.Instance(GroupRepo);
   }
 
-  async getGroups(): Promise<Sdo<any[]>> {
+  async getGroups(): Promise<Dto<any[]>> {
     const api: ApiResult = await this.api.get(API_URL.GET_GROUPS());
     return this.populate(api);
   }

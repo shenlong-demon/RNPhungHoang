@@ -1,8 +1,9 @@
 import BaseFacade from '@core/common/models/BaseFacade';
-import { Dto, Fto, Logger, WebApi } from '@core/common';
-import { AuthService } from '@src/business/service/AuthService';
-import { LoginModel, Setting, User } from '@src/business';
-import { CacheService } from '@src/business/service/CacheService';
+import {Dto, Logger, WebApi} from '@core/common';
+import {AuthService} from '@src/business/service/AuthService';
+import {Setting, User} from '@src/business';
+import {CacheService} from '@src/business/service/CacheService';
+import {LoginResult} from '@src/business/model';
 
 export class LoginFacade extends BaseFacade<LoginFacade> {
   private authService: AuthService = AuthService.shared();
@@ -15,17 +16,23 @@ export class LoginFacade extends BaseFacade<LoginFacade> {
     return this.Instance(LoginFacade);
   }
 
-  async login(username: string, password: string): Promise<Fto<LoginModel | null>> {
-    const dto: Dto<LoginModel> = await this.authService.login(username, password);
-    if (dto.isSuccess && !!dto.data) {
-      const loginModel: LoginModel = dto.data;
-      const user: User = loginModel.user;
-      const setting: Setting = loginModel.setting;
+  async login(
+    username: string,
+    password: string,
+  ): Promise<Dto<LoginResult | null>> {
+    const dto: Dto<LoginResult | null> = await this.authService.login(
+      username,
+      password,
+    );
+    if (dto.next()) {
+      const loginResult: LoginResult = dto.data!;
+      const user: User = loginResult.user;
+      const setting: Setting = loginResult.setting;
       await CacheService.shared().saveUser(user);
       await CacheService.shared().saveSetting(setting);
       this.handleForUser(user);
     }
-    return this.populate<LoginModel | null>(dto);
+    return dto;
   }
 
   async isLoggedIn(): Promise<User | null> {

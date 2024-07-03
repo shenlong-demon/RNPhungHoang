@@ -27,25 +27,25 @@ export class UpdateFileService extends BaseService<UpdateFileService> {
     return this.Instance(UpdateFileService);
   }
 
-  async uploadImage(imageFile?: File): Promise<Dto<string>> {
+  async uploadImage(imageFile?: File, name?: string): Promise<Dto<string>> {
     let image: string = CONSTANTS.STR_EMPTY;
     if (!!imageFile?.name) {
       const fileData: Buffer = await FileUtils.readBufferFromPath(
         imageFile.uri,
       );
+      const ext: string = FileUtils.getFileExtension(imageFile.name);
       const upload = new Upload({
         client: this.client,
         params: {
           Bucket: this.BUCKET,
-          Key: `${this.FOLDER}/` + imageFile.name,
+          Key: `${this.FOLDER}/` + (!!name ? `${name}.${ext}` : imageFile.name),
           Body: fileData,
-          // ACL: 'public-read', // Set the ACL to public-read to make the file publicly accessible
         },
       });
       const resultr = await upload.done();
       Logger.log(() => [`UpdateFileService uploadImage `, resultr]);
       image = resultr.Location || CONSTANTS.STR_EMPTY;
     }
-    return this.successDto<string>(image);
+    return Dto.success<string>(image);
   }
 }

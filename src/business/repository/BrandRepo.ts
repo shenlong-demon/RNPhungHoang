@@ -1,5 +1,5 @@
-import { ApiResult, BaseRepo, Sdo } from '@core/common';
-import { API_URL } from '@src/business';
+import {ApiResult, BaseRepo, Dto} from '@core/common';
+import {API_URL} from '@src/business';
 
 export class BrandRepo extends BaseRepo<BrandRepo> {
   constructor() {
@@ -10,7 +10,7 @@ export class BrandRepo extends BaseRepo<BrandRepo> {
     return this.Instance(BrandRepo);
   }
 
-  async getBrands(): Promise<Sdo<any[]>> {
+  async getBrands(): Promise<Dto<any[]>> {
     const api: ApiResult = await this.api.get(API_URL.GET_BRANDS());
     return this.populate(api);
   }

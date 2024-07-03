@@ -1,22 +1,29 @@
-import React, { FC, memo } from 'react';
-import { InputTextProps } from '../input/InputText';
-import { useController, UseControllerProps, useFormContext } from 'react-hook-form';
-import { StyleSheet } from 'react-native';
-import { Input, Label, View } from '@core/components';
-import { BaseFormProps } from '@core/components/form/Form';
-import { CONSTANTS } from '@core/common';
+import React, {FC, memo} from 'react';
+import {InputTextProps} from '../input/InputText';
+import {
+  useController,
+  UseControllerProps,
+  useFormContext,
+} from 'react-hook-form';
+import {StyleSheet} from 'react-native';
+import {Input, Label, View} from '@core/components';
+import {BaseFormProps} from '@core/components/form/Form';
+import {CONSTANTS} from '@core/common';
 
 type InputTextFormProps = BaseFormProps &
   InputTextProps & {
     defaultValue?: string | number;
   } & UseControllerProps;
 const InputTextForm: FC<InputTextFormProps> = (props: InputTextFormProps) => {
-  const { name, rules, label, defaultValue, ...inputProps } = props;
+  const {name, rules, label, defaultValue, ...inputProps} = props;
   const formContext = useFormContext();
-  const { formState } = formContext;
-  const { field } = useController({ ...props, defaultValue: props.defaultValue });
+  const {formState} = formContext;
+  const {field} = useController({...props, defaultValue: props.defaultValue});
   const hasError = Boolean(formState?.errors[props.name]);
-  const message: string = !!hasError ? `${formState.errors[props.name].message}` : CONSTANTS.STR_EMPTY;
+  const message: string = !!hasError
+    ? `${formState.errors[props.name].message}`
+    : CONSTANTS.STR_EMPTY;
+  const { register } = useFormContext() // retrieve all hook methods
 
   const isEmpty: boolean = !field.value;
   return (
@@ -31,7 +38,7 @@ const InputTextForm: FC<InputTextFormProps> = (props: InputTextFormProps) => {
         style={hasError ? styles.error : styles.normal}
         placeholder={inputProps.placeholder || label}
       />
-      <Label.Field style={{ color: 'red', textAlign: 'right' }} text={message} />
+      <Label.Field style={{color: 'red', textAlign: 'right'}} text={message} />
     </View.V>
   );
 };

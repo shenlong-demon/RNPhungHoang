@@ -1,62 +1,65 @@
-import {Fto} from '@core/common';
 import {Product} from '@src/business';
 import {ProductFacade} from '@src/business/facade';
-import {ProductFilterRequestDto} from '@src/business/service/requests';
 import {File} from '@core/models';
+import {
+  CreateProductRequest,
+  ProductFilterRequest,
+  UpdateProductRequest,
+} from '@src/business/model';
+import {Dto} from '@core/common';
 
 type ProductFacadeResult = {
-  getProductsByBrandAndGroup: (
-    filter: ProductFilterRequestDto,
-  ) => Promise<Product[]>;
-  submitProduct: (
-    id: string,
-    product: Product,
+  getProductsBy: (filter: ProductFilterRequest) => Promise<Product[]>;
+  updateProduct: (
+    id: number,
+    appKey: string,
+    req: UpdateProductRequest,
     imageFile?: File,
-  ) => Promise<Product | null>;
+  ) => Promise<Dto<Product | null>>;
+  createProduct: (
+    req: CreateProductRequest,
+    imageFile?: File,
+  ) => Promise<Dto<Product | null>>;
 };
 
 export const useProductFacade = (): ProductFacadeResult => {
   const productFacade: ProductFacade = ProductFacade.shared();
 
-  const getProductsByBrandAndGroup = async (
-    filter: ProductFilterRequestDto,
+  const getProductsBy = async (
+    filter: ProductFilterRequest,
   ): Promise<Product[]> => {
-    const fto: Fto<Product[]> = await productFacade.getProductsBy(filter);
-    return fto.data;
+    const dto: Dto<Product[]> = await productFacade.getProductsBy(filter);
+    return dto.data || [];
   };
 
   const createProduct = async (
-    product: Product,
+    req: CreateProductRequest,
     imageFile?: File,
-  ): Promise<Product | null> => {
-    const fto: Fto<Product | null> = await productFacade.createProduct(product, imageFile);
-    return fto.data;
-  };
-  const updateProduct = async (
-    id: string,
-    product: Product,
-    imageFile?: File,
-  ): Promise<Product | null> => {
-    const fto: Fto<Product | null> = await productFacade.updateProduct(
-      id,
-      product,
+  ): Promise<Dto<Product | null>> => {
+    const dto: Dto<Product | null> = await productFacade.createProduct(
+      req,
       imageFile,
     );
-    return fto.data;
+    return dto;
   };
-  const submitProduct = async (
-    id: string,
-    product: Product,
+  const updateProduct = async (
+    id: number,
+    appKey: string,
+    req: UpdateProductRequest,
     imageFile?: File,
-  ): Promise<Product | null> => {
-    if (!!product.id) {
-      return createProduct(product);
-    }
-    return updateProduct(id, product, imageFile);
+  ): Promise<Dto<Product | null>> => {
+    const dto: Dto<Product | null> = await productFacade.updateProduct(
+      id,
+      appKey,
+      req,
+      imageFile,
+    );
+    return dto;
   };
 
   return {
-    getProductsByBrandAndGroup,
-    submitProduct,
+    getProductsBy,
+    updateProduct,
+    createProduct,
   };
 };

@@ -1,5 +1,5 @@
 export type ApiResult = {
-  code: string;
+  code: number;
   data?: any | null | undefined;
   message?: string;
 };

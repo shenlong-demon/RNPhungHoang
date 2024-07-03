@@ -1,10 +1,11 @@
-import {ApiResult, BaseRepo, Sdo} from '@core/common';
+import {ApiResult, BaseRepo, Dto} from '@core/common';
 import {API_URL} from '@src/business';
+
 import {
-  CreateProductRequestSdo,
-  ProductFilterRequestSdo,
-  UpdateProductRequestSdo,
-} from '@src/business/repository/requests';
+  CreateProductRequest,
+  ProductFilterRequest,
+  UpdateProductRequest,
+} from '@src/business/model';
 
 export class ProductRepo extends BaseRepo<ProductRepo> {
   constructor() {
@@ -15,7 +16,7 @@ export class ProductRepo extends BaseRepo<ProductRepo> {
     return this.Instance(ProductRepo);
   }
 
-  async getProductsBy(filter: ProductFilterRequestSdo): Promise<Sdo<any[]>> {
+  async getProductsBy(filter: ProductFilterRequest): Promise<Dto<any[]>> {
     const api: ApiResult = await this.api.post(
       API_URL.GET_PRODUCTS_BY(),
       filter,
@@ -23,24 +24,16 @@ export class ProductRepo extends BaseRepo<ProductRepo> {
     return this.populate(api);
   }
 
-  async createProduct(
-    product: CreateProductRequestSdo,
-  ): Promise<Sdo<any | null>> {
-    const api: ApiResult = await this.api.post(
-      API_URL.CREATE_PRODUCT(),
-      product,
-    );
+  async createProduct(req: CreateProductRequest): Promise<Dto<any | null>> {
+    const api: ApiResult = await this.api.post(API_URL.CREATE_PRODUCT(), req);
     return this.populate(api);
   }
 
   async updateProduct(
-    id: string,
-    product: UpdateProductRequestSdo,
-  ): Promise<Sdo<any | null>> {
-    const api: ApiResult = await this.api.post(
-      API_URL.UPDATE_PRODUCT(id),
-      product,
-    );
+    id: number,
+    req: UpdateProductRequest,
+  ): Promise<Dto<any | null>> {
+    const api: ApiResult = await this.api.put(API_URL.UPDATE_PRODUCT(id), req);
     return this.populate(api);
   }
 }
