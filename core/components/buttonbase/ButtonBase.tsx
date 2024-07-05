@@ -4,7 +4,6 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native';
-import {Label} from '@core/components';
 import {TextStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import {PositionProp, PositionUtil} from '@core/components/common';
 
@@ -22,10 +21,10 @@ const ButtonBase: FC<ButtonBaseProps> = ({
 }) => {
   const positionStyle = useMemo(() => {
     return PositionUtil.positionStyle(position);
-  }, []);
+  }, [position]);
   const finalStyles = useMemo(() => {
     return StyleSheet.flatten([styles.common, style, positionStyle]);
-  }, [style]);
+  }, [style, positionStyle]);
   return <TouchableOpacity style={finalStyles} onPress={onPress} {...rest} />;
 };
 

@@ -1,6 +1,7 @@
 import {FC, memo} from 'react';
 import Form from '@core/components/formbase/Form';
 import {Logger} from '@core/common';
+import {StyleSheet} from 'react-native';
 
 type Props = {};
 type FormValue = {
@@ -15,12 +16,16 @@ export const CreateOperationPopup: FC<Props> = memo(({}: Props) => {
     // submitProduct(product)
   };
   return (
-    <Form.View
-      style={{backgroundColor: 'yellow'}}
-      onSubmit={onSubmit}
-      onError={onError}>
+    <Form.View style={styles.container} onSubmit={onSubmit} onError={onError}>
       <Form.Input name="name" />
-      <Form.SubmitButton />
+      <Form.SubmitButton style={{marginTop: 10}} />
     </Form.View>
   );
+});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'yellow',
+    // flex: 1
+    width: '100%',
+  },
 });

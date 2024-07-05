@@ -43,6 +43,6 @@ export const POSSellerScreen: FC<Props> = memo(({}) => {
   );
 });
 const styles = StyleSheet.create({
-  container: {},
+  container: {flex: 1},
   flatList: {},
 });
