@@ -1,15 +1,15 @@
-import React, {useContext, useState} from 'react';
+import React, {Children, useContext, useMemo, useState} from 'react';
 import {Popup} from '@core/components/popup/Popup';
 
 type PopupType = {
-  id: number;
-  contentView: any;
+  id: string;
+  popup: any;
 };
 export type PopupContextResult = {
   closeAllPopups: () => void;
   popups: any[];
-  openPopup: (popupId: number, contentView: any) => void;
-  closePopup: (popupId: number) => void;
+  openPopup: (popupId: string, contentView: any) => void;
+  closePopup: (popupId: string) => void;
 };
 
 export const usePopupContextFacade = (): PopupContextResult => {
@@ -17,7 +17,7 @@ export const usePopupContextFacade = (): PopupContextResult => {
   const closeAllPopups = (): void => {
     setPopups([]);
   };
-  const closePopup = (popupId: number): void => {
+  const closePopup = (popupId: string): void => {
     setPopups([
       ...popups.filter((popup: PopupType): boolean => {
         return popup.id !== popupId;
@@ -25,19 +25,29 @@ export const usePopupContextFacade = (): PopupContextResult => {
     ]);
   };
 
-  const openPopup = (popupId: number, contentView: any): void => {
-    closePopup(popupId);
+  const openPopup = (popupId: string, contentView: any): void => {
     const newPopup = <Popup visible={true}>{contentView}</Popup>;
-    setPopups([...popups, {id: popupId, contentView: newPopup}]);
+    setPopups([
+      ...popups.filter((popup: PopupType): boolean => {
+        return popup.id !== popupId;
+      }),
+      {id: popupId, popup: newPopup},
+    ]);
   };
 
-  return {openPopup, closePopup, closeAllPopups, popups};
+  const popupView = useMemo((): any[] => {
+    return popups.map((popup: PopupType): any => {
+      return popup.popup;
+    });
+  }, [popups]);
+
+  return {openPopup, closePopup, closeAllPopups, popups: popupView};
 };
 
 const DefaultPopupContextResult: PopupContextResult = {
   closeAllPopups: (): void => {},
-  openPopup: (_popupId: number, _contentView: any): void => {},
-  closePopup: (_popupId: number): void => {},
+  openPopup: (_popupId: string, _contentView: any): void => {},
+  closePopup: (_popupId: string): void => {},
   popups: [],
 };
 
@@ -49,10 +59,11 @@ export const usePopupContext = () => useContext(PopupContext);
 
 export const PopupContextProvider = ({children}) => {
   const facade = usePopupContextFacade();
+  const allChildren: any[] = Children.map(children, child => child).concat(
+    facade.popups,
+  );
+
   return (
-    <PopupContext.Provider value={facade}>
-      {children}
-      {...facade.popups}
-    </PopupContext.Provider>
+    <PopupContext.Provider value={facade}>{allChildren}</PopupContext.Provider>
   );
 };

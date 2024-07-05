@@ -7,8 +7,10 @@ import View from '@core/components/viewbase/View';
 import Button from '@core/components/buttonbase/Button';
 import {FlatList} from '@core/components';
 import {OperationListItemView} from '@src/screens/portrait/main/pos/parts';
+import {CreateOperationPopup} from '@src/screens/portrait/components/popup/CreateOperationPopup';
 
 type Props = {};
+const CREATE_POPUP_ID: string = 'CREATE_POPUP_ID';
 export const POSSellerScreen: FC<Props> = memo(({}) => {
   const {navigate} = useNavigation();
   const {openPopup} = usePopupContext();
@@ -17,7 +19,7 @@ export const POSSellerScreen: FC<Props> = memo(({}) => {
   };
 
   const createOperation = () => {
-    openPopup();
+    openPopup(CREATE_POPUP_ID, <CreateOperationPopup />);
   };
 
   const renderOpdrationListItem = useCallback(
