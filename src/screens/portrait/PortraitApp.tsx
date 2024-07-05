@@ -1,22 +1,55 @@
-import React, { FC, memo } from 'react';
-import { DrawerNavigator, NavigationContainer, StackNavigator } from '@core/navigation';
+import React, {FC, memo} from 'react';
+import {
+  DrawerNavigator,
+  NavigationContainer,
+  StackNavigator,
+} from '@core/navigation';
 import LoginScreen from '@src/screens/portrait/auth';
-import MainScreen, { UpdateBrandScreen } from '@src/screens/portrait/main';
-import { Route } from '@src/screens/portrait/Route';
+
+import {Route} from '@src/screens/portrait/Route';
 import StoreScreen from '@src/screens/portrait/main/store';
-import POSSellerScreen from '@src/screens/portrait/main/pos';
-import { DataContextProvider, SettingContextProvider, useAuthContext } from '@src/business';
-import { ProductListScreen, UpdateProductScreen } from '@src/screens/portrait/main/product';
-import { UpdateGroupScreen } from '@src/screens/portrait/main/group';
+import {
+  DataContextProvider, OperationContextProvider,
+  SettingContextProvider,
+  useAuthContext
+} from "@src/business";
+import {
+  ProductListScreen,
+  UpdateProductScreen,
+} from '@src/screens/portrait/main/product';
+import MainScreen from '@src/screens/portrait/main';
+import {UpdateBrandScreen} from '@src/screens/portrait/main/brand';
+import {UpdateGroupScreen} from '@src/screens/portrait/main/group';
+import {
+  OperationDetailScreen,
+  POSSellerScreen,
+} from '@src/screens/portrait/main/pos';
 
 type Props = {};
 export const PortraitApp: FC<Props> = memo(({}) => {
-  const { user } = useAuthContext();
-  const operation = () => {
+  const {user} = useAuthContext();
+
+  const operationDetail = () => {
+    return <OperationDetailScreen />;
+  };
+  const pos = () => {
     return (
-      <StackNavigator
-        screens={[{ name: Route.POS_SELLER, component: POSSellerScreen, options: { headerShown: false } }]}
-      />
+      <OperationContextProvider>
+        <StackNavigator
+          screens={[
+            {
+              name: Route.POS_SELLER,
+              component: POSSellerScreen,
+              options: {headerShown: false},
+            },
+            {
+              name: Route.OPERATION_DETAIL,
+              component: operationDetail,
+              options: {headerShown: false},
+            },
+          ]}
+        />
+      </OperationContextProvider>
     );
   };
 
@@ -27,9 +60,13 @@ export const PortraitApp: FC<Props> = memo(({}) => {
           {
             name: Route.PRODUCT_LIST,
             component: ProductListScreen,
-            options: { headerShown: false },
+            options: {headerShown: false},
           },
-          { name: Route.PRODUCT_UPDATE, component: UpdateProductScreen, options: { headerShown: false } },
+          {
+            name: Route.PRODUCT_UPDATE,
+            component: UpdateProductScreen,
+            options: {headerShown: false},
+          },
         ]}
       />
     );
@@ -40,12 +77,12 @@ export const PortraitApp: FC<Props> = memo(({}) => {
         <DataContextProvider>
           <DrawerNavigator
             screens={[
-              { name: Route.MAIN, component: MainScreen },
-              { name: Route.STORE, component: StoreScreen },
-              { name: Route.PRODUCT, component: product },
-              { name: Route.POS_SELLER, component: operation },
-              { name: Route.BRANCH, component: UpdateBrandScreen },
-              { name: Route.GROUP, component: UpdateGroupScreen },
+              {name: Route.MAIN, component: MainScreen},
+              {name: Route.STORE, component: StoreScreen},
+              {name: Route.PRODUCT, component: product},
+              {name: Route.POS_SELLER, component: pos},
+              {name: Route.BRANCH, component: UpdateBrandScreen},
+              {name: Route.GROUP, component: UpdateGroupScreen},
             ]}
           />
         </DataContextProvider>
@@ -61,9 +98,13 @@ export const PortraitApp: FC<Props> = memo(({}) => {
             ? {
                 name: Route.LOGIN,
                 component: LoginScreen,
-                options: { headerShown: false },
+                options: {headerShown: false},
               }
-            : { name: Route.MAIN, component: main, options: { headerShown: false } },
+            : {
+                name: Route.MAIN,
+                component: main,
+                options: {headerShown: false},
+              },
         ]}
       />
     </NavigationContainer>

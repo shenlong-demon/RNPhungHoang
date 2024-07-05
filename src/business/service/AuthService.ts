@@ -1,6 +1,5 @@
 import {BaseService, Dto, Sdo} from '@core/common';
 import {AuthRepo} from '@src/business/repository/AuthRepo';
-import {Setting, User} from '@src/business';
 import {LoginResult} from '@src/business/model';
 
 export class AuthService extends BaseService<AuthService> {

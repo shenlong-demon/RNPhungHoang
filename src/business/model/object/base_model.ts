@@ -1,4 +1,4 @@
-export type BaseMode = {
+export type BaseModel = {
   id: number;
   appKey: string;
 };

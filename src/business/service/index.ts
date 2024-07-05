@@ -1,4 +1,4 @@
-export * from './models';
+export * from '../model/object';
 export * from './AuthService';
 export * from './BrandService';
 export * from './CacheService';

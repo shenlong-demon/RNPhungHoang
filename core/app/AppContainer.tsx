@@ -1,14 +1,17 @@
 import React from 'react';
-import { ReduxContainer } from '@core/redux';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {ReduxContainer} from '@core/redux';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {PopupContextProvider} from '@src/business';
 
 type Props = {
   children: any;
 };
-export const AppContainer = ({ children }: Props) => {
+export const AppContainer = ({children}: Props) => {
   return (
     <SafeAreaProvider>
-      <ReduxContainer>{children}</ReduxContainer>
+      <PopupContextProvider>
+        <ReduxContainer>{children}</ReduxContainer>
+      </PopupContextProvider>
     </SafeAreaProvider>
   );
 };

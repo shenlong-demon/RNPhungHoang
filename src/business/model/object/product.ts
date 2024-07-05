@@ -1,7 +1,7 @@
 import {Brand, Group, STATUS} from '@src/business';
-import {BaseMode} from './base_model';
+import {BaseModel} from './base_model';
 
-export type Product = BaseMode & {
+export type Product = BaseModel & {
   code?: string;
   name: string;
   otherName?: string;

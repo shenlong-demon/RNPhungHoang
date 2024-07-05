@@ -5,3 +5,5 @@ export * from './label';
 export * from './form';
 export * from './switch';
 export * from './image';
+export * from './viewbase';
+export * from './flatlistbase';

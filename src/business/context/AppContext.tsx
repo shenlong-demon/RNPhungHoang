@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 type AppContextFacadeResult = {
   isInitialized: boolean;
@@ -23,11 +23,13 @@ const DefaultAppContextFacadeResult: AppContextFacadeResult = {
   isInitialized: true,
 };
 
-const AppContext = React.createContext<AppContextFacadeResult>(DefaultAppContextFacadeResult);
+const AppContext = React.createContext<AppContextFacadeResult>(
+  DefaultAppContextFacadeResult,
+);
 
 export const useAppContext = () => useContext(AppContext);
 
-export const AppContextProvider = ({ children }) => {
+export const AppContextProvider = ({children}) => {
   const facade = useAppContextFacade();
   return <AppContext.Provider value={facade}>{children}</AppContext.Provider>;
 };

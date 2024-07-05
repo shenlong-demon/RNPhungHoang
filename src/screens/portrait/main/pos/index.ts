@@ -1,1 +1,2 @@
-export { POSSellerScreen as default } from './POSSellerScreen';
+export * from './POSSellerScreen';
+export * from './OperationDetailScreen';
