@@ -5,3 +5,4 @@ export * from './CacheService';
 export * from './GroupService';
 export * from './ProductService';
 export * from './UpdateFileService';
+export * from './OperationService';

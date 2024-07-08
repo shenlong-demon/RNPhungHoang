@@ -9,10 +9,11 @@ import LoginScreen from '@src/screens/portrait/auth';
 import {Route} from '@src/screens/portrait/Route';
 import StoreScreen from '@src/screens/portrait/main/store';
 import {
-  DataContextProvider, OperationContextProvider,
+  DataContextProvider,
+  OperationContextProvider,
   SettingContextProvider,
-  useAuthContext
-} from "@src/business";
+  useAuthContext,
+} from '@src/business';
 import {
   ProductListScreen,
   UpdateProductScreen,
@@ -45,7 +46,7 @@ export const PortraitApp: FC<Props> = memo(({}) => {
             {
               name: Route.OPERATION_DETAIL,
               component: operationDetail,
-              options: {headerShown: false},
+              options: {headerShown: true},
             },
           ]}
         />

@@ -1,7 +1,7 @@
 import {BaseModel} from '@src/business/model/object/base_model';
 import {Product} from '@src/business';
 
-export type OperationItem = BaseModel & {
+export type Booking = BaseModel & {
   productId?: number;
   product?: Product;
   price: number;

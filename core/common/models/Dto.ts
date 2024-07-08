@@ -28,4 +28,7 @@ export class Dto<T> {
   public static error(code: number, message?: string): Dto<null> {
     return new Dto<null>(RESULT_CODE.ERROR | code, message, null);
   }
+  public static default(): Dto<null> {
+    return new Dto<null>(RESULT_CODE.ERROR, CONSTANTS.STR_EMPTY, null);
+  }
 }

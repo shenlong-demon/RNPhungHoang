@@ -1,5 +1,5 @@
 import {BaseModel} from '@src/business/model/object/base_model';
-import {Customer, OperationItem} from '@src/business';
+import {Booking, Customer} from '@src/business';
 
 export type Operation = BaseModel & {
   name?: string;
@@ -7,5 +7,5 @@ export type Operation = BaseModel & {
   note?: string;
   customer?: Customer;
   customerId?: number;
-  items: OperationItem[];
+  bookings: Booking[];
 };

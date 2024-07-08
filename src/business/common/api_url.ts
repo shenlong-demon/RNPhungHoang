@@ -19,5 +19,11 @@ const API_URL = {
   UPDATE_PRODUCT(id: number) {
     return `${ENV.HOST}/product/update/${id}`;
   },
+  CREATE_OPERATION() {
+    return `${ENV.HOST}/operation/create`;
+  },
+  GET_OPERATION(offset: number) {
+    return `${ENV.HOST}/operation/list/${offset}`;
+  },
 };
 export {API_URL};
