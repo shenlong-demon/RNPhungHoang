@@ -23,4 +23,7 @@ export class OperationService extends BaseService<OperationService> {
   async getOperations(offset: number): Promise<Dto<Operation[]>> {
     return this.operationRepo.getOperations(offset);
   }
+  async getOperation(id: number): Promise<Dto<Operation | null>> {
+    return this.operationRepo.getOperation(id);
+  }
 }

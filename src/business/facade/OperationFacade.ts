@@ -23,4 +23,7 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
   async getOperations(offset: number): Promise<Dto<Operation[]>> {
     return this.operationService.getOperations(offset);
   }
+  async getOperation(id: number): Promise<Dto<Operation | null>> {
+    return this.operationService.getOperation(id);
+  }
 }

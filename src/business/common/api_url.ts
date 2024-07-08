@@ -22,8 +22,11 @@ const API_URL = {
   CREATE_OPERATION() {
     return `${ENV.HOST}/operation/create`;
   },
-  GET_OPERATION(offset: number) {
+  GET_OPERATIONS(offset: number) {
     return `${ENV.HOST}/operation/list/${offset}`;
+  },
+  GET_OPERATION(id: number) {
+    return `${ENV.HOST}/operation/detail/${id}`;
   },
 };
 export {API_URL};

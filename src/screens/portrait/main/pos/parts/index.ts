@@ -1,4 +1,4 @@
 export {HistoryBillListPart as default} from './HistoryBillListPart';
-export * from './OperationBookingListView';
-export * from './OperationItemView';
+export * from './BookingListView';
+export * from './BookingView';
 export * from './OperationListItemView';

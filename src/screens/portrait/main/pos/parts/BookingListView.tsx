@@ -1,19 +1,19 @@
 import {FC, memo, useCallback, useMemo} from 'react';
-import {OperationItem, useOperationContext} from '@src/business';
+import {Booking, useOperationContext} from '@src/business';
 import {FlatList, StyleSheet} from 'react-native';
-import {OperationItemView} from '@src/screens/portrait/main/pos/parts/OperationItemView';
+import {BookingView} from '@src/screens/portrait/main/pos/parts/BookingView';
 import {View} from '@core/components';
 
 type Props = {};
-export const OperationBookingListView: FC<Props> = memo(({}: Props) => {
+export const BookingListView: FC<Props> = memo(({}: Props) => {
   const {operation} = useOperationContext();
-  const bookingItems = useMemo((): OperationItem[] => {
-    return operation?.items || [];
+  const bookingItems = useMemo((): Booking[] => {
+    return operation?.bookings || [];
   }, [operation]);
 
   const renderBookingListItem = useCallback(
-    (data: {item: OperationItem; index: number}): any => {
-      return <OperationItemView item={data.item} index={data.index} />;
+    (data: {item: Booking; index: number}): any => {
+      return <BookingView item={data.item} index={data.index} />;
     },
     [],
   );
