@@ -1,10 +1,12 @@
 import {InputBaseProps} from '@core/components/inputbase/InputBase';
 import React, {FC, memo} from 'react';
 import {UseControllerProps} from 'react-hook-form/dist/types/controller';
-import {ViewStyle} from 'react-native';
+import {StyleSheet, ViewStyle} from 'react-native';
 import View from '@core/components/viewbase/View';
 import Input from '@core/components/inputbase/Input';
-import {useController} from 'react-hook-form';
+import {useController, useFormContext} from 'react-hook-form';
+import Label from '@core/components/labelbase/Label';
+import {CONSTANTS} from '@core/common';
 
 type Props = InputBaseProps &
   UseControllerProps & {
@@ -13,6 +15,7 @@ type Props = InputBaseProps &
   };
 export const FormInputText: FC<Props> = memo(
   ({
+    label,
     name,
     rules,
     defaultValue,
@@ -29,11 +32,27 @@ export const FormInputText: FC<Props> = memo(
       rules,
       defaultValue,
     });
+    const {formState} = useFormContext();
+    const hasError = Boolean(formState?.errors[name]);
+    const message: string = !!hasError
+      ? `${formState.errors[name]?.message}`
+      : CONSTANTS.STR_EMPTY;
+    const textStyles = StyleSheet.flatten([
+      styles.common,
+      style,
+      hasError ? {borderColor: 'red'} : {},
+    ]);
     return (
       <View.V style={containerStyle}>
+        {!!label && (
+          <Label.Field
+            style={hasError ? {color: 'red'} : {}}
+            text={!!message ? message : label}
+          />
+        )}
         <Input.T
           {...rest}
-          style={style}
+          style={textStyles}
           onChangeText={onChange}
           onBlur={onBlur}
           value={value}
@@ -42,3 +61,9 @@ export const FormInputText: FC<Props> = memo(
     );
   },
 );
+const styles = StyleSheet.create({
+  common: {
+    marginTop: -10,
+    marginBottom: 10,
+  },
+});

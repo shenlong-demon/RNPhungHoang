@@ -9,17 +9,21 @@ export type OperationContextResult = {
   updateOperationInList: (op: Operation) => void;
   removeOperationInList: (op: Operation) => void;
 
-  loadOperations: () => Promise<void>;
+  loadMoreOperations: () => void;
 };
 
 export const useOperationContextFacade = (): OperationContextResult => {
   const [operation, setOperation] = useState<Operation | null>(null);
   const [operations, setOperations] = useState<Operation[]>([]);
-  const [operationPageIndex, setOperationPageIndex] = useState<number>(0);
+  const [operationPageIndex, setOperationPageIndex] = useState<number>(-1);
   const facade = useOperationFacade();
   useEffect(() => {
-    loadOperations();
+    setOperationPageIndex(0);
   }, []);
+
+  useEffect(() => {
+    loadOperations();
+  }, [operationPageIndex]);
 
   const loadOperations = async (): Promise<void> => {
     const dto: Dto<Operation[]> = await facade.getOperations(
@@ -34,12 +38,16 @@ export const useOperationContextFacade = (): OperationContextResult => {
     }
   };
   const updateOperationInList = (op: Operation): void => {
-    setOperations([
-      op,
-      ...operations.filter((o: Operation): boolean => {
-        return o.id !== op.id;
-      }),
-    ]);
+    // setOperations([
+    //   op,
+    //   ...operations.filter((o: Operation): boolean => {
+    //     return o.id !== op.id;
+    //   }),
+    // ]);
+  };
+
+  const loadMoreOperations = (): void => {
+    setOperationPageIndex(operationPageIndex + 1);
   };
   const removeOperationInList = (op: Operation): void => {
     setOperations([
@@ -54,7 +62,7 @@ export const useOperationContextFacade = (): OperationContextResult => {
     operations,
     updateOperationInList,
     removeOperationInList,
-    loadOperations,
+    loadMoreOperations,
   };
 };
 
@@ -64,7 +72,7 @@ const DefaultOperationContextResult: OperationContextResult = {
   setOperation: (_op: Operation | null): void => {},
   updateOperationInList: (_op: Operation | null): void => {},
   removeOperationInList: (_op: Operation | null): void => {},
-  loadOperations: async (): Promise<void> => {},
+  loadMoreOperations: async (): Promise<void> => {},
 };
 
 const OperationContext = React.createContext<OperationContextResult>(

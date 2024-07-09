@@ -25,6 +25,8 @@ import {
   OperationDetailScreen,
   POSSellerScreen,
 } from '@src/screens/portrait/main/pos';
+import {CustomerListScreen} from '@src/screens/portrait/main/customer/CustomerListScreen';
+import {UpdateCustomerScreen} from '@src/screens/portrait/main/customer/UpdateCustomerScreen';
 
 type Props = {};
 export const PortraitApp: FC<Props> = memo(({}) => {
@@ -72,6 +74,24 @@ export const PortraitApp: FC<Props> = memo(({}) => {
       />
     );
   };
+  const CustomerStack = () => {
+    return (
+      <StackNavigator
+        screens={[
+          {
+            name: Route.CUSTOMER_LIST,
+            component: CustomerListScreen,
+            options: {headerShown: false},
+          },
+          {
+            name: Route.CUSTOMER_UPDATE,
+            component: UpdateCustomerScreen,
+            options: {headerShown: false},
+          },
+        ]}
+      />
+    );
+  };
   const main = () => {
     return (
       <SettingContextProvider>
@@ -84,6 +104,7 @@ export const PortraitApp: FC<Props> = memo(({}) => {
               {name: Route.POS_SELLER, component: pos},
               {name: Route.BRANCH, component: UpdateBrandScreen},
               {name: Route.GROUP, component: UpdateGroupScreen},
+              {name: Route.CUSTOMER, component: CustomerStack},
             ]}
           />
         </DataContextProvider>

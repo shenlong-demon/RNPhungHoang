@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'gray',
     height: 40,
-    padding: 10,
+    paddingBottom: -10,
     fontWeight: 'bold',
     fontSize: 18,
     textAlignVertical: 'center',

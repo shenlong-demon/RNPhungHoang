@@ -6,9 +6,7 @@ export type LabelProps = {
   text: string;
 } & TextProps;
 export const LabelBase: FC<LabelProps> = memo(({style, text, ...rest}) => {
-  const finalStyle = useMemo((): StyleProp<ViewStyle> => {
-    return StyleSheet.flatten([{...commonStyle.label}, style]);
-  }, [style]);
+  const finalStyle = StyleSheet.flatten([{...commonStyle.label}, style]);
   return (
     <Text style={finalStyle} {...rest}>
       {text}

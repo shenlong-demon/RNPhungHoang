@@ -1,12 +1,28 @@
-import { StyleProp, ViewStyle } from 'react-native';
+import {StyleProp, ViewStyle} from 'react-native';
 
 export type PositionProp = {
-  position?: 'left' | 'right' | 'top' | 'bottom' | 'center' | 'bottom|right' | undefined;
+  position?:
+    | 'left'
+    | 'right'
+    | 'top'
+    | 'bottom'
+    | 'center'
+    | 'bottom|right'
+    | 'center|bottom'
+    | undefined;
 };
 
 export class PositionUtil {
   public static positionStyle(
-    position?: 'left' | 'right' | 'top' | 'bottom' | 'center' | 'bottom|right' | undefined
+    position?:
+      | 'left'
+      | 'right'
+      | 'top'
+      | 'bottom'
+      | 'center'
+      | 'bottom|right'
+      | 'center|bottom'
+      | undefined,
   ): StyleProp<ViewStyle> {
     let pos: any = {};
     if (!!position) {

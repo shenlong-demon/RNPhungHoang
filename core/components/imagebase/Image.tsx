@@ -4,12 +4,12 @@ import ImageBase, {ImageBaseProps} from '@core/components/imagebase/ImageBase';
 interface Props extends ImageBaseProps {
   children: ReactNode;
 }
-interface ViewType extends FC<Props> {
+interface ImageType extends FC<Props> {
   I: typeof ImageBase;
 }
-const Image: ViewType = (({children}) => {
+const Image: ImageType = (({children}) => {
   return <>{children}</>;
-}) as ViewType;
+}) as ImageType;
 
 Image.I = ImageBase;
 export default Image;
