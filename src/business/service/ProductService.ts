@@ -23,7 +23,7 @@ export class ProductService extends BaseService<ProductService> {
     return dto;
   }
 
-  async createProduct(req: CreateProductRequest): Promise<Dto<Product>> {
+  async createProduct(req: CreateProductRequest): Promise<Dto<Product | null>> {
     const dto: Dto<Product | null> = await this.productRepo.createProduct(req);
     return dto;
   }

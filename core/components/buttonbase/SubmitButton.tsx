@@ -13,9 +13,6 @@ const SubmitButton: FC<ButtonBaseProps> = ({style, ...rest}) => {
 
 const styles = StyleSheet.create({
   common: {
-    height: 60,
-    borderRadius: 5,
-    margin: 10,
     backgroundColor: 'green',
   },
 });

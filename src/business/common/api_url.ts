@@ -28,5 +28,11 @@ const API_URL = {
   GET_OPERATION(id: number) {
     return `${ENV.HOST}/operation/detail/${id}`;
   },
+  CREATE_CUSTOMER() {
+    return `${ENV.HOST}/customer/create`;
+  },
+  UPDATE_CUSTOMER(id: number) {
+    return `${ENV.HOST}/customer/update/${id}`;
+  },
 };
 export {API_URL};

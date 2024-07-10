@@ -5,4 +5,5 @@ export type Customer = BaseModel & {
   phone: string;
   nickName: string;
   image?: string | null;
+  status: number;
 };

@@ -1,12 +1,17 @@
-import { ParamListBase, useNavigation as useLibNavigation, useRoute } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useCallback } from 'react';
-import { Logger } from '@core/common';
+import {
+  ParamListBase,
+  useNavigation as useLibNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useCallback} from 'react';
+import {Logger} from '@core/common';
 
 type NavigationResult = {
   navigation?: any | null;
   navigate: (routeName: string, param?: any) => void;
   replace: (routeName: string) => void;
+  goBack: () => void;
   setOptions: (option: any) => void;
   getParam: () => any | null | undefined;
 };
@@ -20,11 +25,14 @@ export const useNavigation = (): NavigationResult => {
   const replace = (routeName: string): void => {
     navigation.replace(routeName);
   };
+  const goBack = (): void => {
+    navigation.goBack();
+  };
   const setOptions = useCallback(
     (options: any): void => {
       navigation.setOptions(options);
     },
-    [navigation]
+    [navigation],
   );
 
   const getParam = (): any | null => {
@@ -35,5 +43,5 @@ export const useNavigation = (): NavigationResult => {
     Logger.log(() => [`useNavigation getParam`, param]);
     return param;
   };
-  return { navigation, navigate, replace, setOptions, getParam };
+  return {navigation, navigate, replace, setOptions, getParam, goBack};
 };

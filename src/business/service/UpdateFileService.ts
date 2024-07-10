@@ -27,7 +27,11 @@ export class UpdateFileService extends BaseService<UpdateFileService> {
     return this.Instance(UpdateFileService);
   }
 
-  async uploadImage(imageFile?: File, name?: string): Promise<Dto<string>> {
+  async uploadImage(
+    folder: string,
+    imageFile?: File,
+    name?: string,
+  ): Promise<Dto<string>> {
     let image: string = CONSTANTS.STR_EMPTY;
     if (!!imageFile?.name) {
       const fileData: Buffer = await FileUtils.readBufferFromPath(
@@ -38,7 +42,9 @@ export class UpdateFileService extends BaseService<UpdateFileService> {
         client: this.client,
         params: {
           Bucket: this.BUCKET,
-          Key: `${this.FOLDER}/` + (!!name ? `${name}.${ext}` : imageFile.name),
+          Key:
+            `${this.FOLDER}/${folder}/` +
+            (!!name ? `${name}.${ext}` : imageFile.name),
           Body: fileData,
         },
       });

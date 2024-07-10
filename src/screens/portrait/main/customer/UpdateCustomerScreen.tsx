@@ -1,24 +1,56 @@
 import React, {FC} from 'react';
 import {Customer} from '@src/business';
 import {useNavigation} from '@core/navigation';
-import {CONSTANTS, Logger} from '@core/common';
+import {CONSTANTS, Dto, Logger, Utility} from '@core/common';
 import {File} from '@core/models';
 import Form from '@core/components/formbase/Form';
 import {StyleSheet} from 'react-native';
+import View from '@core/components/viewbase/View';
+import Button from '@core/components/buttonbase/Button';
+import {useCustomerFacade} from '@src/business/useFacade/useCustomerFacade';
 
 type Props = {};
 type FormValues = {
   imageFile?: File;
   name: string;
+  phone: string;
   nickName?: string;
 };
 export const UpdateCustomerScreen: FC<Props> = ({}) => {
-  const {getParam} = useNavigation();
+  const {getParam, goBack} = useNavigation();
   const customer: Customer | null = getParam();
+  const {createCustomer, updateCustomer} = useCustomerFacade();
   const onSubmit = async (data: FormValues) => {
+    const id: number = customer?.id || 0;
+    const appKey: string = customer?.appKey || Utility.UUID();
+    const status: number = 1;
     Logger.log(() => [`UpdateProductScreen onSubmit data`, data]);
 
-    Logger.log(() => [`UpdateProductScreen onSubmit data`]);
+    if (id === 0) {
+      const dto: Dto<Customer | null> = await createCustomer(
+        {
+          name: data.name,
+          phone: data.phone,
+          nickName: data.nickName,
+          status: status,
+        },
+        data.imageFile,
+      );
+      Logger.log(() => [`UpdateProductScreen onSubmit createCustomer`, dto]);
+    } else {
+      const dto: Dto<Customer | null> = await updateCustomer(
+        id,
+        appKey,
+        {
+          name: data.name,
+          phone: data.phone,
+          nickName: data.nickName,
+          status: status,
+        },
+        data.imageFile,
+      );
+      Logger.log(() => [`UpdateProductScreen onSubmit updateCustomer`, dto]);
+    }
   };
   const onError = (errors: any, e: any) => {
     Logger.log(() => [`UpdateProductScreen onError errors`, errors, e]);
@@ -34,6 +66,7 @@ export const UpdateCustomerScreen: FC<Props> = ({}) => {
         style={styles.avatar}
         canSetSource={true}
       />
+
       <Form.Input
         label={'Name'}
         name="name"
@@ -42,12 +75,22 @@ export const UpdateCustomerScreen: FC<Props> = ({}) => {
         rules={{required: 'Name is required.'}}
       />
       <Form.Input
+        label={'Phone number'}
+        name="phone"
+        placeholder={`Please input phone number`}
+        defaultValue={customer?.name || CONSTANTS.STR_EMPTY}
+        rules={{required: 'Phone number is required.'}}
+      />
+      <Form.Input
         label={'Nick name'}
         name="nickName"
-        defaultValue={customer?.name || CONSTANTS.STR_EMPTY}
+        defaultValue={customer?.nickName || CONSTANTS.STR_EMPTY}
       />
 
-      <Form.SubmitButton />
+      <View.V style={styles.buttonAction}>
+        <Button.Cancel onPress={goBack} />
+        <Form.SubmitButton />
+      </View.V>
     </Form.View>
   );
 };
@@ -55,12 +98,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  buttonAction: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   avatar: {
     marginBottom: 30,
     width: 200,
     height: 200,
-    alignSelf: 'center',
     borderWidth: 1,
     borderColor: 'gray',
+    alignSelf: 'center',
   },
 });

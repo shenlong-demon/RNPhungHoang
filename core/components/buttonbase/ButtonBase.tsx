@@ -32,10 +32,13 @@ export default memo(ButtonBase);
 
 const styles = StyleSheet.create({
   common: {
+    flex: 1,
     height: 48,
     borderWidth: 0.5,
     borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // width: '100%',
+
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
 });

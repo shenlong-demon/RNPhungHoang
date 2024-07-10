@@ -9,6 +9,8 @@ import {
 } from '@src/business/model';
 
 export class ProductFacade extends BaseFacade<ProductFacade> {
+  private static readonly IMAGE_FOLDER: string = 'Product';
+
   private productService: ProductService = ProductService.shared();
   private uploadFileService: UpdateFileService = UpdateFileService.shared();
 
@@ -31,7 +33,11 @@ export class ProductFacade extends BaseFacade<ProductFacade> {
   ): Promise<Dto<Product | null>> {
     const appKey: string = Utility.UUID();
     const uploadDto: Dto<string | null> =
-      await this.uploadFileService.uploadImage(imageFile, appKey);
+      await this.uploadFileService.uploadImage(
+        ProductFacade.IMAGE_FOLDER,
+        imageFile,
+        appKey,
+      );
     if (uploadDto.next()) {
       req.appKey = appKey;
       req.image = uploadDto.data as string;
@@ -50,11 +56,15 @@ export class ProductFacade extends BaseFacade<ProductFacade> {
     imageFile?: File,
   ): Promise<Dto<Product | null>> {
     const uploadDto: Dto<string | null> =
-      await this.uploadFileService.uploadImage(imageFile, appKey);
+      await this.uploadFileService.uploadImage(
+        ProductFacade.IMAGE_FOLDER,
+        imageFile,
+        appKey,
+      );
 
     if (uploadDto.next()) {
       req.image = uploadDto.data as string;
-      const dto: Dto<Product> = await this.productService.updateProduct(
+      const dto: Dto<Product | null> = await this.productService.updateProduct(
         id,
         req,
       );

@@ -25,7 +25,7 @@ const ImageBase: FC<ImageBaseProps> = ({
     return StyleSheet.flatten([styles.common, style]);
   }, [style]);
   const setSource = async (): Promise<void> => {
-    const result: ImageFile | null = await ImagePickerLibrary.selectImage();
+    const result: ImageFile | null = await ImagePickerLibrary.capture();
     if (!!result) {
       setImageSource(result);
     }
@@ -42,8 +42,8 @@ const ImageBase: FC<ImageBaseProps> = ({
     <Pressable onPress={onPress}>
       <FastImage
         source={!!imageSource ? {uri: imageSource.uri} : {uri: IMG}}
-        {...rest}
         style={finalStyles}
+        {...rest}
       />
     </Pressable>
   );
