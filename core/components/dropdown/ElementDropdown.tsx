@@ -1,7 +1,7 @@
-import React, { FC, memo, useEffect, useMemo, useState } from 'react';
-import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
-import { DropdownProps } from 'react-native-element-dropdown/src/components/Dropdown/model';
+import React, {FC, memo, useEffect, useMemo, useState} from 'react';
+import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import {Dropdown} from 'react-native-element-dropdown';
+import {DropdownProps} from 'react-native-element-dropdown/src/components/Dropdown/model';
 
 export type ElementDropdownProps = Omit<DropdownProps<any>, 'onChange'> & {
   onChange?: ((newValue: any | null) => void) | undefined;
@@ -18,7 +18,9 @@ export type ElementDropdownProps = Omit<DropdownProps<any>, 'onChange'> & {
   defaultValue?: any | null | undefined;
   style?: StyleProp<ViewStyle>;
 };
-const ElementDropdown: FC<ElementDropdownProps> = (props: ElementDropdownProps) => {
+const ElementDropdown: FC<ElementDropdownProps> = (
+  props: ElementDropdownProps,
+) => {
   const [value, setValue] = useState<any | null>(props.defaultValue || null);
   const finalStyles = useMemo((): StyleProp<ViewStyle> => {
     return StyleSheet.flatten([commonStyle.view, props.style || {}]);
@@ -41,11 +43,11 @@ const ElementDropdown: FC<ElementDropdownProps> = (props: ElementDropdownProps) 
       placeholder={props.placeholder}
       searchPlaceholder={props.searchPlaceholder}
       value={value}
-      onChange={(item) => {
+      onChange={item => {
         setValue(item);
       }}
       renderItem={props.renderItem}
-      selectedTextStyle={{ fontWeight: 'bold', fontSize: 18 }}
+      selectedTextStyle={{fontWeight: 'bold', fontSize: 18}}
     />
   );
 };

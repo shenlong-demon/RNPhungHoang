@@ -1,34 +1,34 @@
-import {InputBaseProps} from '@core/components/inputbase/InputBase';
 import React, {FC, memo} from 'react';
 import {StyleSheet, ViewStyle} from 'react-native';
 import View from '@core/components/viewbase/View';
-import Input from '@core/components/inputbase/Input';
 import {
   useController,
-  useFormContext,
   UseControllerProps,
+  useFormContext,
 } from 'react-hook-form';
 import Label from '@core/components/labelbase/Label';
 import {CONSTANTS} from '@core/common';
+import {DropdownBaseProps} from '@core/components/dropdownbase/DropDownBase';
+import {DropDown} from '@core/components/dropdownbase';
 
-type Props = InputBaseProps &
+type Props = DropdownBaseProps &
   UseControllerProps & {
     containerStyle?: ViewStyle;
     label?: string;
+    selectedProperty?: string;
   };
-export const FormInputText: FC<Props> = memo(
+export const FormDropDown: FC<Props> = memo(
   ({
     label,
     name,
     rules,
     defaultValue,
-    // label,
-    style,
     containerStyle,
+    selectedProperty,
     ...rest
   }: Props) => {
     const {
-      field: {onChange, onBlur, value},
+      field: {onChange, value},
       // fieldState: {error},
     } = useController({
       name,
@@ -40,33 +40,42 @@ export const FormInputText: FC<Props> = memo(
     const message: string = !!hasError
       ? `${formState.errors[name]?.message}`
       : CONSTANTS.STR_EMPTY;
-    const textStyles = StyleSheet.flatten([
-      styles.common,
-      style,
-      hasError ? {borderColor: 'red'} : {},
+
+    const containerStyles = StyleSheet.flatten([
+      styles.container,
+      containerStyle,
     ]);
+
     return (
-      <View.V style={containerStyle}>
+      <View.Row style={containerStyles}>
         {!!label && (
           <Label.Field
-            style={hasError ? {color: 'red'} : {}}
+            style={hasError ? {color: 'red'} : {marginLeft: -10}}
             text={!!message ? message : label}
           />
         )}
-        <Input.T
-          {...rest}
-          style={textStyles}
-          onChangeText={onChange}
-          onBlur={onBlur}
+        <DropDown.Single
+          onChange={(item: any | null) => {
+            !selectedProperty || selectedProperty === 'all'
+              ? onChange(item)
+              : onChange(!!item ? item[selectedProperty] : null);
+          }}
           value={value}
+          defaultValue={value}
+          // defaultValue={value}
+          {...rest}
         />
-      </View.V>
+      </View.Row>
     );
   },
 );
 const styles = StyleSheet.create({
-  common: {
-    marginTop: -5,
-    marginBottom: 10,
+  container: {
+    // flex: 1,
+    // backgroundColor: 'yellow',
+    width: '100%',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: -10
   },
 });

@@ -12,7 +12,6 @@ export default memo(FieldLabel);
 
 const commonStyle = StyleSheet.create({
   common: {
-    height: 20,
-    // fontSize: 14
+    // height: 20,
   },
 });

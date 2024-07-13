@@ -1,6 +1,5 @@
-import React, {FC, memo, useMemo} from 'react';
-import {StyleSheet, Text, TextProps, ViewStyle} from 'react-native';
-import {StyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
+import React, {FC, memo} from 'react';
+import {StyleSheet, Text, TextProps} from 'react-native';
 
 export type LabelProps = {
   text: string;
@@ -16,8 +15,9 @@ export const LabelBase: FC<LabelProps> = memo(({style, text, ...rest}) => {
 
 const commonStyle = StyleSheet.create({
   label: {
-    height: 40,
+    // height: 40,
     color: 'black',
     textAlignVertical: 'center',
+    fontSize: 18,
   },
 });

@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'gray',
     height: 40,
-    paddingBottom: -10,
     fontWeight: 'bold',
     fontSize: 18,
-    textAlignVertical: 'center',
-    verticalAlign: 'middle',
+    // textAlignVertical: 'bottom',
+    // verticalAlign: 'bottom',
+    paddingBottom: -10
   },
 });

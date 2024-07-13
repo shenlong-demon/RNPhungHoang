@@ -1,6 +1,5 @@
 import React, {FC, memo} from 'react';
-import {UseControllerProps} from "react-hook-form";
-import {useController} from 'react-hook-form';
+import {useController, UseControllerProps} from 'react-hook-form';
 import {ImageBaseProps} from '@core/components/imagebase/ImageBase';
 import Image from '@core/components/imagebase/Image';
 

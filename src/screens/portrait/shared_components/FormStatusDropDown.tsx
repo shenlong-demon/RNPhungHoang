@@ -1,6 +1,8 @@
-import React, {FC, memo, useCallback, useMemo, useState} from 'react';
-import {Form, Label, View} from '@core/components';
+import React, {FC, memo, useCallback, useMemo} from 'react';
 import {STATUS} from '@src/business';
+import View from '@core/components/viewbase/View';
+import Form from '@core/components/formbase/Form';
+import Label from '@core/components/labelbase/Label';
 
 type Props = {
   name: string;
@@ -13,7 +15,7 @@ type Status = {
   color: any;
 };
 
-const StatusDropdownForm: FC<Props> = (props: Props) => {
+export const FormStatusDropDown: FC<Props> = memo((props: Props) => {
   const statuses: Status[] = useMemo(
     () => [
       {
@@ -28,10 +30,6 @@ const StatusDropdownForm: FC<Props> = (props: Props) => {
       },
     ],
     [],
-  );
-
-  const [selectedStatusValue, setStatusValue] = useState<number>(
-    props.defaultValue !== undefined ? props.defaultValue : STATUS.ACTIVE,
   );
 
   const defaultValue = useMemo(() => {
@@ -52,18 +50,19 @@ const StatusDropdownForm: FC<Props> = (props: Props) => {
 
   return (
     <View.V style={{flex: 1}}>
-      <Form.SingleDropdown
+      <Form.DropDown
         placeholder={'Select status'}
         name={props.name}
         data={statuses}
         rules={{required: 'Status is required!'}}
         labelField={'label'}
         valueField={'id'}
+        label={'Status'}
         renderItem={renderItem}
         defaultValue={defaultValue}
-        property={'id'}
+        value={defaultValue}
+        selectedProperty={'id'}
       />
     </View.V>
   );
-};
-export default memo(StatusDropdownForm);
+});

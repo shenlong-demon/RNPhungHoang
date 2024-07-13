@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Customer} from '@src/business';
+import { Customer, STATUS } from "@src/business";
 import {useNavigation} from '@core/navigation';
 import {CONSTANTS, Dto, Logger, Utility} from '@core/common';
 import {File} from '@core/models';
@@ -8,6 +8,7 @@ import {StyleSheet} from 'react-native';
 import View from '@core/components/viewbase/View';
 import Button from '@core/components/buttonbase/Button';
 import {useCustomerFacade} from '@src/business/useFacade/useCustomerFacade';
+import {FormStatusDropDown} from '@src/screens/portrait/shared_components/FormStatusDropDown';
 
 type Props = {};
 type FormValues = {
@@ -86,7 +87,10 @@ export const UpdateCustomerScreen: FC<Props> = ({}) => {
         name="nickName"
         defaultValue={customer?.nickName || CONSTANTS.STR_EMPTY}
       />
-
+      <FormStatusDropDown
+        name={'status'}
+        defaultValue={customer?.status || STATUS.ACTIVE}
+      />
       <View.V style={styles.buttonAction}>
         <Button.Cancel onPress={goBack} />
         <Form.SubmitButton />
