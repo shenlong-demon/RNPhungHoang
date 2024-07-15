@@ -1,4 +1,4 @@
-import React, {Children, useContext, useMemo, useState} from 'react';
+import React, {Children, FC, useContext, useMemo, useState} from 'react';
 import {Popup} from '@core/components/popup/Popup';
 
 type PopupType = {
@@ -57,8 +57,12 @@ const PopupContext = React.createContext<PopupContextResult>(
 
 export const usePopupContext = () => useContext(PopupContext);
 
-export const PopupContextProvider = ({children}) => {
+type Props = {
+  children: React.ReactNode;
+};
+export const PopupContextProvider: FC<Props> = ({children}) => {
   const facade = usePopupContextFacade();
+  // @ts-ignore
   const allChildren: any[] = Children.map(children, child => child).concat(
     facade.popups,
   );

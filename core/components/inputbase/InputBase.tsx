@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     // textAlignVertical: 'bottom',
     // verticalAlign: 'bottom',
-    paddingBottom: -10
+    paddingBottom: -10,
+    width: '100%'
   },
 });

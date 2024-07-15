@@ -18,7 +18,7 @@ type NavigationResult = {
 
 export const useNavigation = (): NavigationResult => {
   const navigation = useLibNavigation<StackNavigationProp<ParamListBase, ''>>();
-  const route = useRoute();
+  const route = navigation?.current?.getCurrentRoute();
   const navigate = (routeName: string, param?: any): void => {
     navigation.navigate(routeName, param);
   };

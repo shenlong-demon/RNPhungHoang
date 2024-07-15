@@ -5,7 +5,7 @@ import View from '@core/components/viewbase/View';
 type Props = ModalProps & {};
 export const Popup: FC<Props> = memo(({visible, children}: Props) => {
   return (
-    <Modal animationType="slide" transparent={true} visible={visible}>
+    <Modal animationType="slide" transparent={false} visible={visible}>
       <View.V style={styles.container}>{children}</View.V>
     </Modal>
   );

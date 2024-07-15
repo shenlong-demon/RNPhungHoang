@@ -1,9 +1,12 @@
-import { FC, memo } from "react";
-import Form from "@core/components/formbase/Form";
-import { CONSTANTS, Dto, Logger } from "@core/common";
-import { StyleSheet } from "react-native";
-import { Operation, useOperationFacade } from "@src/business";
-import Button from "@core/components/buttonbase/Button";
+import {FC, memo} from 'react';
+import Form from '@core/components/formbase/Form';
+import {CONSTANTS, Dto, Logger} from '@core/common';
+import {StyleSheet} from 'react-native';
+import {Operation, useOperationFacade} from '@src/business';
+import Button from '@core/components/buttonbase/Button';
+import View from '@core/components/viewbase/View';
+import {OperationFacade} from '@src/business/facade';
+import {useNavigation} from '@core/navigation';
 
 type Props = {
   onOk: (op: Operation) => Promise<void>;
@@ -27,17 +30,24 @@ export const CreateOperationPopup: FC<Props> = memo(
 
     return (
       <Form.View style={styles.container} onSubmit={onSubmit} onError={onError}>
-        <Form.Input name="name" defaultValue={CONSTANTS.STR_EMPTY} />
-        <Button.Cancel style={{marginTop: 10}} onPress={onCancel} />
-        <Form.SubmitButton style={{marginTop: 10}} />
+        <Form.Input
+          label={'Name'}
+          name="name"
+          defaultValue={CONSTANTS.STR_EMPTY}
+        />
+        <View.Row>
+          <Button.Cancel style={{marginTop: 10}} onPress={onCancel} />
+          <Form.SubmitButton style={{marginTop: 10}} />
+        </View.Row>
       </Form.View>
     );
   },
 );
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'yellow',
-    // flex: 1
+    // backgroundColor: 'yellow',
+    justifyContent: 'center',
+    flex: 1,
     width: '100%',
   },
 });

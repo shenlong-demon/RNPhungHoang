@@ -11,6 +11,7 @@ import StoreScreen from '@src/screens/portrait/main/store';
 import {
   DataContextProvider,
   OperationContextProvider,
+  OperationListContextProvider,
   SettingContextProvider,
   useAuthContext,
 } from '@src/business';
@@ -27,36 +28,54 @@ import {
 } from '@src/screens/portrait/main/pos';
 import {CustomerListScreen} from '@src/screens/portrait/main/customer/CustomerListScreen';
 import {UpdateCustomerScreen} from '@src/screens/portrait/main/customer/UpdateCustomerScreen';
+import {MenuScreen} from '@src/screens/portrait/main/pos/menu';
 
 type Props = {};
 export const PortraitApp: FC<Props> = memo(({}) => {
   const {user} = useAuthContext();
 
-  const operationDetail = () => {
-    return <OperationDetailScreen />;
-  };
-  const pos = () => {
+  const OperationDetail = () => {
     return (
-      <OperationContextProvider>
-        <StackNavigator
-          screens={[
-            {
-              name: Route.POS_SELLER,
-              component: POSSellerScreen,
-              options: {headerShown: false},
-            },
-            {
-              name: Route.OPERATION_DETAIL,
-              component: operationDetail,
-              options: {headerShown: true},
-            },
-          ]}
-        />
-      </OperationContextProvider>
+      <StackNavigator
+        screens={[
+          {
+            name: Route.OPERATION_DETAIL,
+            component: OperationDetailScreen,
+            options: {headerShown: false},
+          },
+          {
+            name: Route.MENU_SCREEN,
+            component: MenuScreen,
+            options: {headerShown: false},
+          },
+        ]}
+      />
+    );
+  };
+  const POSStack = () => {
+    return (
+      <OperationListContextProvider>
+        <OperationContextProvider>
+          <StackNavigator
+            screens={[
+              {
+                name: Route.OPERATION_LIST,
+                component: POSSellerScreen,
+                options: {headerShown: false},
+              },
+              {
+                name: Route.OPERATION_DETAIL,
+                component: OperationDetail,
+                options: {headerShown: true},
+              },
+            ]}
+          />
+        </OperationContextProvider>
+      </OperationListContextProvider>
     );
   };
 
-  const product = () => {
+  const ProductStack = () => {
     return (
       <StackNavigator
         screens={[
@@ -92,43 +111,52 @@ export const PortraitApp: FC<Props> = memo(({}) => {
       />
     );
   };
-  const main = () => {
+  const MainStack = () => {
     return (
       <SettingContextProvider>
         <DataContextProvider>
-          <DrawerNavigator
-            screens={[
-              {name: Route.MAIN, component: MainScreen},
-              {name: Route.STORE, component: StoreScreen},
-              {name: Route.PRODUCT, component: product},
-              {name: Route.POS_SELLER, component: pos},
-              {name: Route.BRANCH, component: UpdateBrandScreen},
-              {name: Route.GROUP, component: UpdateGroupScreen},
-              {name: Route.CUSTOMER, component: CustomerStack},
-            ]}
-          />
+          <>
+            <DrawerNavigator
+              screens={[
+                {name: Route.MAIN, component: MainScreen},
+                {name: Route.STORE, component: StoreScreen},
+                {name: Route.PRODUCT, component: ProductStack},
+                {name: Route.POS_SELLER, component: POSStack},
+                {name: Route.BRANCH, component: UpdateBrandScreen},
+                {name: Route.GROUP, component: UpdateGroupScreen},
+                {name: Route.CUSTOMER, component: CustomerStack},
+              ]}
+            />
+            {/*<Button.FloatCircle*/}
+            {/*  style={{*/}
+            {/*    position: 'absolute',*/}
+            {/*    alignSelf: 'center',*/}
+            {/*    bottom: 0,*/}
+            {/*    justifyContent: 'flex-end',*/}
+            {/*  }}*/}
+            {/*  onPress={() => {}}*/}
+            {/*/>*/}
+          </>
         </DataContextProvider>
       </SettingContextProvider>
     );
   };
 
   return (
-    <NavigationContainer>
-      <StackNavigator
-        screens={[
-          !user
-            ? {
-                name: Route.LOGIN,
-                component: LoginScreen,
-                options: {headerShown: false},
-              }
-            : {
-                name: Route.MAIN,
-                component: main,
-                options: {headerShown: false},
-              },
-        ]}
-      />
-    </NavigationContainer>
+    <StackNavigator
+      screens={[
+        !user
+          ? {
+              name: Route.LOGIN,
+              component: LoginScreen,
+              options: {headerShown: false},
+            }
+          : {
+              name: Route.MAIN,
+              component: MainStack,
+              options: {headerShown: false},
+            },
+      ]}
+    />
   );
 });

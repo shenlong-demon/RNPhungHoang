@@ -1,17 +1,25 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
-import { Label, View } from '@core/components';
-import { Dropdown } from 'react-native-element-dropdown';
-import { Brand, Group, useDataContext } from '@src/business';
-import { StyleSheet } from 'react-native';
+import React, {FC, useCallback, useEffect, useState} from 'react';
+import {Brand, Group, useDataContext} from '@src/business';
+import {StyleSheet} from 'react-native';
+import View from '@core/components/viewbase/View';
+import Label from '@core/components/labelbase/Label';
+import {DropDown} from '@core/components/dropdownbase';
 
 type Props = {
-  defaultValues?: { brand: Brand | null; group: Group | null };
+  defaultValues?: {brand: Brand | null; group: Group | null};
   onChanged: (brand: Brand | null, group: Group | null) => void;
 };
-export const SelectBrandAndGroupView: FC<Props> = ({ defaultValues, onChanged }) => {
-  const { brands, groups } = useDataContext();
-  const [brand, setBrand] = useState<Brand | null>(defaultValues?.brand || null);
-  const [group, setGroup] = useState<Group | null>(defaultValues?.group || null);
+export const SelectBrandAndGroupView: FC<Props> = ({
+  defaultValues,
+  onChanged,
+}) => {
+  const {brands, groups} = useDataContext();
+  const [brand, setBrand] = useState<Brand | null>(
+    defaultValues?.brand || null,
+  );
+  const [group, setGroup] = useState<Group | null>(
+    defaultValues?.group || null,
+  );
 
   useEffect(() => {
     onChanged(brand, group);
@@ -33,8 +41,8 @@ export const SelectBrandAndGroupView: FC<Props> = ({ defaultValues, onChanged })
   }, []);
 
   return (
-    <View.Row>
-      <Dropdown
+    <View.Row style={styles.container}>
+      <DropDown.Single
         mode={'modal'}
         style={styles.dropdown}
         data={brands}
@@ -45,12 +53,10 @@ export const SelectBrandAndGroupView: FC<Props> = ({ defaultValues, onChanged })
         placeholder="Select brand"
         searchPlaceholder="Search..."
         value={brand}
-        onChange={(item) => {
-          setBrand(item);
-        }}
+        onChange={setBrand}
         renderItem={renderBrandItem}
       />
-      <Dropdown
+      <DropDown.Single
         mode={'modal'}
         style={styles.dropdown}
         data={groups}
@@ -61,9 +67,7 @@ export const SelectBrandAndGroupView: FC<Props> = ({ defaultValues, onChanged })
         placeholder="Select group"
         searchPlaceholder="Search..."
         value={group}
-        onChange={(item) => {
-          setGroup(item);
-        }}
+        onChange={setGroup}
         renderItem={renderGroupItem}
       />
     </View.Row>
@@ -71,10 +75,8 @@ export const SelectBrandAndGroupView: FC<Props> = ({ defaultValues, onChanged })
 };
 
 const styles = StyleSheet.create({
-  dropdown: {
-    flex: 1,
-    height: 50,
-    marginLeft: 10,
-    marginRight: 10,
+  container: {
+    justifyContent: 'space-between',
   },
+  dropdown: {},
 });

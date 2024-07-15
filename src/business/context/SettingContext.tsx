@@ -1,5 +1,5 @@
-import { Setting } from '@src/business';
-import React, { useContext, useState } from 'react';
+import {Setting} from '@src/business';
+import React, {FC, useContext, useState} from 'react';
 
 export type SettingContextResult = {
   setting: Setting | null;
@@ -20,11 +20,17 @@ const DefaultSettingContextResult: SettingContextResult = {
   setSetting: (_setting: Setting): void => {},
 };
 
-const SettingContext = React.createContext<SettingContextResult>(DefaultSettingContextResult);
+const SettingContext = React.createContext<SettingContextResult>(
+  DefaultSettingContextResult,
+);
 
 export const useSettingContext = () => useContext(SettingContext);
-
-export const SettingContextProvider = ({ children }) => {
+type Props = {
+  children: React.ReactNode;
+};
+export const SettingContextProvider: FC<Props> = ({children}) => {
   const facade = useSettingContextFacade();
-  return <SettingContext.Provider value={facade}>{children}</SettingContext.Provider>;
+  return (
+    <SettingContext.Provider value={facade}>{children}</SettingContext.Provider>
+  );
 };

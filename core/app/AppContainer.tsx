@@ -2,6 +2,7 @@ import React from 'react';
 import {ReduxContainer} from '@core/redux';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {PopupContextProvider} from '@src/business';
+import {NavigationContainer} from '@core/navigation';
 
 type Props = {
   children: any;
@@ -9,9 +10,9 @@ type Props = {
 export const AppContainer = ({children}: Props) => {
   return (
     <SafeAreaProvider>
-      <PopupContextProvider>
-        <ReduxContainer>{children}</ReduxContainer>
-      </PopupContextProvider>
+      <NavigationContainer>
+        <PopupContextProvider>{children}</PopupContextProvider>
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 };

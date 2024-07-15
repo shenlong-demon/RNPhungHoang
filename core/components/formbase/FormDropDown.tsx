@@ -74,8 +74,5 @@ const styles = StyleSheet.create({
     // flex: 1,
     // backgroundColor: 'yellow',
     width: '100%',
-    borderBottomWidth: 1,
-    borderColor: 'gray',
-    paddingBottom: -10
   },
 });

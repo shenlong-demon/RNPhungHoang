@@ -7,3 +7,4 @@ export * from './ProductService';
 export * from './UpdateFileService';
 export * from './OperationService';
 export * from './CustomerService';
+export * from './DataService';

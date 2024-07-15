@@ -1,6 +1,11 @@
 import BaseFacade from '@core/common/models/BaseFacade';
 import {Dto, Utility} from '@core/common';
-import {Product, ProductService, UpdateFileService} from '@src/business';
+import {
+  Product,
+  ProductService,
+  STATUS,
+  UpdateFileService,
+} from '@src/business';
 import {File} from '@core/models';
 import {
   CreateProductRequest,
@@ -25,6 +30,28 @@ export class ProductFacade extends BaseFacade<ProductFacade> {
   async getProductsBy(filter: ProductFilterRequest): Promise<Dto<Product[]>> {
     const dto: Dto<Product[]> = await this.productService.getProductsBy(filter);
     return dto;
+  }
+
+  async getAllActiveProducts(): Promise<Dto<Product[]>> {
+    const products: Product[] = [];
+    let offset: number = 0;
+    while (true) {
+      const dto: Dto<Product[]> = await this.productService.getProductsBy({
+        status: STATUS.ACTIVE,
+        offset,
+      });
+      if (dto.next()) {
+        const ps: Product[] = dto.data as Product[];
+        if (ps.length === 0) {
+          break;
+        }
+        products.push(...ps);
+      } else {
+        return dto;
+      }
+      offset += 1;
+    }
+    return Dto.success(products);
   }
 
   async createProduct(

@@ -34,5 +34,8 @@ const API_URL = {
   UPDATE_CUSTOMER(id: number) {
     return `${ENV.HOST}/customer/update/${id}`;
   },
+  GET_ALL_DATA: (): string => {
+    return `${ENV.HOST}/data/all`;
+  },
 };
 export {API_URL};

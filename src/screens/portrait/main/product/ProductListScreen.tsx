@@ -1,9 +1,8 @@
 import React, {FC, memo, useCallback, useState} from 'react';
-import {Button, View} from '@core/components';
+import {Button, FlatList, View} from '@core/components';
 import {Brand, Group, Product, useProductFacade} from '@src/business';
 import {useNavigation} from '@core/navigation';
 import {SelectBrandAndGroupView} from '@src/screens/portrait/shared_components';
-import {FlatList} from 'react-native';
 import {ProductListItem} from '@src/screens/portrait/main/product/product_list_item';
 import {Logger} from '@core/common';
 import {Route} from '@src/screens/portrait/Route';
@@ -61,7 +60,7 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
     <View.V style={{flex: 1}}>
       <SelectBrandAndGroupView onChanged={onFilterChanged} />
 
-      <FlatList
+      <FlatList.L
         style={{flex: 1}}
         data={products}
         keyExtractor={item => item.id}

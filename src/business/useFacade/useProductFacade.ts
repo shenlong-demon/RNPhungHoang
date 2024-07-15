@@ -20,6 +20,7 @@ type ProductFacadeResult = {
     req: CreateProductRequest,
     imageFile?: File,
   ) => Promise<Dto<Product | null>>;
+  getAllActiveProducts: () => Promise<Dto<Product[]>>;
 };
 
 export const useProductFacade = (): ProductFacadeResult => {
@@ -56,10 +57,15 @@ export const useProductFacade = (): ProductFacadeResult => {
     );
     return dto;
   };
+  const getAllActiveProducts = async (): Promise<Dto<Product[]>> => {
+    const dto: Dto<Product[]> = await productFacade.getAllActiveProducts();
+    return dto;
+  };
 
   return {
     getProductsBy,
     updateProduct,
     createProduct,
+    getAllActiveProducts,
   };
 };

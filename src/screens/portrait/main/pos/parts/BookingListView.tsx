@@ -1,8 +1,8 @@
 import {FC, memo, useCallback, useMemo} from 'react';
 import {Booking, useOperationContext} from '@src/business';
-import {FlatList, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {BookingView} from '@src/screens/portrait/main/pos/parts/BookingView';
-import {View} from '@core/components';
+import {FlatList, View} from '@core/components';
 
 type Props = {};
 export const BookingListView: FC<Props> = memo(({}: Props) => {
@@ -20,7 +20,7 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
 
   return (
     <View.V style={styles.container}>
-      <FlatList
+      <FlatList.L
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator
         style={styles.listContainer}

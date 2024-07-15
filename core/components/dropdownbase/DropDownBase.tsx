@@ -41,9 +41,7 @@ export const DropDownBase: FC<DropdownBaseProps> = memo(
         placeholder={props.placeholder}
         searchPlaceholder={props.searchPlaceholder}
         value={value}
-        onChange={item => {
-          setValue(item);
-        }}
+        onChange={setValue}
         renderItem={props.renderItem}
         selectedTextStyle={{
           fontWeight: 'bold',
@@ -60,5 +58,8 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     width: '100%',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingTop: 20,
   },
 });

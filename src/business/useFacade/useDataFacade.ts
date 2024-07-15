@@ -1,10 +1,11 @@
 import {DataFacade} from '@src/business/facade';
 import {Dto} from '@core/common';
-import {Brand, Group} from '@src/business';
+import {Brand, DataResult, Group} from '@src/business';
 
 type DataFacadeResult = {
   getBrands: () => Promise<Brand[]>;
   getGroups: () => Promise<Group[]>;
+  getAllData: () => Promise<DataResult | null>;
 };
 
 export const useDataFacade = (): DataFacadeResult => {
@@ -17,6 +18,10 @@ export const useDataFacade = (): DataFacadeResult => {
     const dto: Dto<Group[]> = await facade.getGroups();
     return dto.data || [];
   };
+  const getAllData = async (): Promise<DataResult | null> => {
+    const dto: Dto<DataResult | null> = await facade.getAllData();
+    return dto.data as DataResult;
+  };
 
-  return {getBrands, getGroups};
+  return {getBrands, getGroups, getAllData};
 };

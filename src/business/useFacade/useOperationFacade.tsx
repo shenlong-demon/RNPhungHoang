@@ -1,0 +1,79 @@
+import {OperationFacade} from '@src/business/facade';
+import {Dto} from '@core/common';
+import {
+  Operation,
+  useOperationContext,
+  useOperationListContext,
+  usePopupContext,
+} from '@src/business';
+import React from 'react';
+import {Route} from '@src/screens/portrait/Route';
+import {useNavigation} from '@core/navigation';
+import {CreateOperationPopup} from '@src/screens/portrait/components/popup';
+
+type OperationFacadeResult = {
+  openCreateOperationPopup: () => void;
+  createOperation: (name?: string) => Promise<Dto<Operation | null>>;
+  getOperations: (offset: number) => Promise<Dto<Operation[]>>;
+  getOperation: (id: number) => Promise<Dto<Operation | null>>;
+  enterOperation: (id: number) => Promise<Dto<Operation | null>>;
+};
+const CREATE_POPUP_ID: string = 'CREATE_POPUP_ID';
+
+export const useOperationFacade = (): OperationFacadeResult => {
+  const facade: OperationFacade = OperationFacade.shared();
+  const {openPopup, closeAllPopups} = usePopupContext();
+  const {navigate} = useNavigation();
+  const {setOperation} = useOperationContext();
+  const {updateOperationInList} = useOperationListContext();
+
+  const getOperations = async (offset: number): Promise<Dto<Operation[]>> => {
+    return facade.getOperations(offset);
+  };
+  const getOperation = async (id: number): Promise<Dto<Operation | null>> => {
+    return facade.getOperation(id);
+  };
+
+  const gotoOperation = (op: Operation): void => {
+    setOperation(op);
+    updateOperationInList(op);
+    navigate(Route.OPERATION_DETAIL, op);
+  };
+
+  const enterOperation = async (id: number): Promise<Dto<Operation | null>> => {
+    const dto: Dto<Operation | null> = await getOperation(id);
+    if (dto.next()) {
+      const op: Operation = dto.data as Operation;
+      gotoOperation(op);
+      closeAllPopups();
+    }
+    return dto;
+  };
+
+  const openCreateOperationPopup = (): void => {
+    openPopup(
+      CREATE_POPUP_ID,
+      <CreateOperationPopup
+        onCancel={closeAllPopups}
+        onOk={async (op: Operation): Promise<void> => {
+          gotoOperation(op);
+          closeAllPopups();
+        }}
+      />,
+    );
+  };
+
+  const createOperation = async (
+    name?: string,
+  ): Promise<Dto<Operation | null>> => {
+    return facade.createOperation(name);
+  };
+
+  return {
+    openCreateOperationPopup,
+    createOperation,
+    getOperations,
+    getOperation,
+    enterOperation,
+  };
+};

@@ -14,11 +14,13 @@ export const ViewRow: FC<ViewBaseProps> = memo((props: ViewBaseProps) => {
 
 const styles = StyleSheet.create({
   common: {
+    width: '100%',
+    // flex: 1,
     height: 48,
     flexDirection: 'row',
     // // justifyContent: 'center',
     // // alignContent: 'center',
     alignItems: 'center',
-    // justifyContent: 'space-evenly',
+    justifyContent: 'space-evenly',
   },
 });

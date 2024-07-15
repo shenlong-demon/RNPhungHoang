@@ -2,50 +2,28 @@ import React, {FC, memo, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
 import {
   Operation,
-  useOperationContext,
   useOperationFacade,
+  useOperationListContext,
   usePopupContext,
 } from '@src/business';
-import {useNavigation} from '@core/navigation';
-import {Route} from '@src/screens/portrait/Route';
 import View from '@core/components/viewbase/View';
 import Button from '@core/components/buttonbase/Button';
 import {FlatList} from '@core/components';
 import {OperationListItemView} from '@src/screens/portrait/main/pos/parts';
-import {CreateOperationPopup} from '@src/screens/portrait/components/popup/CreateOperationPopup';
-import {Dto} from '@core/common';
+import {CreateOperationPopup} from '@src/screens/portrait/components/popup';
 
 type Props = {};
-const CREATE_POPUP_ID: string = 'CREATE_POPUP_ID';
 export const POSSellerScreen: FC<Props> = memo(({}) => {
-  const {navigate} = useNavigation();
+  const {operations} = useOperationListContext();
+  const useFacade = useOperationFacade();
   const {openPopup, closeAllPopups} = usePopupContext();
-  const {setOperation, updateOperationInList, operations} =
-    useOperationContext();
-  const facade = useOperationFacade();
 
   const enter = async (item: Operation): Promise<void> => {
-    const dtp: Dto<Operation | null> = await facade.getOperation(item.id);
-    if (dtp.next()) {
-      const op: Operation = dtp.data as Operation;
-      setOperation(op);
-      updateOperationInList(op);
-      navigate(Route.OPERATION_DETAIL, op);
-      closeAllPopups();
-    }
-  };
-  const onOk = async (op: Operation): Promise<void> => {
-    setOperation(op);
-    updateOperationInList(op);
-    navigate(Route.OPERATION_DETAIL, op);
-    closeAllPopups();
+    useFacade.enterOperation(item.id);
   };
 
   const createOperation = () => {
-    openPopup(
-      CREATE_POPUP_ID,
-      <CreateOperationPopup onCancel={closeAllPopups} onOk={onOk} />,
-    );
+    useFacade.openCreateOperationPopup();
   };
 
   const renderOperationListItem = useCallback(
