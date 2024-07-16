@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
     // textAlignVertical: 'bottom',
     // verticalAlign: 'bottom',
     paddingBottom: -10,
-    width: '100%'
+    width: '100%',
   },
 });

@@ -37,5 +37,8 @@ const API_URL = {
   GET_ALL_DATA: (): string => {
     return `${ENV.HOST}/data/all`;
   },
+  BOOKING: (operationId: number): string => {
+    return `${ENV.HOST}/booking/booking/${operationId}`;
+  },
 };
 export {API_URL};

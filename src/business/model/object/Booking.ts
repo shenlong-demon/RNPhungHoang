@@ -8,4 +8,5 @@ export type Booking = BaseModel & {
   quantity: number;
   note?: string;
   operationId: number;
+  name: string;
 };

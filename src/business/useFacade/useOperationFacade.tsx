@@ -2,6 +2,7 @@ import {OperationFacade} from '@src/business/facade';
 import {Dto} from '@core/common';
 import {
   Operation,
+  Product,
   useOperationContext,
   useOperationListContext,
   usePopupContext,
@@ -17,6 +18,7 @@ type OperationFacadeResult = {
   getOperations: (offset: number) => Promise<Dto<Operation[]>>;
   getOperation: (id: number) => Promise<Dto<Operation | null>>;
   enterOperation: (id: number) => Promise<Dto<Operation | null>>;
+  booking: (menuItem: Product) => Promise<void>;
 };
 const CREATE_POPUP_ID: string = 'CREATE_POPUP_ID';
 
@@ -24,7 +26,7 @@ export const useOperationFacade = (): OperationFacadeResult => {
   const facade: OperationFacade = OperationFacade.shared();
   const {openPopup, closeAllPopups} = usePopupContext();
   const {navigate} = useNavigation();
-  const {setOperation} = useOperationContext();
+  const {setOperation, operation} = useOperationContext();
   const {updateOperationInList} = useOperationListContext();
 
   const getOperations = async (offset: number): Promise<Dto<Operation[]>> => {
@@ -69,11 +71,24 @@ export const useOperationFacade = (): OperationFacadeResult => {
     return facade.createOperation(name);
   };
 
+  const booking = async (menuItem: Product): Promise<void> => {
+    if (operation) {
+      const dto: Dto<Operation | null> = await facade.booking(
+        operation,
+        menuItem,
+      );
+      if (dto.next()) {
+        setOperation(dto.data as Operation);
+      }
+    }
+  };
+
   return {
     openCreateOperationPopup,
     createOperation,
     getOperations,
     getOperation,
     enterOperation,
+    booking,
   };
 };

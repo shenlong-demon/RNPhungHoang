@@ -1,6 +1,6 @@
 import BaseFacade from '@core/common/models/BaseFacade';
 import {Dto} from '@core/common';
-import {Operation} from '@src/business';
+import { Operation, Product } from "@src/business";
 import {OperationService} from '@src/business/service/OperationService';
 
 export class OperationFacade extends BaseFacade<OperationFacade> {
@@ -25,5 +25,9 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
   }
   async getOperation(id: number): Promise<Dto<Operation | null>> {
     return this.operationService.getOperation(id);
+  }
+
+  async booking(operation: Operation, menuItem: Product) {
+    return this.operationService.booking(operation, menuItem);
   }
 }

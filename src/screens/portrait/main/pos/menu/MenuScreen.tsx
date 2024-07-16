@@ -1,35 +1,52 @@
-import {FC, memo, useState} from 'react';
+import {FC, memo, useEffect, useState} from 'react';
 import View from '@core/components/viewbase/View';
-import {StyleSheet} from 'react-native';
-import {SelectBrandAndGroupView} from '@src/screens/portrait/shared_components';
-import {Brand, Group, Product, useDataContext} from '@src/business';
+import {Pressable, StyleSheet} from 'react-native';
+import {
+  Product,
+  useOperationFacade,
+  useProductSearchFacade,
+} from '@src/business';
 import {FlatList} from '@core/components';
 import Input from '@core/components/inputbase/Input';
+import {MenuItemView} from '@src/screens/portrait/main/pos/menu/parts';
+import {useNavigation} from '@core/navigation';
+
 type Props = {};
 export const MenuScreen: FC<Props> = memo(({}: Props) => {
-  const {products} = useDataContext();
-  const [searchProducts, setSearchProducts] = useState<Product[]>(
-    products.slice(0, 10),
-  );
+  const [searchProducts, setSearchProducts] = useState<Product[]>([]);
+  const [searchText, setSearchText] = useState<string | null>(null);
+  const productSearchFacade = useProductSearchFacade();
+  const {booking} = useOperationFacade();
+  const {goBack} = useNavigation();
+  useEffect(() => {
+    setSearchProducts(productSearchFacade.search(searchText));
+  }, [searchText]);
 
-  const onBrandAndGroupChanged = async (
-    brand: Brand | null,
-    group: Group | null,
-  ): Promise<void> => {};
+  const book = async (menuItem: Product): Promise<void> => {
+    booking(menuItem);
+    goBack();
+  };
   const renderItem = (data: {item: Product; index: number}): any => {
-
+    return (
+      <MenuItemView
+        item={data.item}
+        index={data.index}
+        onPress={() => book(data.item)}
+      />
+    );
   };
   return (
     <View.V style={styles.container}>
-      <SelectBrandAndGroupView onChanged={onBrandAndGroupChanged} />
       <Input.T
         style={styles.searchText}
         placeholder={'Please input text to search'}
         autoFocus={true}
+        onChangeText={setSearchText}
       />
       <FlatList.L
         style={styles.list}
         data={searchProducts}
+        numColumns={2}
         renderItem={renderItem}
       />
     </View.V>

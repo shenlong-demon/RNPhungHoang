@@ -1,5 +1,5 @@
-import { ApiResult, BaseRepo, Dto } from "@core/common";
-import { API_URL } from "@src/business";
+import {ApiResult, BaseRepo, Dto} from '@core/common';
+import {API_URL} from '@src/business';
 
 export class OperationRepo extends BaseRepo<OperationRepo> {
   constructor() {
@@ -23,6 +23,13 @@ export class OperationRepo extends BaseRepo<OperationRepo> {
   }
   public async getOperation(id: number): Promise<Dto<any | null>> {
     const api: ApiResult = await this.api.get(API_URL.GET_OPERATION(id));
+    return this.populate(api);
+  }
+
+  async booking(operationId: number, productId: number) {
+    const api: ApiResult = await this.api.put(API_URL.BOOKING(operationId), {
+      productId,
+    });
     return this.populate(api);
   }
 }

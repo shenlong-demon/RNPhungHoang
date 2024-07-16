@@ -1,5 +1,5 @@
 import BaseFacade from '@core/common/models/BaseFacade';
-import {Dto, Utility} from '@core/common';
+import {Dto, Logger, Utility} from '@core/common';
 import {
   Product,
   ProductService,
@@ -51,6 +51,10 @@ export class ProductFacade extends BaseFacade<ProductFacade> {
       }
       offset += 1;
     }
+    Logger.log(() => [
+      `ProductFacade getAllActiveProducts length ${products.length}`,
+      products,
+    ]);
     return Dto.success(products);
   }
 

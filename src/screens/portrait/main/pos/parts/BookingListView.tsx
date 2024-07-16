@@ -1,7 +1,7 @@
 import {FC, memo, useCallback, useMemo} from 'react';
 import {Booking, useOperationContext} from '@src/business';
 import {StyleSheet} from 'react-native';
-import {BookingView} from '@src/screens/portrait/main/pos/parts/BookingView';
+import {BookingItemView} from '@src/screens/portrait/main/pos/parts/BookingItemView';
 import {FlatList, View} from '@core/components';
 
 type Props = {};
@@ -13,7 +13,7 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
 
   const renderBookingListItem = useCallback(
     (data: {item: Booking; index: number}): any => {
-      return <BookingView item={data.item} index={data.index} />;
+      return <BookingItemView item={data.item} index={data.index} />;
     },
     [],
   );
@@ -31,6 +31,6 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
   );
 });
 const styles = StyleSheet.create({
-  container: {},
-  listContainer: {},
+  container: {flex: 1},
+  listContainer: {flex: 1},
 });

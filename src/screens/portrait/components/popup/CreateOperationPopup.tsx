@@ -5,8 +5,6 @@ import {StyleSheet} from 'react-native';
 import {Operation, useOperationFacade} from '@src/business';
 import Button from '@core/components/buttonbase/Button';
 import View from '@core/components/viewbase/View';
-import {OperationFacade} from '@src/business/facade';
-import {useNavigation} from '@core/navigation';
 
 type Props = {
   onOk: (op: Operation) => Promise<void>;
@@ -34,6 +32,7 @@ export const CreateOperationPopup: FC<Props> = memo(
           label={'Name'}
           name="name"
           defaultValue={CONSTANTS.STR_EMPTY}
+          autoFocus={true}
         />
         <View.Row>
           <Button.Cancel style={{marginTop: 10}} onPress={onCancel} />

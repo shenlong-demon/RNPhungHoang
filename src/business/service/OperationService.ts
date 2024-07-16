@@ -1,5 +1,5 @@
 import {BaseService, Dto} from '@core/common';
-import {Operation} from '@src/business';
+import { Operation, Product } from "@src/business";
 import {OperationRepo} from '@src/business/repository';
 
 export class OperationService extends BaseService<OperationService> {
@@ -25,5 +25,9 @@ export class OperationService extends BaseService<OperationService> {
   }
   async getOperation(id: number): Promise<Dto<Operation | null>> {
     return this.operationRepo.getOperation(id);
+  }
+
+  async booking(operation: Operation, menuItem: Product) {
+    return this.operationRepo.booking(operation.id, menuItem.id);
   }
 }
