@@ -1,14 +1,69 @@
-import {FC, memo} from 'react';
+import {FC, memo, useEffect, useState} from 'react';
 import View from '@core/components/viewbase/View';
 import {StyleSheet} from 'react-native';
-type Props = {};
-export const CustomerListView: FC<Props> = memo(({}: Props) => {
-  return <View.V style={styles.container}>
+import {Customer, STATUS} from '@src/business';
+import Input from '@core/components/inputbase/Input';
+import {FlatList} from '@core/components';
+import {useCustomerFacade} from '@src/business/useFacade/useCustomerFacade';
+import {CustomerListItemView} from '@src/screens/portrait/main/customer/parts/CustomerListItemView';
+import {CONSTANTS} from '@core/common';
+import {useDebounce} from '@core/use_hook';
 
-  </View.V>;
-});
+type Props = {
+  onPressItem: (customer: Customer) => void;
+  selectedStatus: STATUS | null;
+};
+export const CustomerListView: FC<Props> = memo(
+  ({selectedStatus, onPressItem}: Props) => {
+    const [searchCustomers, setSearchCustomer] = useState<Customer[]>([]);
+    const [searchText, setSearchText] = useState<string>(CONSTANTS.STR_EMPTY);
+    const debouncedValue = useDebounce(searchText);
+
+    const facade = useCustomerFacade();
+
+    useEffect(() => {
+      getCustomers();
+    }, [debouncedValue]);
+
+    const getCustomers = async (): Promise<void> => {
+      const customers: Customer[] = await facade.searchCustomers({
+        searchText: debouncedValue,
+        status: selectedStatus,
+        offset: 0,
+      });
+      setSearchCustomer(customers);
+    };
+
+    const renderCustomer = (data: {item: Customer; index: number}): any => {
+      return (
+        <CustomerListItemView
+          item={data.item}
+          index={data.index}
+          onPress={() => {
+            onPressItem(data.item);
+          }}
+        />
+      );
+    };
+    const onChangeSearchText = (text: string) => {
+      setSearchText(text);
+    };
+    return (
+      <View.V style={styles.container}>
+        <Input.T style={styles.search} onChangeText={onChangeSearchText} />
+        <FlatList.L
+          style={styles.list}
+          data={searchCustomers}
+          renderItem={renderCustomer}
+        />
+      </View.V>
+    );
+  },
+);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  search: {},
+  list: {flex: 1},
 });

@@ -18,6 +18,6 @@ const commonStyle = StyleSheet.create({
     // height: 40,
     color: 'black',
     textAlignVertical: 'center',
-    fontSize: 18,
+    fontSize: 16,
   },
 });

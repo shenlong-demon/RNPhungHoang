@@ -1,9 +1,5 @@
 import React, {FC, memo} from 'react';
-import {
-  DrawerNavigator,
-  NavigationContainer,
-  StackNavigator,
-} from '@core/navigation';
+import {DrawerNavigator, StackNavigator} from '@core/navigation';
 import LoginScreen from '@src/screens/portrait/auth';
 
 import {Route} from '@src/screens/portrait/Route';
@@ -29,6 +25,7 @@ import {
 import {CustomerListScreen} from '@src/screens/portrait/main/customer/CustomerListScreen';
 import {UpdateCustomerScreen} from '@src/screens/portrait/main/customer/UpdateCustomerScreen';
 import {MenuScreen} from '@src/screens/portrait/main/pos/menu';
+import {AssignCustomerScreen} from '@src/screens/portrait/main/pos/assign_csutomer';
 
 type Props = {};
 export const PortraitApp: FC<Props> = memo(({}) => {
@@ -41,12 +38,12 @@ export const PortraitApp: FC<Props> = memo(({}) => {
           {
             name: Route.OPERATION_DETAIL,
             component: OperationDetailScreen,
-            options: {headerShown: false},
+            options: {headerShown: true},
           },
           {
             name: Route.MENU_SCREEN,
             component: MenuScreen,
-            options: {headerShown: false},
+            options: {headerShown: true},
           },
         ]}
       />
@@ -61,11 +58,20 @@ export const PortraitApp: FC<Props> = memo(({}) => {
               {
                 name: Route.OPERATION_LIST,
                 component: POSSellerScreen,
-                options: {headerShown: false},
               },
               {
                 name: Route.OPERATION_DETAIL,
-                component: OperationDetail,
+                component: OperationDetailScreen,
+                options: {headerShown: true},
+              },
+              {
+                name: Route.MENU_SCREEN,
+                component: MenuScreen,
+                options: {headerShown: true},
+              },
+              {
+                name: Route.ASSIGN_CUSTOMER,
+                component: AssignCustomerScreen,
                 options: {headerShown: true},
               },
             ]}
@@ -82,12 +88,12 @@ export const PortraitApp: FC<Props> = memo(({}) => {
           {
             name: Route.PRODUCT_LIST,
             component: ProductListScreen,
-            options: {headerShown: false},
+            options: {headerShown: true},
           },
           {
             name: Route.PRODUCT_UPDATE,
             component: UpdateProductScreen,
-            options: {headerShown: false},
+            options: {headerShown: true},
           },
         ]}
       />
@@ -100,12 +106,12 @@ export const PortraitApp: FC<Props> = memo(({}) => {
           {
             name: Route.CUSTOMER_LIST,
             component: CustomerListScreen,
-            options: {headerShown: false},
+            options: {headerShown: true},
           },
           {
             name: Route.CUSTOMER_UPDATE,
             component: UpdateCustomerScreen,
-            options: {headerShown: false},
+            options: {headerShown: true},
           },
         ]}
       />
@@ -121,7 +127,11 @@ export const PortraitApp: FC<Props> = memo(({}) => {
                 {name: Route.MAIN, component: MainScreen},
                 {name: Route.STORE, component: StoreScreen},
                 {name: Route.PRODUCT, component: ProductStack},
-                {name: Route.POS_SELLER, component: POSStack},
+                {
+                  name: Route.POS_SELLER,
+                  component: POSStack,
+                  options: {headerShown: true},
+                },
                 {name: Route.BRANCH, component: UpdateBrandScreen},
                 {name: Route.GROUP, component: UpdateGroupScreen},
                 {name: Route.CUSTOMER, component: CustomerStack},
@@ -152,7 +162,7 @@ export const PortraitApp: FC<Props> = memo(({}) => {
               options: {headerShown: false},
             }
           : {
-              name: Route.MAIN,
+              name: Route.APP,
               component: MainStack,
               options: {headerShown: false},
             },

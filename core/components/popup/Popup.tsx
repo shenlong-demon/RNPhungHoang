@@ -5,7 +5,7 @@ import View from '@core/components/viewbase/View';
 type Props = ModalProps & {};
 export const Popup: FC<Props> = memo(({visible, children}: Props) => {
   return (
-    <Modal animationType="slide" transparent={false} visible={visible}>
+    <Modal animationType="slide" transparent={true} visible={visible}>
       <View.V style={styles.container}>{children}</View.V>
     </Modal>
   );
@@ -15,5 +15,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.6)',
   },
 });

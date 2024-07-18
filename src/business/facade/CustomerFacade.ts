@@ -3,7 +3,9 @@ import {Dto, Utility} from '@core/common';
 import {
   CreateCustomerRequest,
   Customer,
+  CustomerFilterRequest,
   CustomerService,
+  STATUS,
   UpdateCustomerRequest,
   UpdateFileService,
 } from '@src/business';
@@ -63,5 +65,9 @@ export class CustomerFacade extends BaseFacade<CustomerFacade> {
       return dto;
     }
     return uploadDto.bypass();
+  }
+
+  async getCustomers(req: CustomerFilterRequest): Promise<Dto<Customer[]>> {
+    return this.customerService.getCustomers(req);
   }
 }

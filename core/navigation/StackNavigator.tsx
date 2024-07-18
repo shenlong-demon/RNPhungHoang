@@ -1,7 +1,5 @@
 import React, { FC, memo } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-const Stack = createNativeStackNavigator();
+import { Stack } from './NavigationContainer';
 type Screen = {
   name: string;
   component: FC;

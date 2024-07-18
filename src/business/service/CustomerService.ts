@@ -2,6 +2,7 @@ import {BaseService, Dto} from '@core/common';
 import {
   CreateCustomerRequest,
   Customer,
+  CustomerFilterRequest,
   UpdateCustomerRequest,
 } from '@src/business';
 import {CustomerRepo} from '@src/business/repository';
@@ -20,7 +21,9 @@ export class CustomerService extends BaseService<CustomerService> {
   async createCustomer(
     req: CreateCustomerRequest,
   ): Promise<Dto<Customer | null>> {
-    const dto: Dto<Customer | null> = await this.customerRepo.createCustomer(req);
+    const dto: Dto<Customer | null> = await this.customerRepo.createCustomer(
+      req,
+    );
     return dto;
   }
 
@@ -33,5 +36,9 @@ export class CustomerService extends BaseService<CustomerService> {
       req,
     );
     return dto;
+  }
+
+  async getCustomers(req: CustomerFilterRequest): Promise<Dto<Customer[]>> {
+    return this.customerRepo.getCustomers(req);
   }
 }

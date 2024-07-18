@@ -40,5 +40,11 @@ const API_URL = {
   BOOKING: (operationId: number): string => {
     return `${ENV.HOST}/booking/booking/${operationId}`;
   },
+  ASSIGN_CUSTOMER: (operationId: number): string => {
+    return `${ENV.HOST}/operation/assign-customer/${operationId}`;
+  },
+  SEARCH_CUSTOMER: (): string => {
+    return `${ENV.HOST}/customer/filter`;
+  },
 };
 export {API_URL};

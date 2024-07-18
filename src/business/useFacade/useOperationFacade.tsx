@@ -1,6 +1,7 @@
 import {OperationFacade} from '@src/business/facade';
 import {Dto} from '@core/common';
 import {
+  Customer,
   Operation,
   Product,
   useOperationContext,
@@ -19,6 +20,7 @@ type OperationFacadeResult = {
   getOperation: (id: number) => Promise<Dto<Operation | null>>;
   enterOperation: (id: number) => Promise<Dto<Operation | null>>;
   booking: (menuItem: Product) => Promise<void>;
+  assignCustomer: (customer: Customer) => Promise<Dto<Operation | null>>;
 };
 const CREATE_POPUP_ID: string = 'CREATE_POPUP_ID';
 
@@ -52,6 +54,18 @@ export const useOperationFacade = (): OperationFacadeResult => {
     return dto;
   };
 
+  const assignCustomer = async (
+    customer: Customer,
+  ): Promise<Dto<Operation | null>> => {
+    if (!operation) {
+      return Dto.success(null);
+    }
+    const dto: Dto<Operation | null> = await facade.assignCustomer(
+      operation,
+      customer,
+    );
+    return dto;
+  };
   const openCreateOperationPopup = (): void => {
     openPopup(
       CREATE_POPUP_ID,
@@ -90,5 +104,6 @@ export const useOperationFacade = (): OperationFacadeResult => {
     getOperation,
     enterOperation,
     booking,
+    assignCustomer,
   };
 };

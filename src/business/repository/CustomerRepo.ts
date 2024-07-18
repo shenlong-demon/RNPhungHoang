@@ -2,6 +2,8 @@ import {ApiResult, BaseRepo, Dto} from '@core/common';
 import {
   API_URL,
   CreateCustomerRequest,
+  CustomerFilterRequest,
+  STATUS,
   UpdateCustomerRequest,
 } from '@src/business';
 
@@ -24,6 +26,11 @@ export class CustomerRepo extends BaseRepo<CustomerRepo> {
     req: UpdateCustomerRequest,
   ): Promise<Dto<any | null>> {
     const api: ApiResult = await this.api.put(API_URL.UPDATE_CUSTOMER(id), req);
+    return this.populate(api);
+  }
+
+  async getCustomers(req: CustomerFilterRequest): Promise<Dto<any[]>> {
+    const api: ApiResult = await this.api.post(API_URL.SEARCH_CUSTOMER(), req);
     return this.populate(api);
   }
 }

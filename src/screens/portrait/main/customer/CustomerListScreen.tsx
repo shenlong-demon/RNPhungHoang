@@ -5,6 +5,8 @@ import {CustomerListView} from '@src/screens/portrait/main/customer/parts';
 import Button from '@core/components/buttonbase/Button';
 import {useNavigation} from '@core/navigation';
 import {Route} from '@src/screens/portrait/Route';
+import {Customer} from '@src/business';
+
 type Props = {};
 export const CustomerListScreen: FC<Props> = memo(({}: Props) => {
   const {navigate} = useNavigation();
@@ -12,9 +14,12 @@ export const CustomerListScreen: FC<Props> = memo(({}: Props) => {
   const createCustomer = (): void => {
     navigate(Route.CUSTOMER_UPDATE, null);
   };
+  const enterCustomer = (customer: Customer): void => {
+    // navigate(Route.CUSTOMER_UPDATE, null);
+  };
   return (
     <View.V style={styles.container}>
-      <CustomerListView />
+      <CustomerListView onPressItem={enterCustomer} />
       <Button.FloatCircle
         position={'bottom|right'}
         onPress={() => createCustomer()}

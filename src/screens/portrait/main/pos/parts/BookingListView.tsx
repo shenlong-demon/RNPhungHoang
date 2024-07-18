@@ -6,16 +6,26 @@ import {FlatList, View} from '@core/components';
 
 type Props = {};
 export const BookingListView: FC<Props> = memo(({}: Props) => {
-  const {operation} = useOperationContext();
+  const {operation, setSelectedBooking, selectedBooking} =
+    useOperationContext();
   const bookingItems = useMemo((): Booking[] => {
     return operation?.bookings || [];
   }, [operation]);
 
   const renderBookingListItem = useCallback(
     (data: {item: Booking; index: number}): any => {
-      return <BookingItemView item={data.item} index={data.index} />;
+      return (
+        <BookingItemView
+          item={data.item}
+          index={data.index}
+          isSelected={data.item.appKey === selectedBooking?.appKey}
+          onPress={async (): Promise<void> => {
+            setSelectedBooking(data.item);
+          }}
+        />
+      );
     },
-    [],
+    [setSelectedBooking, selectedBooking],
   );
 
   return (

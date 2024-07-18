@@ -1,6 +1,7 @@
 import {
   CreateCustomerRequest,
   Customer,
+  CustomerFilterRequest,
   UpdateCustomerRequest,
 } from '@src/business';
 import {File} from '@core/models';
@@ -19,6 +20,7 @@ type CustomerFacadeResult = {
     req: CreateCustomerRequest,
     imageFile?: File,
   ) => Promise<Dto<Customer | null>>;
+  searchCustomers: (req: CustomerFilterRequest) => Promise<Customer[]>;
 };
 
 export const useCustomerFacade = (): CustomerFacadeResult => {
@@ -49,8 +51,16 @@ export const useCustomerFacade = (): CustomerFacadeResult => {
     return dto;
   };
 
+  const searchCustomers = async (
+    req: CustomerFilterRequest,
+  ): Promise<Customer[]> => {
+    const dto: Dto<Customer[]> = await customerFacade.getCustomers(req);
+    return (dto.data || []) as Customer[];
+  };
+
   return {
     updateCustomer,
     createCustomer,
+    searchCustomers,
   };
 };

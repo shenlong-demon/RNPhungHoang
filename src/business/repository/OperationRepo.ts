@@ -26,10 +26,26 @@ export class OperationRepo extends BaseRepo<OperationRepo> {
     return this.populate(api);
   }
 
-  async booking(operationId: number, productId: number) {
+  async booking(
+    operationId: number,
+    productId: number,
+  ): Promise<Dto<any | null>> {
     const api: ApiResult = await this.api.put(API_URL.BOOKING(operationId), {
       productId,
     });
+    return this.populate(api);
+  }
+
+  async assignCustomer(
+    operationId: number,
+    customerId: number | null,
+  ): Promise<Dto<any | null>> {
+    const api: ApiResult = await this.api.put(
+      API_URL.ASSIGN_CUSTOMER(operationId),
+      {
+        customerId,
+      },
+    );
     return this.populate(api);
   }
 }

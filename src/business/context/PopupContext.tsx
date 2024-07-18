@@ -26,7 +26,11 @@ export const usePopupContextFacade = (): PopupContextResult => {
   };
 
   const openPopup = (popupId: string, contentView: any): void => {
-    const newPopup = <Popup visible={true}>{contentView}</Popup>;
+    const newPopup = (
+      <Popup transparent={true} visible={true}>
+        {contentView}
+      </Popup>
+    );
     setPopups([
       ...popups.filter((popup: PopupType): boolean => {
         return popup.id !== popupId;

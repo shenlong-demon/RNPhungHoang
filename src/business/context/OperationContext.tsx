@@ -1,23 +1,29 @@
-import {Operation} from '@src/business';
+import {Booking, Operation} from '@src/business';
 import React, {FC, useContext, useState} from 'react';
 
 export type OperationContextResult = {
   operation: Operation | null;
   setOperation: (op: Operation | null) => void;
+  selectedBooking: Booking | null;
+  setSelectedBooking: (booking: Booking | null) => void;
 };
 
 export const useOperationContextFacade = (): OperationContextResult => {
   const [operation, setOperation] = useState<Operation | null>(null);
-
+  const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   return {
     operation,
     setOperation,
+    selectedBooking,
+    setSelectedBooking,
   };
 };
 
 const DefaultOperationContextResult: OperationContextResult = {
   operation: null,
   setOperation: (_op: Operation | null): void => {},
+  selectedBooking: null,
+  setSelectedBooking: (_booking: Booking | null): void => {},
 };
 
 const OperationContext = React.createContext<OperationContextResult>(
