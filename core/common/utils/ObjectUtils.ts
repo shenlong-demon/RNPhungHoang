@@ -91,7 +91,10 @@ export class ObjectUtils {
     return get(value, prop, defaultValue);
   }
 
-  public static merge<TObject, TSource>(object: TObject, source: TSource): TObject & TSource {
+  public static merge<TObject, TSource>(
+    object: TObject,
+    source: TSource,
+  ): TObject & TSource {
     return merge(object, source);
   }
 
@@ -113,28 +116,41 @@ export class ObjectUtils {
   public static clean<T>(input: T, fields: string[], falsy = false): T {
     const keysToOmitIndex = keyBy(fields);
 
-    const data = ObjectUtils.transform(input, (_: any, key: string) => key in keysToOmitIndex);
+    const data = ObjectUtils.transform(
+      input,
+      (_: any, key: string) => key in keysToOmitIndex,
+    );
 
     if (!falsy) {
       return data;
     }
 
-    return ObjectUtils.transform(data, (value: any, _: string) => ObjectUtils.isEmpty(value));
+    return ObjectUtils.transform(data, (value: any, _: string) =>
+      ObjectUtils.isEmpty(value),
+    );
   }
 
   public static cleanOut<T>(input: T, fields: string[], falsy = false): T {
     const keysToOmitIndex = keyBy(fields);
 
-    const data = ObjectUtils.transform(input, (_: any, key: string) => !(key in keysToOmitIndex));
+    const data = ObjectUtils.transform(
+      input,
+      (_: any, key: string) => !(key in keysToOmitIndex),
+    );
 
     if (!falsy) {
       return data;
     }
 
-    return ObjectUtils.transform(data, (value: any, _: string) => ObjectUtils.isEmpty(value));
+    return ObjectUtils.transform(data, (value: any, _: string) =>
+      ObjectUtils.isEmpty(value),
+    );
   }
 
-  public static transform<T>(input: T, next: (v: any, k: string) => boolean): T {
+  public static transform<T>(
+    input: T,
+    next: (v: any, k: string) => boolean,
+  ): T {
     if (ObjectUtils.isEmpty(input)) {
       return {} as any;
     }
@@ -182,5 +198,22 @@ export class ObjectUtils {
         result[key] = value;
       }
     });
+  }
+
+  static distinct<T>(
+    array: T[],
+    keyFunc: (t: T) => any,
+    sortFunc: (a: T, b: T) => number,
+  ): T[] {
+    const result: T[] = [];
+    const map = new Map();
+    for (const item of array.sort(sortFunc)) {
+      const key: any = keyFunc(item);
+      if (!map.has(key)) {
+        map.set(key, true); // set any value to Map
+        result.push(item);
+      }
+    }
+    return result;
   }
 }

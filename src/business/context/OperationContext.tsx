@@ -1,5 +1,6 @@
 import {Booking, Operation} from '@src/business';
-import React, {FC, useContext, useState} from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
+import {Logger} from '@core/common';
 
 export type OperationContextResult = {
   operation: Operation | null;
@@ -11,6 +12,9 @@ export type OperationContextResult = {
 export const useOperationContextFacade = (): OperationContextResult => {
   const [operation, setOperation] = useState<Operation | null>(null);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
+  useEffect(() => {
+    Logger.log(() => [`useOperationContextFacade operation `, operation]);
+  }, [operation]);
   return {
     operation,
     setOperation,

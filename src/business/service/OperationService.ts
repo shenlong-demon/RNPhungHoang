@@ -40,4 +40,8 @@ export class OperationService extends BaseService<OperationService> {
       customer?.id || null,
     );
   }
+
+  async receipt(operation: Operation): Promise<Dto<Operation | null>> {
+    return this.operationRepo.receipt(operation.id);
+  }
 }

@@ -48,4 +48,9 @@ export class OperationRepo extends BaseRepo<OperationRepo> {
     );
     return this.populate(api);
   }
+
+  async receipt(operationId: number): Promise<Dto<any | null>> {
+    const api: ApiResult = await this.api.put(API_URL.RECEIPT(operationId), {});
+    return this.populate(api);
+  }
 }

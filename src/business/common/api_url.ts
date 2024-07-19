@@ -46,5 +46,8 @@ const API_URL = {
   SEARCH_CUSTOMER: (): string => {
     return `${ENV.HOST}/customer/filter`;
   },
+  RECEIPT: (operationId: number): string => {
+    return `${ENV.HOST}/operation/receipt/${operationId}`;
+  },
 };
 export {API_URL};

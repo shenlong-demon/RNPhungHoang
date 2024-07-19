@@ -1,5 +1,6 @@
 import React, {FC, memo} from 'react';
 import {Drawer} from './NavigationContainer';
+import { DrawerNavigationOptions } from "@react-navigation/drawer/src/types";
 
 type Screen = {
   name: string;

@@ -10,7 +10,6 @@ import View from '@core/components/viewbase/View';
 import Button from '@core/components/buttonbase/Button';
 import {FlatList} from '@core/components';
 import {OperationListItemView} from '@src/screens/portrait/main/pos/parts';
-import {CreateOperationPopup} from '@src/screens/portrait/components/popup';
 
 type Props = {};
 export const POSSellerScreen: FC<Props> = memo(({}) => {

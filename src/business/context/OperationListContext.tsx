@@ -1,6 +1,6 @@
 import {Operation, useOperationFacade} from '@src/business';
 import React, {FC, useContext, useEffect, useState} from 'react';
-import {Dto, Logger} from '@core/common';
+import {Dto, Logger, ObjectUtils} from '@core/common';
 
 export type OperationListContextResult = {
   operations: Operation[];
@@ -15,34 +15,42 @@ export const useOperationListContextFacade = (): OperationListContextResult => {
   const [operationPageIndex, setOperationPageIndex] = useState<number>(0);
   const facade = useOperationFacade();
   useEffect(() => {
-    setOperationPageIndex(0);
+    setOperationPageIndex(operationPageIndex);
   }, []);
 
   useEffect(() => {
     loadOperations();
-  }, [operationPageIndex]);
+  }, [operations.length, operationPageIndex]);
 
   const loadOperations = async (): Promise<void> => {
-    Logger.log(() => [
-      `useOperationListContextFacade loadOperations ${operationPageIndex}`,
-    ]);
     const dto: Dto<Operation[]> = await facade.getOperations(
       operationPageIndex,
     );
+    Logger.log(() => [
+      `useOperationListContextFacade loadOperations ${operationPageIndex}`,
+      dto,
+    ]);
     if (dto.next()) {
       if (operationPageIndex === 0) {
-        setOperations(dto.data as Operation[]);
+        setOperations((dto.data || []) as Operation[]);
       } else {
-        setOperations([...operations, ...(dto.data as Operation[])]);
+        addOperationInList([...operations, ...(dto.data as Operation[])]);
       }
     }
   };
   const updateOperationInList = (op: Operation): void => {
-    const exclude: Operation[] = operations.filter((o: Operation): boolean => {
-      return o.id != op.id;
-    });
-    exclude.push(op);
-    setOperations([...exclude]);
+    addOperationInList([op]);
+  };
+
+  const addOperationInList = (ops: Operation[]): void => {
+    const newPps: Operation[] = ObjectUtils.distinct(
+      [...ops, ...operations],
+      (o: Operation) => o.id,
+      (o1: Operation, o2: Operation) => {
+        return o2.updatedAt > o1.updatedAt ? 1 : -1;
+      },
+    );
+    setOperations(newPps);
   };
 
   const loadMoreOperations = (): void => {

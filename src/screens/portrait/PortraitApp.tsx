@@ -31,24 +31,6 @@ type Props = {};
 export const PortraitApp: FC<Props> = memo(({}) => {
   const {user} = useAuthContext();
 
-  const OperationDetail = () => {
-    return (
-      <StackNavigator
-        screens={[
-          {
-            name: Route.OPERATION_DETAIL,
-            component: OperationDetailScreen,
-            options: {headerShown: true},
-          },
-          {
-            name: Route.MENU_SCREEN,
-            component: MenuScreen,
-            options: {headerShown: true},
-          },
-        ]}
-      />
-    );
-  };
   const POSStack = () => {
     return (
       <OperationListContextProvider>

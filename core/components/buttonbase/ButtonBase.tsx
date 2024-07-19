@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import {TextStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import {PositionProp, PositionUtil} from '@core/components/common';
+import Label from '@core/components/labelbase/Label';
 
 export type ButtonBaseProps = TouchableOpacityProps &
   PositionProp & {
@@ -17,6 +18,7 @@ const ButtonBase: FC<ButtonBaseProps> = ({
   onPress,
   style,
   position,
+  label,
   ...rest
 }) => {
   const positionStyle = useMemo(() => {
@@ -25,7 +27,11 @@ const ButtonBase: FC<ButtonBaseProps> = ({
   const finalStyles = useMemo(() => {
     return StyleSheet.flatten([styles.common, style, positionStyle]);
   }, [style, positionStyle]);
-  return <TouchableOpacity style={finalStyles} onPress={onPress} {...rest} />;
+  return (
+    <TouchableOpacity style={finalStyles} onPress={onPress} {...rest}>
+      {!!label ? <Label.T text={label} /> : null}
+    </TouchableOpacity>
+  );
 };
 
 export default memo(ButtonBase);
@@ -37,8 +43,8 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 5,
     // width: '100%',
-
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    minWidth: '30%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

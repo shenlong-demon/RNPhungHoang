@@ -37,4 +37,8 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
   ): Promise<Dto<Operation | null>> {
     return this.operationService.assignCustomer(operation, customer);
   }
+
+  async receipt(operation: Operation): Promise<Dto<Operation | null>> {
+    return this.operationService.receipt(operation);
+  }
 }
