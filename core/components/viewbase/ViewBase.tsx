@@ -36,6 +36,6 @@ export default memo(ViewBase);
 const styles = StyleSheet.create({
   common: {
     // flex: 1,
-    padding: 10,
+    // padding: 5,
   },
 });

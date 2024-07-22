@@ -3,12 +3,6 @@ import {StyleSheet} from 'react-native';
 import View from '@core/components/viewbase/View';
 import Button from '@core/components/buttonbase/Button';
 import Label from '@core/components/labelbase/Label';
-import {
-  Operation,
-  useOperationContext,
-  useOperationFacade,
-} from '@src/business';
-import {Dto} from '@core/common';
 
 type Props = {
   onReceipt: () => void;

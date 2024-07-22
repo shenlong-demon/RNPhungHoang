@@ -1,5 +1,5 @@
 import {OperationFacade} from '@src/business/facade';
-import {Dto} from '@core/common';
+import {CONSTANTS, Dto} from '@core/common';
 import {
   Customer,
   Operation,
@@ -12,6 +12,7 @@ import React from 'react';
 import {Route} from '@src/screens/portrait/Route';
 import {useNavigation} from '@core/navigation';
 import {CreateOperationPopup} from '@src/screens/portrait/components/popup';
+import {File} from '@core/models';
 
 type OperationFacadeResult = {
   openCreateOperationPopup: () => void;
@@ -20,6 +21,7 @@ type OperationFacadeResult = {
   getOperation: (id: number) => Promise<Dto<Operation | null>>;
   enterOperation: (id: number) => Promise<Dto<Operation | null>>;
   booking: (menuItem: Product) => Promise<void>;
+  addIssue: (note: string, image?: File) => Promise<void>;
   assignCustomer: (customer: Customer) => Promise<Dto<Operation | null>>;
   receipt: () => Promise<Dto<Operation | null>>;
 };
@@ -112,6 +114,22 @@ export const useOperationFacade = (): OperationFacadeResult => {
     }
   };
 
+  const addIssue = async (note: string, image?: File): Promise<void> => {
+    if (operation) {
+      const dto: Dto<Operation | null> = await facade.addIssue(
+        operation,
+        {
+          appKey: CONSTANTS.STR_EMPTY,
+          note,
+        },
+        image,
+      );
+      if (dto.next()) {
+        setOperation(dto.data as Operation);
+      }
+    }
+  };
+
   return {
     openCreateOperationPopup,
     createOperation,
@@ -121,5 +139,6 @@ export const useOperationFacade = (): OperationFacadeResult => {
     booking,
     assignCustomer,
     receipt,
+    addIssue,
   };
 };

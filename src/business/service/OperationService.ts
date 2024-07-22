@@ -1,5 +1,10 @@
 import {BaseService, Dto} from '@core/common';
-import {Customer, Operation, Product} from '@src/business';
+import {
+  CreateOperationIssueRequest,
+  Customer,
+  Operation,
+  Product,
+} from '@src/business';
 import {OperationRepo} from '@src/business/repository';
 
 export class OperationService extends BaseService<OperationService> {
@@ -43,5 +48,12 @@ export class OperationService extends BaseService<OperationService> {
 
   async receipt(operation: Operation): Promise<Dto<Operation | null>> {
     return this.operationRepo.receipt(operation.id);
+  }
+
+  async createIssue(
+    operation: Operation,
+    req: CreateOperationIssueRequest,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationRepo.createIssue(operation.id, req);
   }
 }

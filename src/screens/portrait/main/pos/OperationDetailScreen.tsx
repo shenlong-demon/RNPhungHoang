@@ -1,5 +1,4 @@
 import React, {FC, memo} from 'react';
-import {View} from '@core/components';
 import {StyleSheet} from 'react-native';
 import {
   useOperationContext,
@@ -9,23 +8,20 @@ import {
 import {
   BookingListView,
   IssueListView,
+  OperationTabActionView,
 } from '@src/screens/portrait/main/pos/parts';
-import Button from '@core/components/buttonbase/Button';
 import {useNavigation} from '@core/navigation';
 import {Route} from '@src/screens/portrait/Route';
 import {OperationMenuPopup} from '@src/screens/portrait/components/popup';
+import View from '@core/components/viewbase/View';
 
 type Props = {};
 const ACTION_MENU: string = 'ACTION_MENU';
 export const OperationDetailScreen: FC<Props> = memo(({}) => {
-  const {operation} = useOperationContext();
+  const {operation, operationActionScreenIndex} = useOperationContext();
   const {navigate} = useNavigation();
   const {openPopup, closePopup} = usePopupContext();
   const facade = useOperationFacade();
-
-  const openMenu = (): void => {
-    navigate(Route.MENU_SCREEN);
-  };
 
   const openAssignCustomer = (): void => {
     navigate(Route.ASSIGN_CUSTOMER);
@@ -49,20 +45,13 @@ export const OperationDetailScreen: FC<Props> = memo(({}) => {
   };
   return (
     <View.V style={styles.container}>
-      <View.V>
+      <View.V style={styles.operationTabs}>
+        <OperationTabActionView />
+      </View.V>
+      <View.V style={[styles.content]}>
+        <BookingListView />
         <IssueListView />
       </View.V>
-
-      <BookingListView />
-      <Button.FloatCircle
-        position={'bottom|right'}
-        onPress={openMenu}
-        onLongPress={openActionPopup}
-      />
-      <Button.FloatCircle
-        position={'center|bottom'}
-        onPress={openAssignCustomer}
-      />
     </View.V>
   );
 });
@@ -70,8 +59,14 @@ export const OperationDetailScreen: FC<Props> = memo(({}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
   },
-  listContainer: {
+
+  operationTabs: {
+    width: 40,
+  },
+  content: {
     flex: 1,
+    // backgroundColor: 'blue',
   },
 });

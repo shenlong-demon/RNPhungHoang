@@ -1,10 +1,19 @@
 import BaseFacade from '@core/common/models/BaseFacade';
-import {Dto} from '@core/common';
-import {Customer, Operation, Product} from '@src/business';
+import {Dto, Utility} from '@core/common';
+import {
+  CreateOperationIssueRequest,
+  Customer,
+  Operation,
+  Product,
+  UpdateFileService,
+} from '@src/business';
 import {OperationService} from '@src/business/service/OperationService';
+import {File} from '@core/models';
 
 export class OperationFacade extends BaseFacade<OperationFacade> {
   private operationService: OperationService = OperationService.shared();
+  private uploadFileService: UpdateFileService = UpdateFileService.shared();
+  private static readonly IMAGE_FOLDER: string = 'Operation';
 
   constructor() {
     super();
@@ -40,5 +49,27 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
 
   async receipt(operation: Operation): Promise<Dto<Operation | null>> {
     return this.operationService.receipt(operation);
+  }
+
+  async addIssue(
+    operation: Operation,
+    req: CreateOperationIssueRequest,
+    image?: File,
+  ): Promise<Dto<Operation | null>> {
+    const appKey: string = Utility.UUID();
+    const uploadDto: Dto<string | null> =
+      await this.uploadFileService.uploadImage(
+        OperationFacade.IMAGE_FOLDER,
+        image,
+        appKey,
+      );
+    if (uploadDto.next()) {
+      req.appKey = appKey;
+      req.image = uploadDto.data as string;
+      const dto: Dto<Operation | null> =
+        await this.operationService.createIssue(operation, req);
+      return dto;
+    }
+    return uploadDto.bypass();
   }
 }

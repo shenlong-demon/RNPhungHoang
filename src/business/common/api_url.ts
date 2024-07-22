@@ -49,5 +49,8 @@ const API_URL = {
   RECEIPT: (operationId: number): string => {
     return `${ENV.HOST}/operation/receipt/${operationId}`;
   },
+  CREATE_ISSUE: (operationId: number): string => {
+    return `${ENV.HOST}/operation/create-issue/${operationId}`;
+  },
 };
 export {API_URL};
