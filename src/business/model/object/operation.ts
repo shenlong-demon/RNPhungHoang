@@ -5,6 +5,7 @@ export type Operation = BaseModel & {
   name?: string;
   phone?: string;
   note?: string;
+  discount: number;
   customer?: Customer;
   customerId?: number;
   bookings: Booking[];

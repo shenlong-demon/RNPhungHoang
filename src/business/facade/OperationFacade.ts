@@ -2,10 +2,13 @@ import BaseFacade from '@core/common/models/BaseFacade';
 import {Dto, Utility} from '@core/common';
 import {
   AddOperationServiceRequest,
+  CancelBookingRequest,
   CreateOperationIssueRequest,
   Customer,
   Operation,
   Product,
+  SetBookingNoteRequest,
+  SetOperationDiscountRequest,
   UpdateFileService,
 } from '@src/business';
 import {OperationService} from '@src/business/service/OperationService';
@@ -79,5 +82,25 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
     req: AddOperationServiceRequest,
   ): Promise<Dto<Operation | null>> {
     return this.operationService.addService(operation, req);
+  }
+  async cancelBooking(
+    operation: Operation,
+    req: CancelBookingRequest,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationService.cancelBooking(operation, req);
+  }
+
+  async setBookingNote(
+    operation: Operation,
+    req: SetBookingNoteRequest,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationService.setBookingNote(operation, req);
+  }
+
+  async setOperationDiscount(
+    operation: Operation,
+    req: SetOperationDiscountRequest,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationService.setOperationDiscount(operation, req);
   }
 }

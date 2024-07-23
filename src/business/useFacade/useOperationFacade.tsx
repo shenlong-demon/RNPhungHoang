@@ -22,9 +22,16 @@ type OperationFacadeResult = {
   enterOperation: (id: number) => Promise<Dto<Operation | null>>;
   booking: (menuItem: Product) => Promise<void>;
   addIssue: (note: string, image?: File) => Promise<void>;
-  addService: (name: string, price: number) => Promise<void>;
+  addService: (
+    name: string,
+    price: number,
+    note: string,
+  ) => Promise<Dto<Operation | null>>;
   assignCustomer: (customer: Customer) => Promise<Dto<Operation | null>>;
   receipt: () => Promise<Dto<Operation | null>>;
+  cancelBooking: () => Promise<Dto<Operation | null>>;
+  setBookingNote: (newNote: string) => Promise<Dto<Operation | null>>;
+  setOperationDiscount: (discount: number) => Promise<Dto<Operation | null>>;
 };
 const CREATE_POPUP_ID: string = 'CREATE_POPUP_ID';
 
@@ -32,7 +39,8 @@ export const useOperationFacade = (): OperationFacadeResult => {
   const facade: OperationFacade = OperationFacade.shared();
   const {openPopup, closeAllPopups} = usePopupContext();
   const {navigate} = useNavigation();
-  const {setOperation, operation} = useOperationContext();
+  const {setOperation, operation, selectedBooking, setSelectedBooking} =
+    useOperationContext();
   const {updateOperationInList} = useOperationListContext();
 
   const getOperations = async (offset: number): Promise<Dto<Operation[]>> => {
@@ -130,16 +138,71 @@ export const useOperationFacade = (): OperationFacadeResult => {
       }
     }
   };
-  const addService = async (name: string, price: number): Promise<void> => {
+  const addService = async (
+    name: string,
+    price: number,
+    note: string,
+  ): Promise<Dto<Operation | null>> => {
     if (operation) {
       const dto: Dto<Operation | null> = await facade.addService(operation, {
         name,
         price,
+        note,
       });
       if (dto.next()) {
         setOperation(dto.data as Operation);
       }
+      return dto;
     }
+    return Dto.default();
+  };
+  const cancelBooking = async (): Promise<Dto<Operation | null>> => {
+    if (!!operation && !!selectedBooking) {
+      const dto: Dto<Operation | null> = await facade.cancelBooking(operation, {
+        bookingId: selectedBooking.id,
+      });
+      if (dto.next()) {
+        setOperation(dto.data as Operation);
+        setSelectedBooking(null);
+      }
+      return dto;
+    }
+    return Dto.default();
+  };
+  const setBookingNote = async (
+    newNote: string,
+  ): Promise<Dto<Operation | null>> => {
+    if (!!operation && !!selectedBooking) {
+      const dto: Dto<Operation | null> = await facade.setBookingNote(
+        operation,
+        {
+          bookingId: selectedBooking.id,
+          note: newNote,
+        },
+      );
+      if (dto.next()) {
+        setOperation(dto.data as Operation);
+      }
+      return dto;
+    }
+    return Dto.default();
+  };
+  const setOperationDiscount = async (
+    discount: number,
+  ): Promise<Dto<Operation | null>> => {
+    if (!!operation) {
+      const dto: Dto<Operation | null> = await facade.setOperationDiscount(
+        operation,
+        {
+          discount,
+        },
+      );
+      if (dto.next()) {
+        setOperation(dto.data as Operation);
+      }
+      return dto;
+    }
+    return Dto.default();
   };
 
   return {
@@ -153,5 +216,8 @@ export const useOperationFacade = (): OperationFacadeResult => {
     receipt,
     addIssue,
     addService,
+    cancelBooking,
+    setBookingNote,
+    setOperationDiscount,
   };
 };

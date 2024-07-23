@@ -14,7 +14,7 @@ type Props = {
 export const BookingItemView: FC<Props> = memo(
   ({item, index, onPress, onLongPress, isSelected}: Props) => {
     return (
-      <View.Row
+      <View.V
         style={[
           styles.container,
           {
@@ -27,17 +27,24 @@ export const BookingItemView: FC<Props> = memo(
         ]}
         onPress={onPress}
         onLongPress={onLongPress}>
-        <Label.T style={styles.index} text={`${index + 1}`} />
-        <Label.T style={styles.name} text={item.name} />
-        <Label.T text={`${item.quantity}`} />
-        <Label.T style={styles.price} text={`${item.price * 10000000}`} />
-      </View.Row>
+        <View.Row>
+          <Label.T style={styles.index} text={`${index + 1}`} />
+          <Label.T style={styles.name} text={item.name} />
+          <Label.T text={`${item.quantity}`} />
+          <Label.T style={styles.price} text={`${item.price * 10000000}`} />
+        </View.Row>
+        {!!item.note ? (
+          <View.V>
+            <Label.T text={item.note} />
+          </View.V>
+        ) : null}
+      </View.V>
     );
   },
 );
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-evenly',
   },
   name: {

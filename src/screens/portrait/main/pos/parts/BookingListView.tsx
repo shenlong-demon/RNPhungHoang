@@ -1,6 +1,7 @@
 import React, {FC, memo, useCallback, useMemo} from 'react';
 import {
   Booking,
+  Operation,
   OPERATION_ACTION_SCREEN,
   useOperationContext,
   useOperationFacade,
@@ -14,6 +15,7 @@ import {Route} from '@src/screens/portrait/Route';
 import {useNavigation} from '@core/navigation';
 import View from '@core/components/viewbase/View';
 import {AddServicePopup} from '@src/screens/portrait/components/popup';
+import {Dto} from '@core/common';
 
 type Props = {};
 export const BookingListView: FC<Props> = memo(({}: Props) => {
@@ -26,7 +28,7 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
   } = useOperationContext();
   const {navigate} = useNavigation();
   const {openPopup, closeAllPopups} = usePopupContext();
-  const {addService} = useOperationFacade();
+  const facade = useOperationFacade();
   const bookingItems = useMemo((): Booking[] => {
     return operation?.bookings || [];
   }, [operation]);
@@ -55,6 +57,22 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
     [setSelectedBooking, selectedBooking],
   );
 
+  const addService = async (
+    name: string,
+    price: number,
+    note: string,
+  ): Promise<void> => {
+    const dto: Dto<Operation | null> = await facade.addService(
+      name,
+      price,
+      note,
+    );
+    if (dto.next()) {
+      setSelectedBooking(null);
+      setOperationActionScreenIndex(OPERATION_ACTION_SCREEN.BOOKING_LIST);
+    }
+    closeAllPopups();
+  };
   const openAddServicePopup = (): void => {
     openPopup(
       'AddService',
@@ -76,8 +94,16 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
         renderItem={renderBookingListItem}
       />
       <View.Row style={{justifyContent: 'space-between'}}>
-        <Button.B label={'Add service'} onPress={openAddServicePopup} />
-        <Button.B label={'Add product'} onPress={openMenu} />
+        <Button.B
+          style={styles.button}
+          label={'Add service'}
+          onPress={openAddServicePopup}
+        />
+        <Button.B
+          style={styles.button}
+          label={'Add product'}
+          onPress={openMenu}
+        />
       </View.Row>
     </View.V>
   );
@@ -95,5 +121,10 @@ const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
     // backgroundColor: 'green',
+  },
+  button: {
+    flex: 1,
+    marginLeft: 5,
+    marginRight: 5,
   },
 });

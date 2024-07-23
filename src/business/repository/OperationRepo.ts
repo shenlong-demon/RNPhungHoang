@@ -2,7 +2,9 @@ import {ApiResult, BaseRepo, Dto} from '@core/common';
 import {
   AddOperationServiceRequest,
   API_URL,
+  CancelBookingRequest,
   CreateOperationIssueRequest,
+  SetOperationDiscountRequest,
 } from '@src/business';
 
 export class OperationRepo extends BaseRepo<OperationRepo> {
@@ -75,6 +77,39 @@ export class OperationRepo extends BaseRepo<OperationRepo> {
   ): Promise<Dto<any | null>> {
     const api: ApiResult = await this.api.put(
       API_URL.ADD_SERVICE(operationId),
+      req,
+    );
+    return this.populate(api);
+  }
+
+  async cancelBooking(
+    operationId: number,
+    req: CancelBookingRequest,
+  ): Promise<Dto<any | null>> {
+    const api: ApiResult = await this.api.put(
+      API_URL.CANCEL_BOOKING(operationId),
+      req,
+    );
+    return this.populate(api);
+  }
+
+  async setBookingNote(
+    operationId: number,
+    req: CancelBookingRequest,
+  ): Promise<Dto<any | null>> {
+    const api: ApiResult = await this.api.put(
+      API_URL.SET_BOOKING_NOTE(operationId),
+      req,
+    );
+    return this.populate(api);
+  }
+
+  async setOperationDiscount(
+    operationId: number,
+    req: SetOperationDiscountRequest,
+  ): Promise<Dto<any | null>> {
+    const api: ApiResult = await this.api.put(
+      API_URL.SET_OPERATION_DISCOUNT(operationId),
       req,
     );
     return this.populate(api);

@@ -1,10 +1,12 @@
 import {BaseService, Dto} from '@core/common';
 import {
   AddOperationServiceRequest,
+  CancelBookingRequest,
   CreateOperationIssueRequest,
   Customer,
   Operation,
   Product,
+  SetOperationDiscountRequest,
 } from '@src/business';
 import {OperationRepo} from '@src/business/repository';
 
@@ -63,5 +65,26 @@ export class OperationService extends BaseService<OperationService> {
     req: AddOperationServiceRequest,
   ): Promise<Dto<Operation | null>> {
     return this.operationRepo.addService(operation.id, req);
+  }
+
+  async cancelBooking(
+    operation: Operation,
+    req: CancelBookingRequest,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationRepo.cancelBooking(operation.id, req);
+  }
+
+  async setBookingNote(
+    operation: Operation,
+    req: CancelBookingRequest,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationRepo.setBookingNote(operation.id, req);
+  }
+
+  async setOperationDiscount(
+    operation: Operation,
+    req: SetOperationDiscountRequest,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationRepo.setOperationDiscount(operation.id, req);
   }
 }

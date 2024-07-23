@@ -55,5 +55,14 @@ const API_URL = {
   ADD_SERVICE: (operationId: number): string => {
     return `${ENV.HOST}/operation/add-service/${operationId}`;
   },
+  CANCEL_BOOKING: (operationId: number): string => {
+    return `${ENV.HOST}/operation/cancel-booking/${operationId}`;
+  },
+  SET_BOOKING_NOTE: (operationId: number): string => {
+    return `${ENV.HOST}/operation/set-booking-note/${operationId}`;
+  },
+  SET_OPERATION_DISCOUNT: (operationId: number): string => {
+    return `${ENV.HOST}/operation/set-operation-discount/${operationId}`;
+  },
 };
 export {API_URL};
