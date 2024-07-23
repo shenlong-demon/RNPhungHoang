@@ -8,6 +8,8 @@ import {
 import {
   BookingListView,
   IssueListView,
+  OperationActionsView,
+  OperationInfoView,
   OperationTabActionView,
 } from '@src/screens/portrait/main/pos/parts';
 import {useNavigation} from '@core/navigation';
@@ -51,6 +53,8 @@ export const OperationDetailScreen: FC<Props> = memo(({}) => {
       <View.V style={[styles.content]}>
         <BookingListView />
         <IssueListView />
+        <OperationActionsView />
+        <OperationInfoView />
       </View.V>
     </View.V>
   );

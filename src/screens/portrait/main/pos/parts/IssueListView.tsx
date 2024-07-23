@@ -1,6 +1,5 @@
 import React, {FC, memo} from 'react';
 import {StyleSheet} from 'react-native';
-import {View} from '@core/components';
 import {
   OPERATION_ACTION_SCREEN,
   useOperationContext,
@@ -10,6 +9,7 @@ import {
 import Button from '@core/components/buttonbase/Button';
 import {UpdateOperationIssuePopup} from '@src/screens/portrait/components/popup';
 import {File} from '@core/models';
+import View from "@core/components/viewbase/View";
 
 type Props = {};
 export const IssueListView: FC<Props> = memo(({}: Props) => {
@@ -32,7 +32,9 @@ export const IssueListView: FC<Props> = memo(({}: Props) => {
           ? styles.fullContainer
           : styles.hideContainer
       }>
-      <Button.FloatCircle position={'bottom|right'} onPress={openIssuePopup} />
+      <View.Row style={styles.actions}>
+        <Button.B label={'Add Issue'} onPress={openIssuePopup} />
+      </View.Row>
     </View.V>
   );
 });
@@ -43,5 +45,11 @@ const styles = StyleSheet.create({
   hideContainer: {
     flex: 0,
   },
-  listContainer: {flex: 1},
+  actions: {
+    width: '100%',
+    // backgroundColor: 'red',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
 });

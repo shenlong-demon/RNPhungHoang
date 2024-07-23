@@ -39,7 +39,7 @@ export default memo(ButtonBase);
 const styles = StyleSheet.create({
   common: {
     width: 60,
-    height: 60,
+    height: 48,
     borderWidth: 0.5,
     borderRadius: 5,
     // width: '100%',

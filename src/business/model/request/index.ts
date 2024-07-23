@@ -5,3 +5,4 @@ export * from './CreateCustomerRequest';
 export * from './UpdateCustomerRequest';
 export * from './CustomerFilterRequest';
 export * from './CreateOperationIssueRequest';
+export * from './AddOperationServiceRequest';

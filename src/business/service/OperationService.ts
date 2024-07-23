@@ -1,5 +1,6 @@
 import {BaseService, Dto} from '@core/common';
 import {
+  AddOperationServiceRequest,
   CreateOperationIssueRequest,
   Customer,
   Operation,
@@ -55,5 +56,12 @@ export class OperationService extends BaseService<OperationService> {
     req: CreateOperationIssueRequest,
   ): Promise<Dto<Operation | null>> {
     return this.operationRepo.createIssue(operation.id, req);
+  }
+
+  async addService(
+    operation: Operation,
+    req: AddOperationServiceRequest,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationRepo.addService(operation.id, req);
   }
 }

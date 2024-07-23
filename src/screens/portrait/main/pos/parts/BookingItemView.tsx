@@ -8,10 +8,11 @@ type Props = {
   item: Booking;
   index: number;
   onPress: () => Promise<void>;
+  onLongPress: () => Promise<void>;
   isSelected: boolean;
 };
 export const BookingItemView: FC<Props> = memo(
-  ({item, index, onPress, isSelected}: Props) => {
+  ({item, index, onPress, onLongPress, isSelected}: Props) => {
     return (
       <View.Row
         style={[
@@ -24,7 +25,8 @@ export const BookingItemView: FC<Props> = memo(
               : 'white',
           },
         ]}
-        onPress={onPress}>
+        onPress={onPress}
+        onLongPress={onLongPress}>
         <Label.T style={styles.index} text={`${index + 1}`} />
         <Label.T style={styles.name} text={item.name} />
         <Label.T text={`${item.quantity}`} />
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
   },
   name: {
     flex: 0.6,
-    paddingLeft: 10
+    paddingLeft: 10,
   },
   index: {
     // backgroundColor: 'red',

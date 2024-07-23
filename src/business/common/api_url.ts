@@ -52,5 +52,8 @@ const API_URL = {
   CREATE_ISSUE: (operationId: number): string => {
     return `${ENV.HOST}/operation/create-issue/${operationId}`;
   },
+  ADD_SERVICE: (operationId: number): string => {
+    return `${ENV.HOST}/operation/add-service/${operationId}`;
+  },
 };
 export {API_URL};

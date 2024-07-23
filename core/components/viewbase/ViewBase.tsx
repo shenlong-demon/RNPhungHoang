@@ -1,29 +1,28 @@
-import {FC, memo, useMemo} from 'react';
-import {
-  StyleProp,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  ViewProps,
-  ViewStyle,
-} from 'react-native';
+import {FC, memo} from 'react';
+import {StyleSheet, TouchableOpacity, View, ViewProps} from 'react-native';
 import {PositionProp, PositionUtil} from '@core/components/common';
 
 export type ViewBaseProps = ViewProps &
   PositionProp & {
     onPress?: () => void;
+    onLongPress?: () => void;
   };
-const ViewBase: FC<ViewBaseProps> = ({onPress, style, position, children}) => {
-  const positionStyle = useMemo((): StyleProp<ViewStyle> => {
-    return PositionUtil.positionStyle(position);
-  }, [position]);
+const ViewBase: FC<ViewBaseProps> = ({
+  onPress,
+  onLongPress,
+  style,
+  position,
+  children,
+}) => {
+  const positionStyle = PositionUtil.positionStyle(position);
 
-  const finalStyles = useMemo(() => {
-    return StyleSheet.flatten([styles.common, style, positionStyle]);
-  }, [style]);
+  const finalStyles = StyleSheet.flatten([styles.common, style, positionStyle]);
 
-  return !!onPress ? (
-    <TouchableOpacity style={finalStyles} onPress={onPress}>
+  return !!onPress || !!onLongPress ? (
+    <TouchableOpacity
+      style={finalStyles}
+      onPress={onPress}
+      onLongPress={onLongPress}>
       {children}
     </TouchableOpacity>
   ) : (

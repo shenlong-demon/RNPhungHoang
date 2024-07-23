@@ -1,5 +1,9 @@
 import {ApiResult, BaseRepo, Dto} from '@core/common';
-import {API_URL, CreateOperationIssueRequest} from '@src/business';
+import {
+  AddOperationServiceRequest,
+  API_URL,
+  CreateOperationIssueRequest,
+} from '@src/business';
 
 export class OperationRepo extends BaseRepo<OperationRepo> {
   constructor() {
@@ -60,6 +64,17 @@ export class OperationRepo extends BaseRepo<OperationRepo> {
   ): Promise<Dto<any | null>> {
     const api: ApiResult = await this.api.put(
       API_URL.CREATE_ISSUE(operationId),
+      req,
+    );
+    return this.populate(api);
+  }
+
+  async addService(
+    operationId: number,
+    req: AddOperationServiceRequest,
+  ): Promise<Dto<any | null>> {
+    const api: ApiResult = await this.api.put(
+      API_URL.ADD_SERVICE(operationId),
       req,
     );
     return this.populate(api);

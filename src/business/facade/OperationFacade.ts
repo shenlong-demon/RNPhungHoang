@@ -1,6 +1,7 @@
 import BaseFacade from '@core/common/models/BaseFacade';
 import {Dto, Utility} from '@core/common';
 import {
+  AddOperationServiceRequest,
   CreateOperationIssueRequest,
   Customer,
   Operation,
@@ -71,5 +72,12 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
       return dto;
     }
     return uploadDto.bypass();
+  }
+
+  async addService(
+    operation: Operation,
+    req: AddOperationServiceRequest,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationService.addService(operation, req);
   }
 }

@@ -6,3 +6,4 @@ export * from './group';
 export * from './customer';
 export * from './operation';
 export * from './Booking';
+export * from './Issue';

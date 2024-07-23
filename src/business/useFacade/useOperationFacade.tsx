@@ -22,6 +22,7 @@ type OperationFacadeResult = {
   enterOperation: (id: number) => Promise<Dto<Operation | null>>;
   booking: (menuItem: Product) => Promise<void>;
   addIssue: (note: string, image?: File) => Promise<void>;
+  addService: (name: string, price: number) => Promise<void>;
   assignCustomer: (customer: Customer) => Promise<Dto<Operation | null>>;
   receipt: () => Promise<Dto<Operation | null>>;
 };
@@ -129,6 +130,17 @@ export const useOperationFacade = (): OperationFacadeResult => {
       }
     }
   };
+  const addService = async (name: string, price: number): Promise<void> => {
+    if (operation) {
+      const dto: Dto<Operation | null> = await facade.addService(operation, {
+        name,
+        price,
+      });
+      if (dto.next()) {
+        setOperation(dto.data as Operation);
+      }
+    }
+  };
 
   return {
     openCreateOperationPopup,
@@ -140,5 +152,6 @@ export const useOperationFacade = (): OperationFacadeResult => {
     assignCustomer,
     receipt,
     addIssue,
+    addService,
   };
 };
