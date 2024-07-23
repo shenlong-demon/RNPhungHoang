@@ -19,5 +19,7 @@ yarn add @react-navigation/native@6.1.6 \
  axios@1.6.8 \
  rn-fetch-blob@0.12.0 \
  buffer@6.0.3 \
- react-native-fast-image@8.6.3
+ react-native-fast-image@8.6.3 \
+ react-native-tcp-socket@6.2.0
+
 

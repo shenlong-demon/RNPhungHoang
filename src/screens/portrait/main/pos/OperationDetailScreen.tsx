@@ -1,6 +1,7 @@
 import React, {FC, memo} from 'react';
 import {StyleSheet} from 'react-native';
 import {
+  OPERATION_ACTION_SCREEN,
   useOperationContext,
   useOperationFacade,
   usePopupContext,
@@ -51,10 +52,15 @@ export const OperationDetailScreen: FC<Props> = memo(({}) => {
         <OperationTabActionView />
       </View.V>
       <View.V style={[styles.content]}>
-        <BookingListView />
-        <IssueListView />
-        <OperationActionsView />
-        <OperationInfoView />
+        {operationActionScreenIndex === OPERATION_ACTION_SCREEN.BOOKING_LIST ? (
+          <BookingListView />
+        ) : operationActionScreenIndex === OPERATION_ACTION_SCREEN.ISSUE ? (
+          <IssueListView />
+        ) : operationActionScreenIndex === OPERATION_ACTION_SCREEN.ACTION ? (
+          <OperationActionsView />
+        ) : (
+          <OperationInfoView />
+        )}
       </View.V>
     </View.V>
   );

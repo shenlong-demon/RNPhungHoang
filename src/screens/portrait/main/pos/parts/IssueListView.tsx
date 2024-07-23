@@ -1,7 +1,7 @@
-import React, {FC, memo} from 'react';
+import React, {FC, memo, useCallback, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {
-  OPERATION_ACTION_SCREEN,
+  Issue,
   useOperationContext,
   useOperationFacade,
   usePopupContext,
@@ -9,13 +9,19 @@ import {
 import Button from '@core/components/buttonbase/Button';
 import {UpdateOperationIssuePopup} from '@src/screens/portrait/components/popup';
 import {File} from '@core/models';
-import View from "@core/components/viewbase/View";
+import View from '@core/components/viewbase/View';
+import {FlatList} from '@core/components';
+import Label from '@core/components/labelbase/Label';
+import {CONSTANTS} from '@core/common';
 
 type Props = {};
 export const IssueListView: FC<Props> = memo(({}: Props) => {
-  const {operationActionScreenIndex} = useOperationContext();
+  const {operation} = useOperationContext();
   const {addIssue} = useOperationFacade();
   const {openPopup, closeAllPopups} = usePopupContext();
+  const issues = useMemo((): Issue[] => {
+    return operation?.issues || [];
+  }, [operation]);
   const onOk = (note: string, image?: File) => {
     addIssue(note, image);
   };
@@ -25,13 +31,20 @@ export const IssueListView: FC<Props> = memo(({}: Props) => {
       <UpdateOperationIssuePopup onCancel={closeAllPopups} onOk={onOk} />,
     );
   };
+
+  const renderIssueListItem = useCallback(
+    (data: {item: Issue; index: number}): any => {
+      return <Label.T text={data.item.note || CONSTANTS.STR_EMPTY} />;
+    },
+    [],
+  );
   return (
-    <View.V
-      style={
-        operationActionScreenIndex === OPERATION_ACTION_SCREEN.ISSUE
-          ? styles.fullContainer
-          : styles.hideContainer
-      }>
+    <View.V style={styles.container}>
+      <FlatList.L
+        style={styles.list}
+        data={issues}
+        renderItem={renderIssueListItem}
+      />
       <View.Row style={styles.actions}>
         <Button.B label={'Add Issue'} onPress={openIssuePopup} />
       </View.Row>
@@ -39,11 +52,12 @@ export const IssueListView: FC<Props> = memo(({}: Props) => {
   );
 });
 const styles = StyleSheet.create({
-  fullContainer: {
+  container: {
     flex: 1,
   },
-  hideContainer: {
-    flex: 0,
+
+  list: {
+    flex: 1,
   },
   actions: {
     width: '100%',
