@@ -35,8 +35,8 @@ export const CreateOperationPopup: FC<Props> = memo(
           autoFocus={true}
         />
         <View.Row>
-          <Button.Cancel style={{marginTop: 10}} onPress={onCancel} />
-          <Form.SubmitButton style={{marginTop: 10}} />
+          <Button.Cancel onPress={onCancel} />
+          <Form.SubmitButton />
         </View.Row>
       </Form.View>
     );
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   container: {
     // backgroundColor: 'yellow',
     justifyContent: 'center',
-    flex: 1,
-    width: '100%',
+    // flex: 1,
+    // width: '800%',
   },
 });

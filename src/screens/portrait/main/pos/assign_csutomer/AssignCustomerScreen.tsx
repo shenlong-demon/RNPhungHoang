@@ -1,13 +1,7 @@
-import {FC, memo, useMemo} from 'react';
+import {FC, memo} from 'react';
 import View from '@core/components/viewbase/View';
 import {StyleSheet} from 'react-native';
-import {
-  Customer,
-  Operation,
-  STATUS,
-  useOperationContext,
-  useOperationFacade,
-} from '@src/business';
+import {Customer, Operation, STATUS, useOperationFacade} from '@src/business';
 import {CustomerListView} from '@src/screens/portrait/main/customer/parts';
 import {Dto} from '@core/common';
 import {useNavigation} from '@core/navigation';

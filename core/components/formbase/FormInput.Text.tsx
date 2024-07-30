@@ -22,6 +22,7 @@ export const FormInputText: FC<Props> = memo(
     name,
     rules,
     defaultValue,
+    multiline,
     // label,
     style,
     containerStyle,
@@ -42,6 +43,11 @@ export const FormInputText: FC<Props> = memo(
       : CONSTANTS.STR_EMPTY;
     const textStyles = StyleSheet.flatten([
       styles.common,
+      multiline
+        ? {
+            marginTop: 5,
+          }
+        : {},
       style,
       hasError ? {borderColor: 'red'} : {},
     ]);
@@ -55,6 +61,7 @@ export const FormInputText: FC<Props> = memo(
         )}
         <Input.T
           {...rest}
+          multiline={multiline}
           style={textStyles}
           onChangeText={onChange}
           onBlur={onBlur}

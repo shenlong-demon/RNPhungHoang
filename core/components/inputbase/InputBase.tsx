@@ -1,18 +1,14 @@
-import React, {FC, memo, useMemo} from 'react';
+import React, {FC, memo} from 'react';
 import {StyleSheet, TextInput, TextInputProps} from 'react-native';
 
 export type InputBaseProps = {} & TextInputProps;
 export const InputBase: FC<InputBaseProps> = memo(
   ({style, multiline, ...rest}) => {
-    const finalStyles = useMemo(
-      () =>
-        StyleSheet.flatten([
-          styles.common,
-          multiline ? styles.multiLine : {},
-          style,
-        ]),
-      [style, multiline],
-    );
+    const finalStyles = StyleSheet.flatten([
+      styles.common,
+      multiline ? styles.multiLine : {},
+      style,
+    ]);
 
     return <TextInput {...rest} multiline={multiline} style={finalStyles} />;
   },
@@ -27,11 +23,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     // textAlignVertical: 'bottom',
     // verticalAlign: 'bottom',
-    // minWidth: 200,
+    minWidth: '70%',
     paddingBottom: -10,
     width: '100%',
   },
   multiLine: {
     borderWidth: 1,
+    marginTop: 10,
   },
 });

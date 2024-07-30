@@ -75,9 +75,7 @@ const styles = StyleSheet.create({
   container: {
     // backgroundColor: 'yellow',
     justifyContent: 'center',
-    flex: 1,
-    width: '100%',
-    padding: 20,
+    // flex: 1,
   },
   note: {
     height: 300,

@@ -29,7 +29,7 @@ import {AssignCustomerScreen} from '@src/screens/portrait/main/pos/assign_csutom
 
 type Props = {};
 export const PortraitApp: FC<Props> = memo(({}) => {
-  const {user} = useAuthContext();
+  const {user, init} = useAuthContext();
 
   const POSStack = () => {
     return (
@@ -134,7 +134,9 @@ export const PortraitApp: FC<Props> = memo(({}) => {
     );
   };
 
-  return (
+  return !init ? (
+    <></>
+  ) : (
     <StackNavigator
       screens={[
         !user

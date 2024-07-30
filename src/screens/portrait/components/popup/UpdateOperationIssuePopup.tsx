@@ -51,11 +51,11 @@ export const UpdateOperationIssuePopup: FC<Props> = memo(
 );
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: 'yellow',
+    backgroundColor: 'yellow',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
-    width: '80%',
+    // flex: 1,
+    width: '100%',
   },
   image: {
     borderWidth: 1,
@@ -64,9 +64,9 @@ const styles = StyleSheet.create({
     height: 200,
   },
   note: {
-    height: 300,
+    height: 200,
     textAlign: 'justify',
     textAlignVertical: 'top',
-    width: '80%',
+    // width: '80%',
   },
 });

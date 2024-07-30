@@ -41,6 +41,7 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
     (data: {item: Booking; index: number}): any => {
       return (
         <BookingItemView
+          key={data.item.id}
           item={data.item}
           index={data.index}
           isSelected={data.item.appKey === selectedBooking?.appKey}

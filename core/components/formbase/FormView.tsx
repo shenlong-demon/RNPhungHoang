@@ -11,7 +11,7 @@ import {Logger} from '@core/common';
 
 type Props = ViewBaseProps & {
   onSubmit: (data: any) => void;
-  onError: (error: any, e: any) => void;
+  onError?: (error: any, e: any) => void;
 };
 export const FormView: FC<Props> = memo(
   ({onSubmit, onError, children, ...rest}: Props) => {
@@ -22,7 +22,7 @@ export const FormView: FC<Props> = memo(
 
     const onErrorForm: SubmitErrorHandler<any> = (errors, e) => {
       Logger.log(() => [`ViewForm onError errors`, errors]);
-      onError(errors, e);
+      !!onError && onError(errors, e);
     };
 
     const methods = useForm({mode: 'onChange'});

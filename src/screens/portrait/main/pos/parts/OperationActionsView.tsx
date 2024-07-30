@@ -16,9 +16,12 @@ import {
   YesNoPopup,
 } from '@src/screens/portrait/components/popup';
 import {Dto} from '@core/common';
+import {useNavigation} from '@core/navigation';
+import {Route} from '@src/screens/portrait/Route';
 
 type Props = {};
 export const OperationActionsView: FC<Props> = memo(({}: Props) => {
+  const {navigate} = useNavigation();
   const facade = useOperationFacade();
   const {selectedBooking, setOperationActionScreenIndex, operation} =
     useOperationContext();
@@ -32,6 +35,9 @@ export const OperationActionsView: FC<Props> = memo(({}: Props) => {
       setOperationActionScreenIndex(OPERATION_ACTION_SCREEN.OPERATION_INFO);
     }
     closeAllPopups();
+  };
+  const doAssignCustomer = async (): Promise<void> => {
+    navigate(Route.ASSIGN_CUSTOMER);
   };
   const doSetDiscount = async (): Promise<void> => {
     openPopup(
@@ -85,14 +91,35 @@ export const OperationActionsView: FC<Props> = memo(({}: Props) => {
         {!!selectedBooking ? (
           <>
             <Label.T text={`Actions for ${selectedBooking.name}`} />
-            <Button.B label={`Set note`} onPress={doSetBookingNote} />
-            <Button.B label={`Cancel`} onPress={doCancelBooking} />
+            <Button.B
+              style={styles.button}
+              label={`Set note`}
+              onPress={doSetBookingNote}
+            />
+            <Button.B
+              style={styles.button}
+              label={`Cancel`}
+              onPress={doCancelBooking}
+            />
           </>
         ) : null}
       </View.V>
       <View.V>
-        <Button.B label={'Set discount'} onPress={doSetDiscount} />
-        <Button.B label={'Receipt'} onPress={doReceipt} />
+        <Button.B
+          style={styles.button}
+          label={'Assign Customer'}
+          onPress={doAssignCustomer}
+        />
+        <Button.B
+          style={styles.button}
+          label={'Set Discount'}
+          onPress={doSetDiscount}
+        />
+        <Button.B
+          style={styles.buttonReceipt}
+          label={'Receipt'}
+          onPress={doReceipt}
+        />
       </View.V>
     </View.V>
   );
@@ -101,5 +128,12 @@ const styles = StyleSheet.create({
   container: {flex: 1},
   bookingActions: {
     flex: 1,
+  },
+  button: {
+    marginTop: 2,
+    marginBottom: 2,
+  },
+  buttonReceipt: {
+    marginTop: 20,
   },
 });

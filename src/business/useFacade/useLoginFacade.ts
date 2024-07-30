@@ -1,14 +1,10 @@
 import {LoginFacade} from '@src/business/facade';
-import {Dto, Fto} from '@core/common';
-import {
-  LoginModel,
-  useAuthContext,
-  useSettingContextFacade,
-} from '@src/business';
+import {Dto} from '@core/common';
+import {useAuthContext, useSettingContextFacade} from '@src/business';
 import {LoginResult} from '@src/business/model';
 
 type AuthFacadeResult = {
-  login: (username: string, password) => Promise<void>;
+  login: (username: string, password: string) => Promise<void>;
 };
 
 export const useAuthFacade = (): AuthFacadeResult => {

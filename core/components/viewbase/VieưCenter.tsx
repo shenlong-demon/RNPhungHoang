@@ -2,7 +2,7 @@ import {FC, memo} from 'react';
 import {StyleSheet} from 'react-native';
 import ViewBase, {ViewBaseProps} from '@core/components/viewbase/ViewBase';
 
-export const ViewRow: FC<ViewBaseProps> = memo((props: ViewBaseProps) => {
+export const ViewCenter: FC<ViewBaseProps> = memo((props: ViewBaseProps) => {
   const finalStyles = StyleSheet.flatten([styles.common, props.style]);
 
   return (
@@ -15,11 +15,8 @@ export const ViewRow: FC<ViewBaseProps> = memo((props: ViewBaseProps) => {
 const styles = StyleSheet.create({
   common: {
     width: '100%',
-    // flex: 1,
-    height: 60,
-    flexDirection: 'row',
+    justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
   },
 });

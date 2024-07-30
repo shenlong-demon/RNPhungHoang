@@ -1,24 +1,36 @@
 import React, {FC, memo, useState} from 'react';
-import {Button, Input, View} from '@core/components';
 import {useAuthFacade} from '@src/business';
+import Form from '@core/components/formbase/Form';
+import View from '@core/components/viewbase/View';
+import {StyleSheet} from 'react-native';
 
 type Props = {};
+type FormData = {
+  phone: string;
+  password: string;
+};
 export const LoginScreen: FC<Props> = memo(({}) => {
-  const [phone, setPhone] = useState<string>('0905690200');
-  const [password, setPassword] = useState<string>('123456');
   const {login} = useAuthFacade();
 
-  const submit = () => {
-    login(phone, password);
+  const handleSubmit = (data: FormData): void => {
+    login(data.phone, data.password);
   };
   return (
-    <View.V
-      position={'right'}
-      alignChildren={'center|vertical'}
-      styles={{backgroundColor: 'red'}}>
-      <Input.Text onChangeText={setPhone} />
-      <Input.Password onChangeText={setPassword} />
-      <Button.B label={'Login'} onPress={submit} />
-    </View.V>
+    <View.Center style={styles.container}>
+      <Form.View onSubmit={handleSubmit}>
+        <Form.Input name={'phone'} label="Phone" />
+        <Form.Input name={'password'} label="Password" />
+        <Form.SubmitButton style={styles.submit} label={'Login'} />
+      </Form.View>
+    </View.Center>
   );
+});
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  submit: {
+    alignSelf: 'center',
+  },
 });

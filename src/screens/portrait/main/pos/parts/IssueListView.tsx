@@ -24,10 +24,11 @@ export const IssueListView: FC<Props> = memo(({}: Props) => {
   }, [operation]);
   const onOk = (note: string, image?: File) => {
     addIssue(note, image);
+    closeAllPopups();
   };
   const openIssuePopup = (): void => {
     openPopup(
-      'UpdateOperationIssuePopup',
+      'Add Issue',
       <UpdateOperationIssuePopup onCancel={closeAllPopups} onOk={onOk} />,
     );
   };

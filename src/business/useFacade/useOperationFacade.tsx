@@ -33,7 +33,6 @@ type OperationFacadeResult = {
   setBookingNote: (newNote: string) => Promise<Dto<Operation | null>>;
   setOperationDiscount: (discount: number) => Promise<Dto<Operation | null>>;
 };
-const CREATE_POPUP_ID: string = 'CREATE_POPUP_ID';
 
 export const useOperationFacade = (): OperationFacadeResult => {
   const facade: OperationFacade = OperationFacade.shared();
@@ -94,7 +93,7 @@ export const useOperationFacade = (): OperationFacadeResult => {
   };
   const openCreateOperationPopup = (): void => {
     openPopup(
-      CREATE_POPUP_ID,
+      `Create Operation`,
       <CreateOperationPopup
         onCancel={closeAllPopups}
         onOk={async (op: Operation): Promise<void> => {

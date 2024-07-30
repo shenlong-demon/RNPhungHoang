@@ -37,6 +37,7 @@ export const CustomerListView: FC<Props> = memo(
     const renderCustomer = (data: {item: Customer; index: number}): any => {
       return (
         <CustomerListItemView
+          key={data.item.id}
           item={data.item}
           index={data.index}
           onPress={() => {

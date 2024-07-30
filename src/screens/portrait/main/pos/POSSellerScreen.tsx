@@ -29,6 +29,7 @@ export const POSSellerScreen: FC<Props> = memo(({}) => {
     (data: {item: Operation; index: number}) => {
       return (
         <OperationListItemView
+          key={data.item.id}
           onPress={() => enter(data.item)}
           operation={data.item}
           index={data.index}

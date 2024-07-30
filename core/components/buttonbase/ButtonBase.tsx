@@ -19,6 +19,7 @@ const ButtonBase: FC<ButtonBaseProps> = ({
   style,
   position,
   label,
+  textStyle,
   ...rest
 }) => {
   const positionStyle = useMemo(() => {
@@ -29,7 +30,7 @@ const ButtonBase: FC<ButtonBaseProps> = ({
   }, [style, positionStyle]);
   return (
     <TouchableOpacity style={finalStyles} onPress={onPress} {...rest}>
-      {!!label ? <Label.T text={label} /> : null}
+      {!!label ? <Label.T style={textStyle} text={label} /> : null}
     </TouchableOpacity>
   );
 };
@@ -38,7 +39,6 @@ export default memo(ButtonBase);
 
 const styles = StyleSheet.create({
   common: {
-    width: 60,
     height: 48,
     borderWidth: 0.5,
     borderRadius: 5,
@@ -46,5 +46,6 @@ const styles = StyleSheet.create({
     minWidth: '30%',
     justifyContent: 'center',
     alignItems: 'center',
+    alignContent: 'center',
   },
 });
