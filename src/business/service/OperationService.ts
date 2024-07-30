@@ -53,12 +53,10 @@ export class OperationService extends BaseService<OperationService> {
     return this.operationRepo.receipt(operation.id);
   }
 
-  async createIssue(
+  createIssue = async (
     operation: Operation,
     req: CreateOperationIssueRequest,
-  ): Promise<Dto<Operation | null>> {
-    return this.operationRepo.createIssue(operation.id, req);
-  }
+  ): Promise<Dto<Operation | null>> => this.operationRepo.createIssue(operation.id, req);
 
   async addService(
     operation: Operation,

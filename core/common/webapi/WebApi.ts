@@ -27,7 +27,7 @@ export class WebApi extends Singleton<WebApi> {
     try {
       const response: AxiosResponse = await this.api.post(url, data, {headers});
       res = this.handle(response);
-      Logger.log(() => [`POST ${url}`, headers, data, response, res]);
+      Logger.log(() => [`POST ${url} RETURN `, headers, data, response, res]);
     } catch (ex) {
       res = this.catchException(ex);
       Logger.log(() => [`POST ${url} ERROR`, headers, data, res]);
@@ -41,7 +41,7 @@ export class WebApi extends Singleton<WebApi> {
     try {
       const response: AxiosResponse = await this.api.put(url, data, {headers});
       res = this.handle(response);
-      Logger.log(() => [`PUT ${url}`, headers, data, response, res]);
+      Logger.log(() => [`PUT ${url} RETURN `, headers, data, response, res]);
     } catch (ex) {
       res = this.catchException(ex);
       Logger.log(() => [`PUT ${url} ERROR`, headers, data, res]);
@@ -56,7 +56,7 @@ export class WebApi extends Singleton<WebApi> {
     try {
       const response: AxiosResponse = await this.api.get(url, {headers});
       res = this.handle(response);
-      Logger.log(() => [`GET ${url}`, headers, response, res]);
+      Logger.log(() => [`GET ${url} RETURN `, headers, response, res]);
     } catch (ex) {
       res = this.catchException(ex);
       Logger.log(() => [`GET ${url} ERROR`, headers, res]);

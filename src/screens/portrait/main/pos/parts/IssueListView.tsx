@@ -13,6 +13,7 @@ import View from '@core/components/viewbase/View';
 import {FlatList} from '@core/components';
 import Label from '@core/components/labelbase/Label';
 import {CONSTANTS} from '@core/common';
+import {IssueListItemView} from '@src/screens/portrait/main/pos/parts/IssueListItemView';
 
 type Props = {};
 export const IssueListView: FC<Props> = memo(({}: Props) => {
@@ -35,7 +36,15 @@ export const IssueListView: FC<Props> = memo(({}: Props) => {
 
   const renderIssueListItem = useCallback(
     (data: {item: Issue; index: number}): any => {
-      return <Label.T text={data.item.note || CONSTANTS.STR_EMPTY} />;
+      return (
+        <IssueListItemView
+          item={data.item}
+          index={data.index}
+          onPress={async () => {}}
+          onLongPress={async () => {}}
+          isSelected={false}
+        />
+      );
     },
     [],
   );

@@ -12,8 +12,16 @@ type Props = {
 export const OperationListItemView: FC<Props> = memo(
   ({operation, index, onPress}: Props) => {
     return (
-      <View.Row style={[styles.container, {backgroundColor: index % 2 === 0 ? 'rgba(234,252,234,0.37)' : 'white'}]} onPress={onPress}>
-        <Label.T text={operation.name || CONSTANTS.STR_EMPTY} />
+      <View.Row
+        style={[
+          styles.container,
+          {
+            backgroundColor:
+              index % 2 === 0 ? 'rgba(234,252,234,0.37)' : 'white',
+          },
+        ]}
+        onPress={onPress}>
+        <Label.T text={operation.name || 'No name'} />
       </View.Row>
     );
   },

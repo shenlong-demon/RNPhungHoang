@@ -5,38 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8def0e7d-dc40-4214-9271-5c05a281f5a9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/core/components/view/ViewCenter.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/components/viewbase/VieưCenter.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/RNPhungHoang.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/components/buttonbase/ButtonBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/buttonbase/ButtonBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/components/buttonbase/CancelButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/buttonbase/CancelButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/components/buttonbase/SubmitButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/buttonbase/SubmitButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/components/formbase/FormInput.Text.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/formbase/FormInput.Text.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/components/formbase/FormView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/formbase/FormView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/components/inputbase/InputBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/inputbase/InputBase.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/IssueListItemView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/common/webapi/WebApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/common/webapi/WebApi.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/components/popup/Popup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/popup/Popup.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/components/view/View.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/view/View.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/components/viewbase/View.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/viewbase/View.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/components/viewbase/ViewRow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/viewbase/ViewRow.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/context/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/AuthContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/useFacade/useLoginFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/useFacade/useLoginFacade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/useFacade/useOperationFacade.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/useFacade/useOperationFacade.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/PortraitApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/PortraitApp.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/auth/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/auth/LoginScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/context/OperationListContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/OperationListContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/model/object/operation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/model/object/operation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/service/OperationService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/service/OperationService.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/portrait/components/popup/AddServicePopup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/components/popup/AddServicePopup.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/components/popup/CreateOperationPopup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/components/popup/CreateOperationPopup.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/components/popup/SetPricePopup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/components/popup/SetPricePopup.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/portrait/components/popup/UpdateOperationIssuePopup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/components/popup/UpdateOperationIssuePopup.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/customer/parts/CustomerListView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/customer/parts/CustomerListView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/pos/POSSellerScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/POSSellerScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/pos/assign_csutomer/AssignCustomerScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/assign_csutomer/AssignCustomerScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/BookingListView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/BookingListView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/IssueListView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/IssueListView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/OperationActionsView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/OperationActionsView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/OperationListItemView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/OperationListItemView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,8 +29,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -128,7 +111,7 @@
       <workItem from="1721312128882" duration="5411000" />
       <workItem from="1721362594245" duration="39476000" />
       <workItem from="1722317280113" duration="26000" />
-      <workItem from="1722317317771" duration="5522000" />
+      <workItem from="1722317317771" duration="8100000" />
     </task>
     <servers />
   </component>

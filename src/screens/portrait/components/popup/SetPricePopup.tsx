@@ -50,7 +50,5 @@ export const SetPricePopup: FC<Props> = memo(
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    flex: 1,
-    width: '100%',
   },
 });

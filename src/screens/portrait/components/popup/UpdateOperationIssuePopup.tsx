@@ -51,7 +51,7 @@ export const UpdateOperationIssuePopup: FC<Props> = memo(
 );
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'yellow',
+    // backgroundColor: 'yellow',
     justifyContent: 'center',
     alignItems: 'center',
     // flex: 1,

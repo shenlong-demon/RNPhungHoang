@@ -75,12 +75,14 @@ const styles = StyleSheet.create({
   container: {
     // backgroundColor: 'yellow',
     justifyContent: 'center',
+    alignItems: 'center',
     // flex: 1,
+    width: '100%',
   },
   note: {
-    height: 300,
+    height: 200,
     textAlign: 'justify',
     textAlignVertical: 'top',
-    width: '80%',
+    // width: '80%',
   },
 });

@@ -11,4 +11,5 @@ export type Operation = BaseModel & {
   bookings: Booking[];
   issues: Issue[];
   estimation?: Date | null;
+  total?: number;
 };

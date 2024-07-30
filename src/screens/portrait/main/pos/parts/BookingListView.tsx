@@ -16,6 +16,7 @@ import {useNavigation} from '@core/navigation';
 import View from '@core/components/viewbase/View';
 import {AddServicePopup} from '@src/screens/portrait/components/popup';
 import {Dto} from '@core/common';
+import Label from '@core/components/labelbase/Label';
 
 type Props = {};
 export const BookingListView: FC<Props> = memo(({}: Props) => {
@@ -94,6 +95,9 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
         data={bookingItems}
         renderItem={renderBookingListItem}
       />
+      <View.Row>
+        <Label.T text={`${operation?.total || ''}`} />
+      </View.Row>
       <View.Row style={{justifyContent: 'space-between'}}>
         <Button.B
           style={styles.button}

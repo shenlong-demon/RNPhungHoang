@@ -19,6 +19,9 @@ export const useOperationListContextFacade = (): OperationListContextResult => {
   }, []);
 
   useEffect(() => {
+    Logger.log(() => [
+      `useOperationListContextFacade loadOperations length ${operations.length} with index ${operationPageIndex}`,
+    ]);
     loadOperations();
   }, [operations.length, operationPageIndex]);
 

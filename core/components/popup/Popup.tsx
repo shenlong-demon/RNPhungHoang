@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     backgroundColor: 'green',
+    marginBottom: 20,
   },
   headerText: {
     color: 'white',

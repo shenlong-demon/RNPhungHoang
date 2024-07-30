@@ -41,7 +41,7 @@ export const OperationActionsView: FC<Props> = memo(({}: Props) => {
   };
   const doSetDiscount = async (): Promise<void> => {
     openPopup(
-      'doSetDiscount',
+      'Set Discount',
       <SetPricePopup
         defaultPrice={operation?.discount}
         message={`Do you want to cancel ${selectedBooking?.name}`}
