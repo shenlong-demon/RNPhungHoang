@@ -1,5 +1,5 @@
 import {Operation, useOperationFacade} from '@src/business';
-import React, {FC, useContext, useEffect, useState} from 'react';
+import React, {FC, useContext, useEffect, useRef, useState} from 'react';
 import {Dto, Logger, ObjectUtils} from '@core/common';
 
 export type OperationListContextResult = {
@@ -13,6 +13,7 @@ export type OperationListContextResult = {
 export const useOperationListContextFacade = (): OperationListContextResult => {
   const [operations, setOperations] = useState<Operation[]>([]);
   const [operationPageIndex, setOperationPageIndex] = useState<number>(0);
+  const previousOperationIndexRef = useRef<number>(-1);
   const facade = useOperationFacade();
   useEffect(() => {
     setOperationPageIndex(operationPageIndex);
@@ -22,7 +23,10 @@ export const useOperationListContextFacade = (): OperationListContextResult => {
     Logger.log(() => [
       `useOperationListContextFacade loadOperations length ${operations.length} with index ${operationPageIndex}`,
     ]);
-    loadOperations();
+    if (previousOperationIndexRef.current != operationPageIndex) {
+      loadOperations();
+    }
+    previousOperationIndexRef.current = operationPageIndex;
   }, [operations.length, operationPageIndex]);
 
   const loadOperations = async (): Promise<void> => {

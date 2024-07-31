@@ -7,6 +7,7 @@ import {
   Operation,
   Product,
   SetOperationDiscountRequest,
+  SetOperationEstimationRequest,
 } from '@src/business';
 import {OperationRepo} from '@src/business/repository';
 
@@ -56,7 +57,8 @@ export class OperationService extends BaseService<OperationService> {
   createIssue = async (
     operation: Operation,
     req: CreateOperationIssueRequest,
-  ): Promise<Dto<Operation | null>> => this.operationRepo.createIssue(operation.id, req);
+  ): Promise<Dto<Operation | null>> =>
+    this.operationRepo.createIssue(operation.id, req);
 
   async addService(
     operation: Operation,
@@ -84,5 +86,12 @@ export class OperationService extends BaseService<OperationService> {
     req: SetOperationDiscountRequest,
   ): Promise<Dto<Operation | null>> {
     return this.operationRepo.setOperationDiscount(operation.id, req);
+  }
+
+  async setEstimation(
+    operation: Operation,
+    req: SetOperationEstimationRequest,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationRepo.setEstimation(operation.id, req);
   }
 }

@@ -64,5 +64,8 @@ const API_URL = {
   SET_OPERATION_DISCOUNT: (operationId: number): string => {
     return `${ENV.HOST}/operation/set-operation-discount/${operationId}`;
   },
+  SET_OPERATION_ESTIMATION: (operationId: number): string => {
+    return `${ENV.HOST}/operation/set-operation-estimation/${operationId}`;
+  },
 };
 export {API_URL};

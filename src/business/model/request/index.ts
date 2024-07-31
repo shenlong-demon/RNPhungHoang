@@ -9,3 +9,4 @@ export * from './AddOperationServiceRequest';
 export * from './CancelBookingRequest';
 export * from './SetBookingNoteRequest';
 export * from './SetOperationDiscountRequest';
+export * from './SetOperationEstimationRequest';

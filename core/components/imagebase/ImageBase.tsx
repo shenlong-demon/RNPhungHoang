@@ -37,15 +37,24 @@ const ImageBase: FC<ImageBaseProps> = ({
   const onPress = (): void => {
     !!canSetSource && setSource();
   };
-
-  return (
-    <Pressable onPress={onPress}>
+  const getImage = (): any => {
+    return (
       <FastImage
         source={!!imageSource ? {uri: imageSource.uri} : {uri: IMG}}
         style={finalStyles}
         {...rest}
       />
-    </Pressable>
+    );
+  };
+
+  return (
+    <>
+      {!!canSetSource ? (
+        <Pressable onPress={onPress}>{getImage()}</Pressable>
+      ) : (
+        getImage()
+      )}
+    </>
   );
 };
 

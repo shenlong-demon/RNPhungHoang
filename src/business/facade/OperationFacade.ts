@@ -9,6 +9,7 @@ import {
   Product,
   SetBookingNoteRequest,
   SetOperationDiscountRequest,
+  SetOperationEstimationRequest,
   UpdateFileService,
 } from '@src/business';
 import {OperationService} from '@src/business/service/OperationService';
@@ -102,5 +103,12 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
     req: SetOperationDiscountRequest,
   ): Promise<Dto<Operation | null>> {
     return this.operationService.setOperationDiscount(operation, req);
+  }
+
+  async setEstimation(
+    operation: Operation,
+    req: SetOperationEstimationRequest,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationService.setEstimation(operation, req);
   }
 }

@@ -33,7 +33,7 @@ export const SetPricePopup: FC<Props> = memo(
             required: `${label} is required!`,
           }}
           label={label}
-          placeholder={'Please input note'}
+          placeholder={`Please input ${label.toLowerCase()}`}
           name="price"
           defaultValue={`${defaultPrice || ''}`}
           autoFocus={true}

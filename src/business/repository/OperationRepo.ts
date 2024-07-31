@@ -5,6 +5,7 @@ import {
   CancelBookingRequest,
   CreateOperationIssueRequest,
   SetOperationDiscountRequest,
+  SetOperationEstimationRequest,
 } from '@src/business';
 
 export class OperationRepo extends BaseRepo<OperationRepo> {
@@ -110,6 +111,17 @@ export class OperationRepo extends BaseRepo<OperationRepo> {
   ): Promise<Dto<any | null>> {
     const api: ApiResult = await this.api.put(
       API_URL.SET_OPERATION_DISCOUNT(operationId),
+      req,
+    );
+    return this.populate(api);
+  }
+
+  async setEstimation(
+    operationId: number,
+    req: SetOperationEstimationRequest,
+  ): Promise<Dto<any | null>> {
+    const api: ApiResult = await this.api.put(
+      API_URL.SET_OPERATION_ESTIMATION(operationId),
       req,
     );
     return this.populate(api);

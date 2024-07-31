@@ -1,6 +1,7 @@
-import {Booking, Operation} from '@src/business';
+import {Booking, Operation, SetOperationEstimationRequest} from '@src/business';
 import React, {FC, useContext, useEffect, useState} from 'react';
-import {Logger} from '@core/common';
+import {Dto, Logger} from '@core/common';
+import {OperationFacade} from '@src/business/facade';
 
 export enum OPERATION_ACTION_SCREEN {
   BOOKING_LIST = 0,
@@ -16,9 +17,11 @@ export type OperationContextResult = {
   setSelectedBooking: (booking: Booking | null) => void;
   operationActionScreenIndex: number;
   setOperationActionScreenIndex: (index: OPERATION_ACTION_SCREEN) => void;
+  setEstimation: (newDate: Date) => Promise<void>;
 };
 
 export const useOperationContextFacade = (): OperationContextResult => {
+  const facade: OperationFacade = OperationFacade.shared();
   const [operation, setOperation] = useState<Operation | null>(null);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [operationActionScreenIndex, setOperationActionScreenIndex] =
@@ -26,6 +29,20 @@ export const useOperationContextFacade = (): OperationContextResult => {
   useEffect(() => {
     Logger.log(() => [`useOperationContextFacade operation `, operation]);
   }, [operation]);
+
+  const setEstimation = async (newDate: Date): Promise<void> => {
+    if (!operation) {
+      return;
+    }
+    const dto: Dto<Operation | null> = await facade.setEstimation(operation, {
+      newDate: newDate.getTime(),
+    } as SetOperationEstimationRequest);
+    if (dto.next()) {
+      if (dto.data) {
+        setOperation(dto.data as Operation);
+      }
+    }
+  };
   return {
     operation,
     setOperation,
@@ -33,6 +50,7 @@ export const useOperationContextFacade = (): OperationContextResult => {
     setSelectedBooking,
     operationActionScreenIndex,
     setOperationActionScreenIndex,
+    setEstimation,
   };
 };
 
@@ -43,6 +61,7 @@ const DefaultOperationContextResult: OperationContextResult = {
   setSelectedBooking: (_booking: Booking | null): void => {},
   operationActionScreenIndex: OPERATION_ACTION_SCREEN.BOOKING_LIST,
   setOperationActionScreenIndex: (_index: OPERATION_ACTION_SCREEN): void => {},
+  setEstimation: async (_newDate: Date): Promise<void> => {},
 };
 
 const OperationContext = React.createContext<OperationContextResult>(
