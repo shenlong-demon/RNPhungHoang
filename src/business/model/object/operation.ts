@@ -10,6 +10,6 @@ export type Operation = BaseModel & {
   customerId?: number;
   bookings: Booking[];
   issues: Issue[];
-  estimation?: Date | null;
+  estimation?: number | null;
   total?: number;
 };

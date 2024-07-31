@@ -27,7 +27,7 @@ type OperationFacadeResult = {
     price: number,
     note: string,
   ) => Promise<Dto<Operation | null>>;
-  assignCustomer: (customer: Customer) => Promise<Dto<Operation | null>>;
+  assignCustomer: (customer: Customer | null) => Promise<Dto<Operation | null>>;
   receipt: () => Promise<Dto<Operation | null>>;
   cancelBooking: () => Promise<Dto<Operation | null>>;
   setBookingNote: (newNote: string) => Promise<Dto<Operation | null>>;
@@ -66,7 +66,7 @@ export const useOperationFacade = (): OperationFacadeResult => {
   };
 
   const assignCustomer = async (
-    customer: Customer,
+    customer: Customer | null,
   ): Promise<Dto<Operation | null>> => {
     if (!operation) {
       return Dto.success(null);

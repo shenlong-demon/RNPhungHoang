@@ -54,7 +54,9 @@ export const useOperationListContextFacade = (): OperationListContextResult => {
       [...ops, ...operations],
       (o: Operation) => o.id,
       (o1: Operation, o2: Operation) => {
-        return o2.updatedAt > o1.updatedAt ? 1 : -1;
+        return (o2.updatedAt || o2.createdAt) > (o1.updatedAt || o1.createdAt)
+          ? 1
+          : -1;
       },
     );
     setOperations(newPps);

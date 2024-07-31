@@ -16,17 +16,13 @@ import {
   YesNoPopup,
 } from '@src/screens/portrait/components/popup';
 import {Dto} from '@core/common';
-import {useNavigation} from '@core/navigation';
-import {Route} from '@src/screens/portrait/Route';
 
 type Props = {};
 export const OperationActionsView: FC<Props> = memo(({}: Props) => {
-  const {navigate} = useNavigation();
   const facade = useOperationFacade();
   const {selectedBooking, setOperationActionScreenIndex, operation} =
     useOperationContext();
   const {openPopup, closeAllPopups} = usePopupContext();
-  const doReceipt = async (): Promise<void> => {};
   const setOperationDiscount = async (newDiscount: number): Promise<void> => {
     const dto: Dto<Operation | null> = await facade.setOperationDiscount(
       newDiscount,
@@ -36,9 +32,7 @@ export const OperationActionsView: FC<Props> = memo(({}: Props) => {
     }
     closeAllPopups();
   };
-  const doAssignCustomer = async (): Promise<void> => {
-    navigate(Route.ASSIGN_CUSTOMER);
-  };
+
   const doSetDiscount = async (): Promise<void> => {
     openPopup(
       'Set Discount',
@@ -87,53 +81,60 @@ export const OperationActionsView: FC<Props> = memo(({}: Props) => {
   };
   return (
     <View.V style={styles.container}>
-      <View.V style={styles.bookingActions}>
+      <View.V style={styles.actionView}>
         {!!selectedBooking ? (
           <>
-            <Label.T text={`Actions for ${selectedBooking.name}`} />
+            <View.Row>
+              <Label.T
+                style={{fontWeight: 'bold'}}
+                text={`Actions for      [${selectedBooking.name}]`}
+              />
+            </View.Row>
             <Button.B
-              style={styles.button}
+              style={[styles.button, {backgroundColor: '#c0efff'}]}
               label={`Set note`}
               onPress={doSetBookingNote}
             />
             <Button.B
-              style={styles.button}
+              style={[styles.button, {backgroundColor: 'red'}]}
+              textStyle={{color: 'white'}}
               label={`Cancel`}
               onPress={doCancelBooking}
             />
           </>
         ) : null}
       </View.V>
-      <View.V>
+      <View.V style={styles.operationActionView}>
         <Button.B
-          style={styles.button}
-          label={'Assign Customer'}
-          onPress={doAssignCustomer}
-        />
-        <Button.B
-          style={styles.button}
+          style={[styles.buttonOperation, {backgroundColor: '#dec1ff'}]}
           label={'Set Discount'}
           onPress={doSetDiscount}
-        />
-        <Button.B
-          style={styles.buttonReceipt}
-          label={'Receipt'}
-          onPress={doReceipt}
         />
       </View.V>
     </View.V>
   );
 });
 const styles = StyleSheet.create({
-  container: {flex: 1},
-  bookingActions: {
+  container: {flex: 1, paddingLeft: 10, paddingRight: 10},
+  actionView: {
     flex: 1,
+    // justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  operationActionView: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
   },
   button: {
-    marginTop: 2,
-    marginBottom: 2,
+    marginTop: 5,
+    marginBottom: 5,
+    width: '70%',
   },
-  buttonReceipt: {
+  buttonOperation: {
+    marginBottom: 10,
     marginTop: 20,
+    width: '70%',
   },
 });

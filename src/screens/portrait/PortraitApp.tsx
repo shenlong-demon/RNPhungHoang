@@ -53,7 +53,12 @@ export const PortraitApp: FC<Props> = memo(({}) => {
               },
               {
                 name: Route.ASSIGN_CUSTOMER,
-                component: AssignCustomerScreen,
+                component: CustomerListScreen,
+                options: {headerShown: true},
+              },
+              {
+                name: Route.CUSTOMER_UPDATE,
+                component: UpdateCustomerScreen,
                 options: {headerShown: true},
               },
             ]}

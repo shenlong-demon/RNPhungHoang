@@ -55,6 +55,8 @@ export const MenuScreen: FC<Props> = memo(({}: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   resultContainer: {
     flex: 1,

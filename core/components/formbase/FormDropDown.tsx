@@ -23,6 +23,7 @@ export const FormDropDown: FC<Props> = memo(
     name,
     rules,
     defaultValue,
+    style,
     containerStyle,
     selectedProperty,
     ...rest
@@ -46,11 +47,16 @@ export const FormDropDown: FC<Props> = memo(
       containerStyle,
     ]);
 
+    const dropdownStyle = StyleSheet.flatten([
+      styles.commonDropdownStyle,
+      style,
+    ]);
+
     return (
       <View.Row style={containerStyles}>
         {!!label && (
           <Label.Field
-            style={hasError ? {color: 'red'} : {marginLeft: -10}}
+            style={hasError ? {color: 'red'} : {}}
             text={!!message ? message : label}
           />
         )}
@@ -62,6 +68,7 @@ export const FormDropDown: FC<Props> = memo(
           }}
           value={value}
           defaultValue={value}
+          style={dropdownStyle}
           // defaultValue={value}
           {...rest}
         />
@@ -74,5 +81,15 @@ const styles = StyleSheet.create({
     // flex: 1,
     // backgroundColor: 'yellow',
     width: '100%',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    paddingTop: 30,
+  },
+  commonDropdownStyle: {
+    borderBottomWidth: 0,
+    paddingTop: -20,
   },
 });

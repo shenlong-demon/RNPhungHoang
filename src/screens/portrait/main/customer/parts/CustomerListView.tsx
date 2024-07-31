@@ -51,7 +51,11 @@ export const CustomerListView: FC<Props> = memo(
     };
     return (
       <View.V style={styles.container}>
-        <Input.T style={styles.search} onChangeText={onChangeSearchText} />
+        <Input.T
+          placeholder={'Fill keyword to search customer'}
+          style={styles.search}
+          onChangeText={onChangeSearchText}
+        />
         <FlatList.L
           style={styles.list}
           data={searchCustomers}
@@ -65,6 +69,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  search: {},
+  search: {
+    marginBottom: 20
+  },
   list: {flex: 1},
 });

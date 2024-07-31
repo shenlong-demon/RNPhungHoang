@@ -1,11 +1,6 @@
-import {
-  ParamListBase,
-  useNavigation as useLibNavigation,
-  useRoute,
-} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {useCallback} from 'react';
-import {Logger} from '@core/common';
+import { useNavigation as useLibNavigation, useRoute } from "@react-navigation/native";
+import { useCallback } from "react";
+import { Logger } from "@core/common";
 
 type NavigationResult = {
   navigation?: any | null;
@@ -17,8 +12,9 @@ type NavigationResult = {
 };
 
 export const useNavigation = (): NavigationResult => {
-  const navigation = useLibNavigation<StackNavigationProp<ParamListBase, ''>>();
-  const route = navigation?.current?.getCurrentRoute();
+  const navigation = useLibNavigation();
+  const route = useRoute();
+  // const route = navigation?.current?.getCurrentRoute();
   const navigate = (routeName: string, param?: any): void => {
     navigation.navigate(routeName, param);
   };
@@ -36,7 +32,7 @@ export const useNavigation = (): NavigationResult => {
   );
 
   const getParam = (): any | null => {
-    let param: any | null | undefined = route.params;
+    let param: any | null | undefined = route?.params;
     if (param === undefined) {
       param = null;
     }

@@ -10,8 +10,8 @@ import {TextStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 export type DateTimePickerBaseProps = ViewBaseProps & {
   textStyle?: StyleProp<TextStyle>;
-  defaultValue?: Date | null;
-  onChange: (newDate: Date) => void;
+  defaultValue?: number | null;
+  onChange: (newDate: number) => void;
 };
 enum MODE {
   DATE = 'date',
@@ -25,7 +25,9 @@ export const DateTimePickerBase: FC<DateTimePickerBaseProps> = memo(
     style,
     ...rest
   }: DateTimePickerBaseProps) => {
-    const [datetime, setDatetime] = useState<Date>(defaultValue || new Date());
+    const [datetime, setDatetime] = useState<Date>(
+      new Date(defaultValue || DateTimeUtils.now()),
+    );
     const [showMode, setShowMode] = useState<MODE | null>(null);
     const prevShowModeRef = useRef<MODE | null>(null);
 
@@ -49,7 +51,7 @@ export const DateTimePickerBase: FC<DateTimePickerBaseProps> = memo(
       if (showMode !== prevShowModeRef.current) {
         showDateTimePicker();
       } else if (showMode === MODE.TIME) {
-        onChange(datetime);
+        onChange(datetime.getTime());
       }
       prevShowModeRef.current = showMode;
     }, [datetime, showMode]);
@@ -95,6 +97,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   text: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
 });

@@ -56,7 +56,12 @@ export const IssueListView: FC<Props> = memo(({}: Props) => {
         renderItem={renderIssueListItem}
       />
       <View.Row style={styles.actions}>
-        <Button.B label={'Add Issue'} onPress={openIssuePopup} />
+        <Button.B
+          style={{backgroundColor: '#c23d3d'}}
+          textStyle={{color: 'white'}}
+          label={'Add Issue'}
+          onPress={openIssuePopup}
+        />
       </View.Row>
     </View.V>
   );
@@ -64,6 +69,8 @@ export const IssueListView: FC<Props> = memo(({}: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
 
   list: {

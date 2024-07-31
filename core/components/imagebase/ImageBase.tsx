@@ -1,4 +1,4 @@
-import React, {FC, memo, useEffect, useMemo, useState} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import {ImageProps, Pressable, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {ImageFile, ImagePickerLibrary} from '@core/system';
@@ -21,9 +21,7 @@ const ImageBase: FC<ImageBaseProps> = ({
   ...rest
 }) => {
   const [imageSource, setImageSource] = useState<File | null>(source);
-  const finalStyles = useMemo(() => {
-    return StyleSheet.flatten([styles.common, style]);
-  }, [style]);
+  const finalStyles = StyleSheet.flatten([styles.common, style]);
   const setSource = async (): Promise<void> => {
     const result: ImageFile | null = await ImagePickerLibrary.capture();
     if (!!result) {
@@ -62,7 +60,11 @@ export default memo(ImageBase);
 
 const styles = StyleSheet.create({
   common: {
+    width: 200,
+    height: 200,
     resizeMode: 'contain',
     borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'green',
   },
 });

@@ -17,7 +17,7 @@ export type OperationContextResult = {
   setSelectedBooking: (booking: Booking | null) => void;
   operationActionScreenIndex: number;
   setOperationActionScreenIndex: (index: OPERATION_ACTION_SCREEN) => void;
-  setEstimation: (newDate: Date) => Promise<void>;
+  setEstimation: (newDate: number) => Promise<void>;
 };
 
 export const useOperationContextFacade = (): OperationContextResult => {
@@ -30,12 +30,12 @@ export const useOperationContextFacade = (): OperationContextResult => {
     Logger.log(() => [`useOperationContextFacade operation `, operation]);
   }, [operation]);
 
-  const setEstimation = async (newDate: Date): Promise<void> => {
+  const setEstimation = async (newDate: number): Promise<void> => {
     if (!operation) {
       return;
     }
     const dto: Dto<Operation | null> = await facade.setEstimation(operation, {
-      newDate: newDate.getTime(),
+      newDate: newDate,
     } as SetOperationEstimationRequest);
     if (dto.next()) {
       if (dto.data) {
@@ -61,7 +61,7 @@ const DefaultOperationContextResult: OperationContextResult = {
   setSelectedBooking: (_booking: Booking | null): void => {},
   operationActionScreenIndex: OPERATION_ACTION_SCREEN.BOOKING_LIST,
   setOperationActionScreenIndex: (_index: OPERATION_ACTION_SCREEN): void => {},
-  setEstimation: async (_newDate: Date): Promise<void> => {},
+  setEstimation: async (_newDate: number): Promise<void> => {},
 };
 
 const OperationContext = React.createContext<OperationContextResult>(

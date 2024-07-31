@@ -100,12 +100,14 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
       </View.Row>
       <View.Row style={{justifyContent: 'space-between'}}>
         <Button.B
-          style={styles.button}
+          style={[styles.button, {backgroundColor: '#0483d9'}]}
+          textStyle={{color: 'white'}}
           label={'Add service'}
           onPress={openAddServicePopup}
         />
         <Button.B
-          style={styles.button}
+          style={[styles.button, {backgroundColor: '#8b04d9'}]}
+          textStyle={{color: 'white'}}
           label={'Add product'}
           onPress={openMenu}
         />

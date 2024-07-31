@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import { Customer, STATUS } from "@src/business";
+import {Customer, STATUS} from '@src/business';
 import {useNavigation} from '@core/navigation';
 import {CONSTANTS, Dto, Logger, Utility} from '@core/common';
 import {File} from '@core/models';
@@ -9,7 +9,13 @@ import View from '@core/components/viewbase/View';
 import Button from '@core/components/buttonbase/Button';
 import {useCustomerFacade} from '@src/business/useFacade/useCustomerFacade';
 import {FormStatusDropDown} from '@src/screens/portrait/shared_components/FormStatusDropDown';
-
+export type CustomerUpdateNavigationParam = {
+  assignCustomerFunc?: (
+    selectedCustomer: Customer,
+    fromSelected: boolean,
+  ) => void;
+  customer: Customer | null;
+};
 type Props = {};
 type FormValues = {
   imageFile?: File;
@@ -19,7 +25,8 @@ type FormValues = {
 };
 export const UpdateCustomerScreen: FC<Props> = ({}) => {
   const {getParam, goBack} = useNavigation();
-  const customer: Customer | null = getParam();
+  const param: CustomerUpdateNavigationParam | null = getParam();
+  const customer: Customer | null = param?.customer || null;
   const {createCustomer, updateCustomer} = useCustomerFacade();
   const onSubmit = async (data: FormValues) => {
     const id: number = customer?.id || 0;
@@ -38,6 +45,11 @@ export const UpdateCustomerScreen: FC<Props> = ({}) => {
         data.imageFile,
       );
       Logger.log(() => [`UpdateProductScreen onSubmit createCustomer`, dto]);
+      if (dto.next()) {
+        if (!!param?.assignCustomerFunc) {
+          param.assignCustomerFunc(dto.data as Customer, false);
+        }
+      }
     } else {
       const dto: Dto<Customer | null> = await updateCustomer(
         id,
@@ -79,40 +91,37 @@ export const UpdateCustomerScreen: FC<Props> = ({}) => {
         label={'Phone number'}
         name="phone"
         placeholder={`Please input phone number`}
-        defaultValue={customer?.name || CONSTANTS.STR_EMPTY}
+        defaultValue={customer?.phone || CONSTANTS.STR_EMPTY}
         rules={{required: 'Phone number is required.'}}
       />
       <Form.Input
         label={'Nick name'}
         name="nickName"
+        placeholder={`Please input nick name`}
         defaultValue={customer?.nickName || CONSTANTS.STR_EMPTY}
       />
       <FormStatusDropDown
         name={'status'}
         defaultValue={customer?.status || STATUS.ACTIVE}
       />
-      <View.V style={styles.buttonAction}>
+      <View.Row style={styles.buttonAction}>
         <Button.Cancel onPress={goBack} />
         <Form.SubmitButton />
-      </View.V>
+      </View.Row>
     </Form.View>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   buttonAction: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    // justifyContent: 'space-between',
+    // alignItems: 'center',
   },
   avatar: {
-    marginBottom: 30,
-    width: 200,
-    height: 200,
-    borderWidth: 1,
-    borderColor: 'gray',
     alignSelf: 'center',
   },
 });
