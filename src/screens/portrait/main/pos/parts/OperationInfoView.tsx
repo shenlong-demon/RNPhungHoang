@@ -61,7 +61,7 @@ export const OperationInfoView: FC<Props> = memo(({}: Props) => {
             <Label.T
               style={{alignSelf: 'center', fontWeight: 'bold', color: 'green'}}
               text={`${
-                operation?.customer?.total === 0 ? '0' : CONSTANTS.STR_EMPTY
+                !operation?.customer?.total ? '0' : operation?.customer?.total
               }`}
             />
           </View.V>
