@@ -3,6 +3,9 @@ export class DateTimeUtils {
     return new Date().getTime();
   }
   public static formatDateTimeString(date: Date): string {
-    return date.toLocaleString();
+    return new Intl.DateTimeFormat('vi-VN', {
+      dateStyle: 'short',
+      timeStyle: 'short',
+    }).format(date);
   }
 }

@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     alignContent: 'flex-start',
   },
   datetime: {
-    backgroundColor: 'green',
+    backgroundColor: '#200ae7',
   },
   datetimeText: {
     color: 'white',

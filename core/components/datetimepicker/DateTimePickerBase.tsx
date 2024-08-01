@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     height: 40,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
   },
   common: {
     flex: 1,

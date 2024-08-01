@@ -26,6 +26,7 @@ export const SetNotePopup: FC<Props> = memo(
     return (
       <Form.View style={styles.container} onSubmit={onSubmit} onError={onError}>
         <Form.Input
+          style={styles.note}
           rules={{
             // valueAsNumber: true,
             required: 'Note is required!',
@@ -34,6 +35,7 @@ export const SetNotePopup: FC<Props> = memo(
           placeholder={'Please input note'}
           name="note"
           defaultValue={defaultNote || CONSTANTS.STR_EMPTY}
+          multiline={true}
           autoFocus={true}
         />
 
@@ -47,8 +49,16 @@ export const SetNotePopup: FC<Props> = memo(
 );
 const styles = StyleSheet.create({
   container: {
+    // backgroundColor: 'yellow',
     justifyContent: 'center',
-    flex: 1,
+    alignItems: 'center',
+    // flex: 1,
     width: '100%',
+  },
+  note: {
+    height: 200,
+    textAlign: 'justify',
+    textAlignVertical: 'top',
+    // width: '80%',
   },
 });

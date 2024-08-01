@@ -1,13 +1,12 @@
-import {FC, memo} from 'react';
-import Form from '@core/components/formbase/Form';
-import {CONSTANTS, Dto, Logger} from '@core/common';
-import {StyleSheet} from 'react-native';
-import {Operation, useOperationFacade} from '@src/business';
-import Button from '@core/components/buttonbase/Button';
-import View from '@core/components/viewbase/View';
+import { FC, memo } from "react";
+import Form from "@core/components/formbase/Form";
+import { CONSTANTS, Logger } from "@core/common";
+import { StyleSheet } from "react-native";
+import Button from "@core/components/buttonbase/Button";
+import View from "@core/components/viewbase/View";
 
 type Props = {
-  onOk: (op: Operation) => Promise<void>;
+  onOk: (operationName?: string) => Promise<void>;
   onCancel: () => void;
 };
 type FormValue = {
@@ -15,11 +14,8 @@ type FormValue = {
 };
 export const CreateOperationPopup: FC<Props> = memo(
   ({onOk, onCancel}: Props) => {
-    const {createOperation} = useOperationFacade();
     const onSubmit = async (data: FormValue): Promise<void> => {
-      Logger.log(() => [`CreateOperationPopup onSubmit`, data]);
-      const dto: Dto<Operation | null> = await createOperation(data.name);
-      onOk(dto.data as Operation);
+      onOk(data.name);
     };
     const onError = (errors: any, e: any) => {
       Logger.log(() => [`CreateOperationPopup onError errors`, errors, e]);

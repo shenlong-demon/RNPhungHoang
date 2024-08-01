@@ -7,3 +7,4 @@ export * from './OperationTabActionView';
 export * from './OperationActionsView';
 export * from './OperationInfoView';
 export * from './IssueListItemView';
+export * from './OperationDetailHeaderView';

@@ -8,14 +8,11 @@ import {
   useOperationListContext,
   usePopupContext,
 } from '@src/business';
-import React from 'react';
 import {Route} from '@src/screens/portrait/Route';
 import {useNavigation} from '@core/navigation';
-import {CreateOperationPopup} from '@src/screens/portrait/components/popup';
 import {File} from '@core/models';
 
 type OperationFacadeResult = {
-  openCreateOperationPopup: () => void;
   createOperation: (name?: string) => Promise<Dto<Operation | null>>;
   getOperations: (offset: number) => Promise<Dto<Operation[]>>;
   getOperation: (id: number) => Promise<Dto<Operation | null>>;
@@ -91,23 +88,16 @@ export const useOperationFacade = (): OperationFacadeResult => {
     }
     return dto;
   };
-  const openCreateOperationPopup = (): void => {
-    openPopup(
-      `Create Operation`,
-      <CreateOperationPopup
-        onCancel={closeAllPopups}
-        onOk={async (op: Operation): Promise<void> => {
-          gotoOperation(op);
-          closeAllPopups();
-        }}
-      />,
-    );
-  };
 
   const createOperation = async (
     name?: string,
   ): Promise<Dto<Operation | null>> => {
-    return facade.createOperation(name);
+    const dto: Dto<Operation | null> = await facade.createOperation(name);
+    if (dto.next()) {
+      gotoOperation(dto.data as Operation);
+      closeAllPopups();
+    }
+    return dto;
   };
 
   const booking = async (menuItem: Product): Promise<void> => {
@@ -205,7 +195,6 @@ export const useOperationFacade = (): OperationFacadeResult => {
   };
 
   return {
-    openCreateOperationPopup,
     createOperation,
     getOperations,
     getOperation,

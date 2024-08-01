@@ -1,19 +1,28 @@
-import React, {FC, memo} from 'react';
+import React, {FC, memo, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {OPERATION_ACTION_SCREEN, useOperationContext} from '@src/business';
 import {
   BookingListView,
   IssueListView,
   OperationActionsView,
+  OperationDetailHeaderView,
   OperationInfoView,
   OperationTabActionView,
 } from '@src/screens/portrait/main/pos/parts';
 import View from '@core/components/viewbase/View';
+import {useNavigation} from '@core/navigation';
 
 type Props = {};
 export const OperationDetailScreen: FC<Props> = memo(({}) => {
-  const {operationActionScreenIndex} = useOperationContext();
-
+  const {operationActionScreenIndex, operation} = useOperationContext();
+  const {setOptions} = useNavigation();
+  useEffect(() => {
+    setOptions({
+      header: () => <OperationDetailHeaderView />,
+      headerLeft: null,
+      gestureEnabled: false,
+    });
+  }, [operation]);
   return (
     <View.V style={styles.container}>
       <View.V style={styles.operationTabs}>

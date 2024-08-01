@@ -25,12 +25,20 @@ import {
 import {CustomerListScreen} from '@src/screens/portrait/main/customer/CustomerListScreen';
 import {UpdateCustomerScreen} from '@src/screens/portrait/main/customer/UpdateCustomerScreen';
 import {MenuScreen} from '@src/screens/portrait/main/pos/menu';
-import {AssignCustomerScreen} from '@src/screens/portrait/main/pos/assign_csutomer';
 
 type Props = {};
 export const PortraitApp: FC<Props> = memo(({}) => {
   const {user, init} = useAuthContext();
-
+  const headerStyle = {
+    headerStyle: {
+      backgroundColor: 'green',
+    },
+    headerTintColor: 'white',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+    headerTitleAlign: 'center',
+  };
   const POSStack = () => {
     return (
       <OperationListContextProvider>
@@ -40,11 +48,15 @@ export const PortraitApp: FC<Props> = memo(({}) => {
               {
                 name: Route.OPERATION_LIST,
                 component: POSSellerScreen,
+                options: {
+                  ...headerStyle,
+                  title: 'Operation List',
+                  headerShown: true,
+                },
               },
               {
                 name: Route.OPERATION_DETAIL,
                 component: OperationDetailScreen,
-                options: {headerShown: true},
               },
               {
                 name: Route.MENU_SCREEN,
@@ -54,7 +66,11 @@ export const PortraitApp: FC<Props> = memo(({}) => {
               {
                 name: Route.ASSIGN_CUSTOMER,
                 component: CustomerListScreen,
-                options: {headerShown: true},
+                options: {
+                  ...headerStyle,
+                  headerShown: true,
+                  title: 'Assign Customer',
+                },
               },
               {
                 name: Route.CUSTOMER_UPDATE,
@@ -110,6 +126,7 @@ export const PortraitApp: FC<Props> = memo(({}) => {
         <DataContextProvider>
           <>
             <DrawerNavigator
+              screenOptions={{...headerStyle}}
               screens={[
                 {name: Route.MAIN, component: MainScreen},
                 {name: Route.STORE, component: StoreScreen},
@@ -117,7 +134,7 @@ export const PortraitApp: FC<Props> = memo(({}) => {
                 {
                   name: Route.POS_SELLER,
                   component: POSStack,
-                  options: {headerShown: true},
+                  options: {headerShown: false},
                 },
                 {name: Route.BRANCH, component: UpdateBrandScreen},
                 {name: Route.GROUP, component: UpdateGroupScreen},
@@ -153,7 +170,7 @@ export const PortraitApp: FC<Props> = memo(({}) => {
           : {
               name: Route.APP,
               component: MainStack,
-              options: {headerShown: false},
+              options: {...headerStyle, headerShown: false},
             },
       ]}
     />

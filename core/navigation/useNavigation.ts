@@ -1,6 +1,9 @@
-import { useNavigation as useLibNavigation, useRoute } from "@react-navigation/native";
-import { useCallback } from "react";
-import { Logger } from "@core/common";
+import {
+  useNavigation as useLibNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import {useCallback} from 'react';
+import {Logger} from '@core/common';
 
 type NavigationResult = {
   navigation?: any | null;
@@ -13,8 +16,9 @@ type NavigationResult = {
 
 export const useNavigation = (): NavigationResult => {
   const navigation = useLibNavigation();
-  const route = useRoute();
-  // const route = navigation?.current?.getCurrentRoute();
+  const routeNavigation = useRoute();
+
+  const route = navigation?.current?.getCurrentRoute() || routeNavigation;
   const navigate = (routeName: string, param?: any): void => {
     navigation.navigate(routeName, param);
   };

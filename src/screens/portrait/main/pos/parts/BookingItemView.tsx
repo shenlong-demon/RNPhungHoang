@@ -31,10 +31,13 @@ export const BookingItemView: FC<Props> = memo(
           <Label.T style={styles.index} text={`${index + 1}`} />
           <Label.T style={styles.name} text={item.name} />
           <Label.T text={`${item.quantity}`} />
-          <Label.T style={styles.price} text={`${item.price * 10000000}`} />
+          <Label.T
+            style={styles.price}
+            text={`${item.price * item.quantity}`}
+          />
         </View.Row>
         {!!item.note ? (
-          <View.V>
+          <View.V style={{marginLeft: 10}}>
             <Label.T text={item.note} />
           </View.V>
         ) : null}
