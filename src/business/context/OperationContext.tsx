@@ -1,4 +1,9 @@
-import {Booking, Operation, SetOperationEstimationRequest} from '@src/business';
+import {
+  Booking,
+  Operation,
+  SetOperationEstimationRequest,
+  useOperationListContext,
+} from '@src/business';
 import React, {FC, useContext, useEffect, useState} from 'react';
 import {Dto, Logger} from '@core/common';
 import {OperationFacade} from '@src/business/facade';
@@ -18,12 +23,15 @@ export type OperationContextResult = {
   operationActionScreenIndex: number;
   setOperationActionScreenIndex: (index: OPERATION_ACTION_SCREEN) => void;
   setEstimation: (newDate: number) => Promise<void>;
+  enterOperation: (op: Operation) => Promise<Dto<Operation | null>>;
+  createOperation: (operationName?: string) => Promise<Dto<Operation | null>>;
 };
 
 export const useOperationContextFacade = (): OperationContextResult => {
   const facade: OperationFacade = OperationFacade.shared();
   const [operation, setOperation] = useState<Operation | null>(null);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
+  const {updateOperationInList} = useOperationListContext();
   const [operationActionScreenIndex, setOperationActionScreenIndex] =
     useState<OPERATION_ACTION_SCREEN>(OPERATION_ACTION_SCREEN.BOOKING_LIST);
   useEffect(() => {
@@ -43,6 +51,35 @@ export const useOperationContextFacade = (): OperationContextResult => {
       }
     }
   };
+  const enterOperation = async (
+    op: Operation,
+  ): Promise<Dto<Operation | null>> => {
+    const dto: Dto<Operation | null> = await facade.getOperation(op.id);
+    if (dto.next()) {
+      const newOp: Operation | null = dto.data as Operation | null;
+      if (newOp) {
+        updateOperationInList(newOp);
+        setOperation(newOp);
+      }
+    }
+    return dto;
+  };
+  const createOperation = async (
+    operationName?: string,
+  ): Promise<Dto<Operation | null>> => {
+    const dto: Dto<Operation | null> = await facade.createOperation(
+      operationName,
+    );
+    if (dto.next()) {
+      const newOp: Operation | null = dto.data as Operation | null;
+      if (newOp) {
+        updateOperationInList(newOp);
+        setOperation(newOp);
+      }
+    }
+    return dto;
+  };
+
   return {
     operation,
     setOperation,
@@ -51,6 +88,8 @@ export const useOperationContextFacade = (): OperationContextResult => {
     operationActionScreenIndex,
     setOperationActionScreenIndex,
     setEstimation,
+    enterOperation,
+    createOperation,
   };
 };
 
@@ -62,6 +101,14 @@ const DefaultOperationContextResult: OperationContextResult = {
   operationActionScreenIndex: OPERATION_ACTION_SCREEN.BOOKING_LIST,
   setOperationActionScreenIndex: (_index: OPERATION_ACTION_SCREEN): void => {},
   setEstimation: async (_newDate: number): Promise<void> => {},
+  enterOperation: async (_op: Operation): Promise<Dto<Operation | null>> => {
+    return Dto.default();
+  },
+  createOperation: async (
+    _o_operationName?: string,
+  ): Promise<Dto<Operation | null>> => {
+    return Dto.default();
+  },
 };
 
 const OperationContext = React.createContext<OperationContextResult>(

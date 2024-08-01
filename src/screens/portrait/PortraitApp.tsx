@@ -44,12 +44,12 @@ export const PortraitApp: FC<Props> = memo(({}) => {
       <OperationListContextProvider>
         <OperationContextProvider>
           <StackNavigator
+            screenOptions={{...headerStyle}}
             screens={[
               {
                 name: Route.OPERATION_LIST,
                 component: POSSellerScreen,
                 options: {
-                  ...headerStyle,
                   title: 'Operation List',
                   headerShown: true,
                 },
@@ -61,7 +61,7 @@ export const PortraitApp: FC<Props> = memo(({}) => {
               {
                 name: Route.MENU_SCREEN,
                 component: MenuScreen,
-                options: {headerShown: true},
+                options: {title: 'Booking Product'},
               },
               {
                 name: Route.ASSIGN_CUSTOMER,

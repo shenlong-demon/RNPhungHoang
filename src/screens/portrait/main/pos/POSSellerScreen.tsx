@@ -2,7 +2,7 @@ import React, {FC, memo, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
 import {
   Operation,
-  useOperationFacade,
+  useOperationContext,
   useOperationListContext,
   usePopupContext,
 } from '@src/business';
@@ -11,42 +11,52 @@ import Button from '@core/components/buttonbase/Button';
 import {FlatList} from '@core/components';
 import {OperationListItemView} from '@src/screens/portrait/main/pos/parts';
 import {CreateOperationPopup} from '@src/screens/portrait/components/popup';
+import {Dto} from '@core/common';
+import {useNavigation} from '@core/navigation';
+import {Route} from '@src/screens/portrait/Route';
 
 type Props = {};
 export const POSSellerScreen: FC<Props> = memo(({}) => {
   const {operations} = useOperationListContext();
-  const useFacade = useOperationFacade();
+  const {enterOperation, createOperation} = useOperationContext();
   const {openPopup, closeAllPopups} = usePopupContext();
+  const {navigate} = useNavigation();
 
   const enter = async (item: Operation): Promise<void> => {
-    useFacade.enterOperation(item.id);
+    const dto: Dto<Operation | null> = await enterOperation(item);
+    if (dto.next()) {
+      navigate(Route.OPERATION_DETAIL, dto.data);
+    }
   };
 
-  const createOperation = () => {
+  const createNewOperation = () => {
     openPopup(
       `Create Operation`,
       <CreateOperationPopup
         onCancel={closeAllPopups}
         onOk={async (operationName?: string): Promise<void> => {
-          useFacade.createOperation(operationName);
+          const dto: Dto<Operation | null> = await createOperation(
+            operationName,
+          );
+          if (dto.next()) {
+            closeAllPopups();
+            navigate(Route.OPERATION_DETAIL, dto.data);
+          }
         }}
       />,
     );
   };
 
-  const renderOperationListItem = useCallback(
-    (data: {item: Operation; index: number}) => {
-      return (
-        <OperationListItemView
-          key={data.item.id}
-          onPress={() => enter(data.item)}
-          operation={data.item}
-          index={data.index}
-        />
-      );
-    },
-    [],
-  );
+  const renderOperationListItem = (data: {item: Operation; index: number}) => {
+    return (
+      <OperationListItemView
+        key={data.item.id}
+        onPress={() => enter(data.item)}
+        operation={data.item}
+        index={data.index}
+      />
+    );
+  };
   return (
     <View.V style={styles.container}>
       <FlatList.L
@@ -56,7 +66,7 @@ export const POSSellerScreen: FC<Props> = memo(({}) => {
       />
       <Button.FloatCircle
         position={'bottom|right'}
-        onPress={() => createOperation()}
+        onPress={() => createNewOperation()}
       />
     </View.V>
   );
