@@ -6,7 +6,7 @@ export type OperationListContextResult = {
   operations: Operation[];
   updateOperationInList: (op: Operation) => void;
   removeOperationInList: (op: Operation) => void;
-
+  reloadOperations: () => void;
   loadMoreOperations: () => void;
 };
 
@@ -29,6 +29,11 @@ export const useOperationListContextFacade = (): OperationListContextResult => {
     previousOperationIndexRef.current = operationPageIndex;
   }, [operations.length, operationPageIndex]);
 
+  const reloadOperations = (): void => {
+    previousOperationIndexRef.current = -1;
+    setOperations([]);
+    setOperationPageIndex(0);
+  };
   const loadOperations = async (): Promise<void> => {
     const dto: Dto<Operation[]> = await facade.getOperations(
       operationPageIndex,
@@ -77,6 +82,7 @@ export const useOperationListContextFacade = (): OperationListContextResult => {
     updateOperationInList,
     removeOperationInList,
     loadMoreOperations,
+    reloadOperations,
   };
 };
 
@@ -85,6 +91,7 @@ const DefaultOperationListContextResult: OperationListContextResult = {
   updateOperationInList: (_op: Operation | null): void => {},
   removeOperationInList: (_op: Operation | null): void => {},
   loadMoreOperations: async (): Promise<void> => {},
+  reloadOperations: (): void => {},
 };
 
 const OperationListContext = React.createContext<OperationListContextResult>(

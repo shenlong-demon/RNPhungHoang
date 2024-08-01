@@ -126,4 +126,11 @@ export class OperationRepo extends BaseRepo<OperationRepo> {
     );
     return this.populate(api);
   }
+
+  async getOperationDetail(operationId: number): Promise<Dto<any | null>> {
+    const api: ApiResult = await this.api.get(
+      API_URL.GET_OPERATION_DETAIL(operationId),
+    );
+    return this.populate(api);
+  }
 }

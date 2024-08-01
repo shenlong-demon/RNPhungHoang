@@ -94,4 +94,10 @@ export class OperationService extends BaseService<OperationService> {
   ): Promise<Dto<Operation | null>> {
     return this.operationRepo.setEstimation(operation.id, req);
   }
+
+  async getOperationDetail(
+    operationId: number,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationRepo.getOperationDetail(operationId);
+  }
 }

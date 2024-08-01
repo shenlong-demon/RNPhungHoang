@@ -19,13 +19,18 @@ import {CustomerListNavigationParam} from '@src/screens/portrait/main/customer/C
 type Props = {};
 export const OperationInfoView: FC<Props> = memo(({}: Props) => {
   const facade = useOperationFacade();
-  const {operation, setEstimation} = useOperationContext();
+  const {operation, setEstimation, getOperationDetail} = useOperationContext();
   const {navigate, goBack} = useNavigation();
   const onEstimationChanged = (newDate: number): void => {
     Logger.log(() => [`OperationInfoView estimation changed `, newDate]);
     setEstimation(newDate);
   };
-  const doReceipt = async (): Promise<void> => {};
+  const doReceipt = async (): Promise<void> => {
+    const dto: Dto<Operation | null> = await getOperationDetail();
+    if (dto.next()) {
+      navigate(Route.RECEIPT);
+    }
+  };
   const assignCustomerToOperation = async (
     customer: Customer,
     fromSelected: boolean,
@@ -50,11 +55,11 @@ export const OperationInfoView: FC<Props> = memo(({}: Props) => {
         <View.V style={styles.customer}>
           <View.V style={styles.customerInfo} onPress={assignCustomer}>
             <Label.T
-              style={{alignSelf: 'center'}}
+              style={{alignSelf: 'center', fontWeight: 'bold'}}
               text={`${operation?.customer?.name || 'Press  to assign'}`}
             />
             <Label.T
-              style={{alignSelf: 'center'}}
+              style={{alignSelf: 'center', fontWeight: 'bold', color: 'green'}}
               text={`${
                 operation?.customer?.total === 0 ? '0' : CONSTANTS.STR_EMPTY
               }`}

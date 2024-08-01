@@ -1,4 +1,4 @@
-import React, {FC, memo, useCallback} from 'react';
+import React, {FC, memo, useCallback, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {
   Operation,
@@ -17,10 +17,11 @@ import {Route} from '@src/screens/portrait/Route';
 
 type Props = {};
 export const POSSellerScreen: FC<Props> = memo(({}) => {
-  const {operations} = useOperationListContext();
+  const {operations, reloadOperations} = useOperationListContext();
   const {enterOperation, createOperation} = useOperationContext();
   const {openPopup, closeAllPopups} = usePopupContext();
   const {navigate} = useNavigation();
+  const [isRefreshing, setIsFreshing] = useState<boolean>(false);
 
   const enter = async (item: Operation): Promise<void> => {
     const dto: Dto<Operation | null> = await enterOperation(item);
@@ -57,12 +58,19 @@ export const POSSellerScreen: FC<Props> = memo(({}) => {
       />
     );
   };
+  const onRefresh = async (): Promise<void> => {
+    setIsFreshing(true);
+    await reloadOperations();
+    setIsFreshing(false);
+  };
   return (
     <View.V style={styles.container}>
       <FlatList.L
         style={styles.flatList}
         data={operations}
         renderItem={renderOperationListItem}
+        onRefresh={onRefresh}
+        refreshing={isRefreshing}
       />
       <Button.FloatCircle
         position={'bottom|right'}

@@ -7,9 +7,9 @@ import {StyleSheet} from 'react-native';
 type Props = {
   item: Booking;
   index: number;
-  onPress: () => Promise<void>;
-  onLongPress: () => Promise<void>;
-  isSelected: boolean;
+  onPress?: () => Promise<void>;
+  onLongPress?: () => Promise<void>;
+  isSelected?: boolean;
 };
 export const BookingItemView: FC<Props> = memo(
   ({item, index, onPress, onLongPress, isSelected}: Props) => {

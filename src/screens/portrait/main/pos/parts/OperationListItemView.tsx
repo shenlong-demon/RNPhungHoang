@@ -15,7 +15,7 @@ export const OperationListItemView: FC<Props> = memo(
     useEffect(() => {
       const timer = setInterval(() => {
         setTime(DateTimeUtils.now);
-      }, 1000);
+      }, 10000);
       return () => clearInterval(timer);
     }, []);
     const donePercent = useMemo((): number => {

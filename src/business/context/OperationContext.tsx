@@ -1,4 +1,5 @@
 import {
+  Bill,
   Booking,
   Operation,
   SetOperationEstimationRequest,
@@ -25,13 +26,16 @@ export type OperationContextResult = {
   setEstimation: (newDate: number) => Promise<void>;
   enterOperation: (op: Operation) => Promise<Dto<Operation | null>>;
   createOperation: (operationName?: string) => Promise<Dto<Operation | null>>;
+  getOperationDetail: () => Promise<Dto<Operation | null>>;
+  receipt: () => Promise<Dto<Bill | null>>;
 };
 
 export const useOperationContextFacade = (): OperationContextResult => {
   const facade: OperationFacade = OperationFacade.shared();
   const [operation, setOperation] = useState<Operation | null>(null);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
-  const {updateOperationInList} = useOperationListContext();
+  const {updateOperationInList, removeOperationInList} =
+    useOperationListContext();
   const [operationActionScreenIndex, setOperationActionScreenIndex] =
     useState<OPERATION_ACTION_SCREEN>(OPERATION_ACTION_SCREEN.BOOKING_LIST);
   useEffect(() => {
@@ -47,6 +51,7 @@ export const useOperationContextFacade = (): OperationContextResult => {
     } as SetOperationEstimationRequest);
     if (dto.next()) {
       if (dto.data) {
+        updateOperationInList(dto.data);
         setOperation(dto.data as Operation);
       }
     }
@@ -80,6 +85,38 @@ export const useOperationContextFacade = (): OperationContextResult => {
     return dto;
   };
 
+  const getOperationDetail = async (): Promise<Dto<Operation | null>> => {
+    if (!operation) {
+      return Dto.default();
+    }
+    const dto: Dto<Operation | null> = await facade.getOperationDetail(
+      operation.id,
+    );
+    if (dto.next()) {
+      const fullOp: Operation | null = dto.data as Operation | null;
+      if (!!fullOp) {
+        updateOperationInList(fullOp);
+        setOperation(fullOp);
+      }
+    }
+    return dto;
+  };
+
+  const receipt = async (): Promise<Dto<Bill | null>> => {
+    if (!operation) {
+      return Dto.default();
+    }
+    const dto: Dto<Bill | null> = await facade.receipt(operation);
+    if (dto.next()) {
+      const fullOp: Bill | null = dto.data as Bill | null;
+      if (!!fullOp) {
+        removeOperationInList(operation);
+        setOperation(null);
+      }
+    }
+    return dto;
+  };
+
   return {
     operation,
     setOperation,
@@ -90,6 +127,8 @@ export const useOperationContextFacade = (): OperationContextResult => {
     setEstimation,
     enterOperation,
     createOperation,
+    getOperationDetail,
+    receipt,
   };
 };
 
@@ -105,8 +144,14 @@ const DefaultOperationContextResult: OperationContextResult = {
     return Dto.default();
   },
   createOperation: async (
-    _o_operationName?: string,
+    _operationName?: string,
   ): Promise<Dto<Operation | null>> => {
+    return Dto.default();
+  },
+  getOperationDetail: async (): Promise<Dto<Operation | null>> => {
+    return Dto.default();
+  },
+  receipt: async (): Promise<Dto<Bill | null>> => {
     return Dto.default();
   },
 };

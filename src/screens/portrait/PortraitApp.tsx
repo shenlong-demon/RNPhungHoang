@@ -25,6 +25,7 @@ import {
 import {CustomerListScreen} from '@src/screens/portrait/main/customer/CustomerListScreen';
 import {UpdateCustomerScreen} from '@src/screens/portrait/main/customer/UpdateCustomerScreen';
 import {MenuScreen} from '@src/screens/portrait/main/pos/menu';
+import {ReceiptScreen} from '@src/screens/portrait/main/pos/receipt';
 
 type Props = {};
 export const PortraitApp: FC<Props> = memo(({}) => {
@@ -75,6 +76,11 @@ export const PortraitApp: FC<Props> = memo(({}) => {
               {
                 name: Route.CUSTOMER_UPDATE,
                 component: UpdateCustomerScreen,
+                options: {headerShown: true},
+              },
+              {
+                name: Route.RECEIPT,
+                component: ReceiptScreen,
                 options: {headerShown: true},
               },
             ]}

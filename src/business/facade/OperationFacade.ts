@@ -111,4 +111,10 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
   ): Promise<Dto<Operation | null>> {
     return this.operationService.setEstimation(operation, req);
   }
+
+  async getOperationDetail(
+    operationId: number,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationService.getOperationDetail(operationId);
+  }
 }
