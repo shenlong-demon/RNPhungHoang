@@ -58,11 +58,9 @@ export const OperationInfoView: FC<Props> = memo(({}: Props) => {
               style={{alignSelf: 'center', fontWeight: 'bold'}}
               text={`${operation?.customer?.name || 'Press  to assign'}`}
             />
-            <Label.T
+            <Label.Money
               style={{alignSelf: 'center', fontWeight: 'bold', color: 'green'}}
-              text={`${
-                !operation?.customer?.total ? '0' : operation?.customer?.total
-              }`}
+              value={operation?.customer?.total}
             />
           </View.V>
           <Image.I

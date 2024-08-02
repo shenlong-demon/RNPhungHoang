@@ -5,7 +5,7 @@ import {
   SetOperationEstimationRequest,
   useOperationListContext,
 } from '@src/business';
-import React, {FC, useContext, useEffect, useState} from 'react';
+import React, {FC, useContext, useEffect, useMemo, useState} from 'react';
 import {Dto, Logger} from '@core/common';
 import {OperationFacade} from '@src/business/facade';
 
@@ -28,6 +28,7 @@ export type OperationContextResult = {
   createOperation: (operationName?: string) => Promise<Dto<Operation | null>>;
   getOperationDetail: () => Promise<Dto<Operation | null>>;
   receipt: () => Promise<Dto<Bill | null>>;
+  total: number;
 };
 
 export const useOperationContextFacade = (): OperationContextResult => {
@@ -40,6 +41,13 @@ export const useOperationContextFacade = (): OperationContextResult => {
     useState<OPERATION_ACTION_SCREEN>(OPERATION_ACTION_SCREEN.BOOKING_LIST);
   useEffect(() => {
     Logger.log(() => [`useOperationContextFacade operation `, operation]);
+  }, [operation]);
+
+  const total = useMemo(() => {
+    if (!operation) {
+      return 0;
+    }
+    return facade.getOperationTotal(operation);
   }, [operation]);
 
   const setEstimation = async (newDate: number): Promise<void> => {
@@ -129,6 +137,7 @@ export const useOperationContextFacade = (): OperationContextResult => {
     createOperation,
     getOperationDetail,
     receipt,
+    total,
   };
 };
 
@@ -154,6 +163,7 @@ const DefaultOperationContextResult: OperationContextResult = {
   receipt: async (): Promise<Dto<Bill | null>> => {
     return Dto.default();
   },
+  total: 0,
 };
 
 const OperationContext = React.createContext<OperationContextResult>(

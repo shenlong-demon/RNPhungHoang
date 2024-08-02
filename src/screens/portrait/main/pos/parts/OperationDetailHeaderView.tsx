@@ -8,7 +8,7 @@ import {useNavigation} from '@core/navigation';
 
 type Props = {};
 export const OperationDetailHeaderView: FC<Props> = ({}: Props) => {
-  const {operation} = useOperationContext();
+  const {operation, total} = useOperationContext();
   const {goBack} = useNavigation();
   return (
     <View.Row style={styles.container}>
@@ -20,7 +20,7 @@ export const OperationDetailHeaderView: FC<Props> = ({}: Props) => {
           label={'Back'}
           onPress={goBack}
         />
-        <Label.T style={styles.total} text={`10000000`} />
+        <Label.Money style={styles.total} value={total} />
       </View.Row>
     </View.Row>
   );
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
   },
-  name: {color: 'white', fontWeight: 'bold'},
+  name: {color: 'white', fontWeight: 'bold', fontSize: 24},
   total: {color: 'white', fontWeight: 'bold'},
   backButton: {width: 100, minWidth: 100},
   float: {

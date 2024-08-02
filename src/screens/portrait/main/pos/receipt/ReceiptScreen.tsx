@@ -10,7 +10,7 @@ import {Dto} from '@core/common';
 import {useNavigation} from '@core/navigation';
 type Props = {};
 export const ReceiptScreen: FC<Props> = memo(({}: Props) => {
-  const {operation, receipt} = useOperationContext();
+  const {operation, total, receipt} = useOperationContext();
   const {popToTop} = useNavigation();
   const renderItem = (data: {item: Booking; index: number}): any => {
     return <BookingItemView item={data.item} index={data.index} />;
@@ -27,15 +27,13 @@ export const ReceiptScreen: FC<Props> = memo(({}: Props) => {
         <Label.T style={styles.titleName} text={`Operation Name`} />
         <Label.T style={styles.name} text={`${operation?.name}`} />
         {operation?.discount ? (
-          <Label.T
-            style={styles.discount}
-            text={`Discount: ${operation?.discount || 0}`}
-          />
+          <>
+            <Label.T style={styles.titleName} text={`Discount`} />
+            <Label.Money style={styles.discount} value={operation?.discount} />
+          </>
         ) : null}
-        <Label.T
-          style={styles.total}
-          text={`Total: ${operation?.discount || 0}`}
-        />
+        <Label.T style={styles.titleName} text={`Total`} />
+        <Label.Money style={styles.total} value={total} />
       </View.V>
       <FlatList.L
         style={styles.list}
@@ -79,11 +77,11 @@ const styles = StyleSheet.create({
   },
   name: {
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   discount: {
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   total: {
     fontWeight: 'bold',

@@ -7,13 +7,13 @@ import View from '@core/components/viewbase/View';
 
 type Props = {
   defaultServiceName?: string;
-  onOk: (name: string, price: number, note: string) => Promise<void>;
+  onOk: (name: string, price: number, note?: string) => Promise<void>;
   onCancel: () => void;
 };
 type FormValue = {
   name: string;
   price: string;
-  note: string;
+  note?: string;
 };
 export const AddServicePopup: FC<Props> = memo(
   ({defaultServiceName, onOk, onCancel}: Props) => {
@@ -57,7 +57,7 @@ export const AddServicePopup: FC<Props> = memo(
         <Form.Input
           multiline={true}
           numberOfLines={5}
-          rules={{required: 'Note is required!'}}
+          // rules={{required: 'Note is required!'}}
           defaultValue={CONSTANTS.STR_EMPTY}
           label={'Note'}
           name="note"

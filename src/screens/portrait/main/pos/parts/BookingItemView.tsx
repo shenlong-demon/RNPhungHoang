@@ -30,14 +30,14 @@ export const BookingItemView: FC<Props> = memo(
         <View.Row>
           <Label.T style={styles.index} text={`${index + 1}`} />
           <Label.T style={styles.name} text={item.name} />
-          <Label.T text={`${item.quantity}`} />
-          <Label.T
+          <Label.T style={styles.quantity} text={`${item.quantity}`} />
+          <Label.Money
             style={styles.price}
-            text={`${item.price * item.quantity}`}
+            value={item.price * item.quantity}
           />
         </View.Row>
         {!!item.note ? (
-          <View.V style={{marginLeft: 10}}>
+          <View.V style={{marginLeft: 10, marginTop: -10}}>
             <Label.T text={item.note} />
           </View.V>
         ) : null}
@@ -49,10 +49,13 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     justifyContent: 'space-evenly',
+    borderBottomWidth: 1,
+    borderColor: 'green',
   },
   name: {
     flex: 0.6,
     paddingLeft: 10,
+    fontWeight: 'bold',
   },
   index: {
     // backgroundColor: 'red',
@@ -60,5 +63,9 @@ const styles = StyleSheet.create({
   price: {
     flex: 0.3,
     textAlign: 'right',
+    fontWeight: 'bold',
+  },
+  quantity: {
+    fontWeight: 'bold',
   },
 });

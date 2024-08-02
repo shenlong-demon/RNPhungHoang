@@ -16,7 +16,10 @@ export class Dto<T> {
   }
 
   public next(): boolean {
-    return true;
+    return !this.isError();
+  }
+  public isError(): boolean {
+    return !!(this.code & RESULT_CODE.ERROR);
   }
   public bypass(): Dto<null> {
     return new Dto<null>(this.code, this.message);

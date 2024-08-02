@@ -117,4 +117,16 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
   ): Promise<Dto<Operation | null>> {
     return this.operationService.getOperationDetail(operationId);
   }
+
+  getOperationTotal(operation: Operation | null): number {
+    if (!operation) {
+      return 0;
+    }
+    let total: number = 0;
+    for (const booking of operation.bookings || []) {
+      total += booking.price * booking.quantity;
+    }
+    total -= operation.discount || 0;
+    return total;
+  }
 }

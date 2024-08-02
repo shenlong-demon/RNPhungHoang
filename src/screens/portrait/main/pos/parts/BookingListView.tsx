@@ -62,7 +62,7 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
   const addService = async (
     name: string,
     price: number,
-    note: string,
+    note?: string,
   ): Promise<void> => {
     const dto: Dto<Operation | null> = await facade.addService(
       name,
@@ -100,13 +100,13 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
       </View.Row>
       <View.Row style={{justifyContent: 'space-between'}}>
         <Button.B
-          style={[styles.button, {backgroundColor: '#0483d9'}]}
+          style={[styles.button, {backgroundColor: '#0563a2'}]}
           textStyle={{color: 'white'}}
           label={'Add service'}
           onPress={openAddServicePopup}
         />
         <Button.B
-          style={[styles.button, {backgroundColor: '#8b04d9'}]}
+          style={[styles.button, {backgroundColor: '#7208af'}]}
           textStyle={{color: 'white'}}
           label={'Add product'}
           onPress={openMenu}

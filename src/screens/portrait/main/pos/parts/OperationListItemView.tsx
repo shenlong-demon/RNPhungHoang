@@ -28,9 +28,9 @@ export const OperationListItemView: FC<Props> = memo(
       }
       const unit: number = 100 / total;
       const percent: number = ((time - operation.createdAt) * unit) / 100;
-      Logger.log(() => [
-        `OperationListItemView ${operation.name} unit ${unit}  done ${percent}`,
-      ]);
+      // Logger.log(() => [
+      //   `OperationListItemView ${operation.name} unit ${unit}  done ${percent}`,
+      // ]);
       return percent;
     }, [time]);
 
