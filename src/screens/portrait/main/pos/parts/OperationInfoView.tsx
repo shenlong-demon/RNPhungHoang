@@ -8,6 +8,7 @@ import {
   Operation,
   useOperationContext,
   useOperationFacade,
+  usePopupContext,
 } from '@src/business';
 import Label from '@core/components/labelbase/Label';
 import Button from '@core/components/buttonbase/Button';
@@ -15,12 +16,14 @@ import Image from '@core/components/imagebase/Image';
 import {Route} from '@src/screens/portrait/Route';
 import {useNavigation} from '@core/navigation';
 import {CustomerListNavigationParam} from '@src/screens/portrait/main/customer/CustomerListScreen';
+import {YesNoPopup} from '@src/screens/portrait/components/popup';
 
 type Props = {};
 export const OperationInfoView: FC<Props> = memo(({}: Props) => {
   const facade = useOperationFacade();
   const {operation, setEstimation, getOperationDetail} = useOperationContext();
   const {navigate, goBack} = useNavigation();
+  const {openPopup, closeAllPopups} = usePopupContext();
   const onEstimationChanged = (newDate: number): void => {
     Logger.log(() => [`OperationInfoView estimation changed `, newDate]);
     setEstimation(newDate);
@@ -32,14 +35,16 @@ export const OperationInfoView: FC<Props> = memo(({}: Props) => {
     }
   };
   const assignCustomerToOperation = async (
-    customer: Customer,
+    customer: Customer | null,
     fromSelected: boolean,
   ): Promise<void> => {
     const dto: Dto<Operation | null> = await facade.assignCustomer(customer);
     if (dto.next()) {
-      goBack();
-      if (!fromSelected) {
+      if (customer) {
         goBack();
+        if (!fromSelected) {
+          goBack();
+        }
       }
     }
   };
@@ -48,12 +53,30 @@ export const OperationInfoView: FC<Props> = memo(({}: Props) => {
       assignCustomerFunc: assignCustomerToOperation,
     } as CustomerListNavigationParam);
   };
+  const unassignedCustomer = (): void => {
+    if (!!operation?.customer) {
+      openPopup(
+        'Unassign Cutomer',
+        <YesNoPopup
+          message={'Do you want to unassigned customer ?'}
+          onOk={() => {
+            assignCustomerToOperation(null, false);
+            closeAllPopups();
+          }}
+          onCancel={closeAllPopups}
+        />,
+      );
+    }
+  };
 
   return (
     <View.V style={styles.container}>
       <View.V style={styles.content}>
         <View.V style={styles.customer}>
-          <View.V style={styles.customerInfo} onPress={assignCustomer}>
+          <View.V
+            style={styles.customerInfo}
+            onPress={assignCustomer}
+            onLongPress={unassignedCustomer}>
             <Label.T
               style={{alignSelf: 'center', fontWeight: 'bold'}}
               text={`${operation?.customer?.name || 'Press  to assign'}`}
