@@ -26,6 +26,7 @@ import {CustomerListScreen} from '@src/screens/portrait/main/customer/CustomerLi
 import {UpdateCustomerScreen} from '@src/screens/portrait/main/customer/UpdateCustomerScreen';
 import {MenuScreen} from '@src/screens/portrait/main/pos/menu';
 import {ReceiptScreen} from '@src/screens/portrait/main/pos/receipt';
+import {CloseOutReportScreen} from '@src/screens/portrait/main/closeouttreport';
 
 type Props = {};
 export const PortraitApp: FC<Props> = memo(({}) => {
@@ -150,6 +151,7 @@ export const PortraitApp: FC<Props> = memo(({}) => {
                 {name: Route.BRANCH, component: UpdateBrandScreen},
                 {name: Route.GROUP, component: UpdateGroupScreen},
                 {name: Route.CUSTOMER, component: CustomerStack},
+                {name: Route.CLOSE_OUT_REPORT, component: CloseOutReportScreen},
               ]}
             />
             {/*<Button.FloatCircle*/}

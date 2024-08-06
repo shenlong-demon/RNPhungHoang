@@ -82,5 +82,8 @@ const API_URL = {
   UPDATE_GROUP: (groupId: number): string => {
     return `${ENV.HOST}/group/update/${groupId}`;
   },
+  DO_CLOSE_OUT_REPORT: (): string => {
+    return `${ENV.HOST}/report/close-out-report`;
+  },
 };
 export {API_URL};

@@ -77,7 +77,6 @@ export const useOperationFacade = (): OperationFacadeResult => {
     return dto;
   };
 
-
   const createOperation = async (
     name?: string,
   ): Promise<Dto<Operation | null>> => {

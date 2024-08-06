@@ -11,7 +11,6 @@ import {useNavigation} from '@core/navigation';
 import {CONSTANTS, Dto, Logger} from '@core/common';
 import GroupSelectItem from '@src/screens/portrait/shared_components/GroupSelectItem';
 import BrandSelectItem from '@src/screens/portrait/shared_components/BrandSelectItem';
-import StatusDropdownForm from '@src/screens/portrait/shared_components/StatusDropdownForm';
 import {File} from '@core/models';
 import {CreateProductRequest, UpdateProductRequest} from '@src/business/model';
 import Form from '@core/components/formbase/Form';
@@ -130,7 +129,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
         defaultValue={`${product?.price || CONSTANTS.STR_EMPTY}`}
         name={'price'}
         rules={{
-          valueAsNumber: true,
+          // valueAsNumber: true,
           required: 'Price is required!',
           min: 0,
           pattern: {
@@ -148,7 +147,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
         name={'quantity'}
         rules={{
           required: 'Quantity is required!',
-          valueAsNumber: true,
+          // valueAsNumber: true,
           min: 0,
           pattern: {
             value: /^[-+]?[1-9]\d*$/,

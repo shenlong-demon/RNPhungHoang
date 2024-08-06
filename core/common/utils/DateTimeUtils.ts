@@ -8,4 +8,9 @@ export class DateTimeUtils {
       timeStyle: 'short',
     }).format(date);
   }
+  public static formatDateString(date: Date): string {
+    return new Intl.DateTimeFormat('vi-VN', {
+      dateStyle: 'short',
+    }).format(date);
+  }
 }

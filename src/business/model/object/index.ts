@@ -8,3 +8,4 @@ export * from './operation';
 export * from './Booking';
 export * from './Issue';
 export * from './Bill';
+export * from './CloseOutReport';

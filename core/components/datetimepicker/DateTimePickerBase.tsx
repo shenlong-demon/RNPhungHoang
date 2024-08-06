@@ -7,18 +7,26 @@ import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import {DateTimeUtils, Logger} from '@core/common';
 import {StyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
 import {TextStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
-
-export type DateTimePickerBaseProps = ViewBaseProps & {
-  textStyle?: StyleProp<TextStyle>;
-  defaultValue?: number | null;
-  onChange: (newDate: number) => void;
-};
 enum MODE {
   DATE = 'date',
   TIME = 'time',
 }
+
+export enum DISPLAY_MODE {
+  DATE = 'date',
+  DATETIME = 'datetime',
+}
+
+export type DateTimePickerBaseProps = ViewBaseProps & {
+  mode?: DISPLAY_MODE;
+  textStyle?: StyleProp<TextStyle>;
+  defaultValue?: number | null;
+  onChange: (newDate: number) => void;
+};
+
 export const DateTimePickerBase: FC<DateTimePickerBaseProps> = memo(
   ({
+    mode,
     defaultValue,
     onChange,
     textStyle,
@@ -40,7 +48,10 @@ export const DateTimePickerBase: FC<DateTimePickerBaseProps> = memo(
       // const currentDate = selectedDate;
       setDatetime(selectedDate);
 
-      if (showMode === MODE.DATE) {
+      if (
+        showMode === MODE.DATE &&
+        (mode || DISPLAY_MODE.DATETIME) === DISPLAY_MODE.DATETIME
+      ) {
         setShowMode(MODE.TIME);
       } else {
         setShowMode(null);
@@ -50,7 +61,7 @@ export const DateTimePickerBase: FC<DateTimePickerBaseProps> = memo(
     useEffect(() => {
       if (showMode !== prevShowModeRef.current) {
         showDateTimePicker();
-      } else if (showMode === MODE.TIME) {
+      } else if (showMode === MODE.TIME || mode === DISPLAY_MODE.DATE) {
         onChange(datetime.getTime());
       }
       prevShowModeRef.current = showMode;
@@ -70,7 +81,10 @@ export const DateTimePickerBase: FC<DateTimePickerBaseProps> = memo(
     const open = (): void => {
       setShowMode(MODE.DATE);
     };
-    const dateStr: string = DateTimeUtils.formatDateTimeString(datetime);
+    const dateStr: string =
+      mode === DISPLAY_MODE.DATETIME
+        ? DateTimeUtils.formatDateTimeString(datetime)
+        : DateTimeUtils.formatDateString(datetime);
     const labelStyles = StyleSheet.flatten([styles.text, textStyle || {}]);
     const containerStyle = StyleSheet.flatten([styles.container, style]);
     return (
@@ -87,6 +101,7 @@ const styles = StyleSheet.create({
     height: 40,
     paddingLeft: 15,
     paddingRight: 15,
+    backgroundColor: '#200ae7',
   },
   common: {
     flex: 1,
@@ -98,5 +113,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: 'bold',
+    color: 'white',
   },
 });

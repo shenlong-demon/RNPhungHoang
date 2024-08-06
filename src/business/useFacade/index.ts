@@ -3,3 +3,4 @@ export * from './useProductFacade';
 export * from './useDataFacade';
 export * from './useOperationFacade';
 export * from './useProductSearchFacade';
+export * from './useCloseoutReportFacade';
