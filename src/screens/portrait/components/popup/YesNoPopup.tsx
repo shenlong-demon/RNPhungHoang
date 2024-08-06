@@ -14,11 +14,26 @@ export const YesNoPopup: FC<Props> = memo(
   ({message, onOk, onCancel}: Props) => {
     return (
       <View.V style={styles.container}>
-        <Label.T text={message} />
-        <View.Row>
-          <Button.B label="No" onPress={onCancel} />
-          <Button.B label="Yes" onPress={onOk} />
-        </View.Row>
+        <Label.T style={{fontWeight: 'bold'}} text={message} />
+        <View.V
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginTop: 10,
+          }}>
+          <Button.B
+            style={{backgroundColor: 'red', marginRight: 20}}
+            textStyle={{color: 'white'}}
+            label="No"
+            onPress={onCancel}
+          />
+          <Button.B
+            style={{backgroundColor: 'green', marginLeft: 20}}
+            textStyle={{color: 'white'}}
+            label="Yes"
+            onPress={onOk}
+          />
+        </View.V>
       </View.V>
     );
   },
@@ -26,7 +41,5 @@ export const YesNoPopup: FC<Props> = memo(
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    flex: 1,
-    width: '100%',
   },
 });
