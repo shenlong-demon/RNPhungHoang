@@ -1,6 +1,11 @@
 import BaseFacade from '@core/common/models/BaseFacade';
 import {Dto} from '@core/common';
-import { CloseOutReport, CloseOutReportRequest, ReportService } from "@src/business";
+import {
+  CloseOutReport,
+  CloseOutReportRequest,
+  GetCloseOutReportsRequest,
+  ReportService,
+} from '@src/business';
 
 export class ReportFacade extends BaseFacade<ReportFacade> {
   private readonly IMAGE_FOLDER: string = 'Customer';
@@ -18,5 +23,11 @@ export class ReportFacade extends BaseFacade<ReportFacade> {
     req: CloseOutReportRequest,
   ): Promise<Dto<CloseOutReport | null>> {
     return this.reportService.doCloseOutReport(req);
+  }
+
+  public async getCloseOutReports(
+    req: GetCloseOutReportsRequest,
+  ): Promise<Dto<CloseOutReport[]>> {
+    return this.reportService.getCloseOutReports(req);
   }
 }

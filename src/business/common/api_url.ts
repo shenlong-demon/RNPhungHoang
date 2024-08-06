@@ -85,5 +85,8 @@ const API_URL = {
   DO_CLOSE_OUT_REPORT: (): string => {
     return `${ENV.HOST}/report/close-out-report`;
   },
+  GET_CLOSE_OUT_REPORT: (): string => {
+    return `${ENV.HOST}/report/list-close-out-report`;
+  },
 };
 export {API_URL};

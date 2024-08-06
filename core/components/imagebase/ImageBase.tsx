@@ -1,8 +1,10 @@
 import React, {FC, memo, useEffect, useState} from 'react';
-import {ImageProps, Pressable, StyleSheet} from 'react-native';
+import {ImageProps, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {ImageFile, ImagePickerLibrary} from '@core/system';
 import {File} from '@core/models';
+import View from '@core/components/viewbase/View';
+import Button from '@core/components/buttonbase/Button';
 
 export interface ImageBaseProps extends Omit<ImageProps, 'source>'> {
   canSetSource?: boolean;
@@ -22,19 +24,23 @@ const ImageBase: FC<ImageBaseProps> = ({
 }) => {
   const [imageSource, setImageSource] = useState<File | null>(source);
   const finalStyles = StyleSheet.flatten([styles.common, style]);
-  const setSource = async (): Promise<void> => {
+  const capture = async (): Promise<void> => {
     const result: ImageFile | null = await ImagePickerLibrary.capture();
     if (!!result) {
       setImageSource(result);
     }
   };
+  const select = async (): Promise<void> => {
+    const result: ImageFile | null = await ImagePickerLibrary.selectImage();
+    if (!!result) {
+      setImageSource(result);
+    }
+  };
+
   useEffect(() => {
     !!onSourceChanged && onSourceChanged(imageSource);
   }, [onSourceChanged, imageSource]);
 
-  const onPress = (): void => {
-    !!canSetSource && setSource();
-  };
   const getImage = (): any => {
     return (
       <FastImage
@@ -46,13 +52,31 @@ const ImageBase: FC<ImageBaseProps> = ({
   };
 
   return (
-    <>
-      {!!canSetSource ? (
-        <Pressable onPress={onPress}>{getImage()}</Pressable>
-      ) : (
-        getImage()
-      )}
-    </>
+    <View.V>
+      {getImage()}
+      {canSetSource ? (
+        <View.V
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}>
+          <Button.B
+            style={[styles.button, {backgroundColor: '#faf1b6'}]}
+            onPress={capture}
+            label={'Capture'}
+          />
+          <Button.B
+            style={[styles.button, {backgroundColor: '#c0efff'}]}
+            onPress={select}
+            label={'Select'}
+          />
+        </View.V>
+      ) : null}
+    </View.V>
   );
 };
 
@@ -66,5 +90,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: 'green',
+  },
+  button: {
+    // flex: 1,
+    opacity: 0.9,
+    minWidth: 100,
   },
 });

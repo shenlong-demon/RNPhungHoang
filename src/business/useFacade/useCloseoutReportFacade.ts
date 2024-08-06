@@ -1,8 +1,14 @@
 import {ReportFacade} from '@src/business/facade/ReportFacade';
-import {CloseOutReportRequest} from '@src/business';
+import {
+  CloseOutReport,
+  CloseOutReportRequest,
+  GetCloseOutReportsRequest,
+} from '@src/business';
+import {Dto} from '@core/common';
 
 type CloseOutReportFacadeResult = {
   doCloseOutReport: (selectedData: number) => Promise<void>;
+  getCloseOutReports: (selectedMonth: number) => Promise<Dto<CloseOutReport[]>>;
 };
 
 export const useCloseOutReportFacade = (): CloseOutReportFacadeResult => {
@@ -12,8 +18,16 @@ export const useCloseOutReportFacade = (): CloseOutReportFacadeResult => {
       date: selectedData,
     } as CloseOutReportRequest);
   };
+  const getCloseOutReports = async (
+    selectedMonth: number,
+  ): Promise<Dto<CloseOutReport[]>> => {
+    return facade.getCloseOutReports({
+      date: selectedMonth,
+    } as GetCloseOutReportsRequest);
+  };
 
   return {
     doCloseOutReport,
+    getCloseOutReports,
   };
 };

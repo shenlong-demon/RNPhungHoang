@@ -1,9 +1,11 @@
 import {ApiResult, BaseRepo, Dto} from '@core/common';
 import {
   API_URL,
+  CloseOutReport,
   CloseOutReportRequest,
   CreateBrandRequest,
   CreateGroupRequest,
+  GetCloseOutReportsRequest,
   UpdateBrandRequest,
   UpdateGroupRequest,
 } from '@src/business';
@@ -56,6 +58,15 @@ export class ReportRepo extends BaseRepo<ReportRepo> {
   ): Promise<Dto<any | null>> {
     const api: ApiResult = await this.api.post(
       API_URL.DO_CLOSE_OUT_REPORT(),
+      req,
+    );
+    return this.populate(api);
+  }
+  public async getCloseOutReports(
+    req: GetCloseOutReportsRequest,
+  ): Promise<Dto<any[]>> {
+    const api: ApiResult = await this.api.post(
+      API_URL.GET_CLOSE_OUT_REPORT(),
       req,
     );
     return this.populate(api);
