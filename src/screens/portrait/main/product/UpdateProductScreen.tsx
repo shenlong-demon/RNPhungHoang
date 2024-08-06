@@ -1,5 +1,4 @@
 import React, {FC} from 'react';
-import {Button, Form, Label, View} from '@core/components';
 import {
   Brand,
   Group,
@@ -9,12 +8,16 @@ import {
   useProductFacade,
 } from '@src/business';
 import {useNavigation} from '@core/navigation';
-import {Dto, Logger} from '@core/common';
+import {CONSTANTS, Dto, Logger} from '@core/common';
 import GroupSelectItem from '@src/screens/portrait/shared_components/GroupSelectItem';
 import BrandSelectItem from '@src/screens/portrait/shared_components/BrandSelectItem';
 import StatusDropdownForm from '@src/screens/portrait/shared_components/StatusDropdownForm';
 import {File} from '@core/models';
 import {CreateProductRequest, UpdateProductRequest} from '@src/business/model';
+import Form from '@core/components/formbase/Form';
+import View from '@core/components/viewbase/View';
+import {StyleSheet} from 'react-native';
+import {FormStatusDropDown} from '@src/screens/portrait/shared_components/FormStatusDropDown';
 
 type Props = {};
 type FormValues = Product & {
@@ -69,40 +72,36 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
   };
 
   return (
-    <Form.View onSubmit={onSubmit} onError={onError}>
-      <Label.T text={'Imager'} />
+    <Form.View style={styles.container} onSubmit={onSubmit} onError={onError}>
       <Form.Image
-        style={{
-          width: 100,
-          aspectRatio: 1,
-          height: 100,
-        }}
-        name={'imageFile'}
-        canSetSource={true}
+        name="imageFile"
+        source={{uri: product?.image || CONSTANTS.STR_EMPTY} as File}
         defaultValue={{uri: product?.image} as File}
+        style={styles.avatar}
+        canSetSource={true}
       />
 
-      <Form.InputText
-        label={'Product name'}
+      <Form.Input
+        label={'Product Name'}
         placeholder={'Please input product name'}
         defaultValue={product?.name}
         name={'name'}
         rules={{required: 'Name is required!'}}
       />
-      <Form.InputText
-        label={'Other name'}
+      <Form.Input
+        label={'Other Name'}
         placeholder={'Please input other name'}
         defaultValue={product?.otherName}
         name={'otherName'}
       />
-      <Form.InputText
+      <Form.Input
         label={'Code'}
         placeholder={'Please input code'}
         defaultValue={product?.code}
         name={'code'}
       />
       <View.Row>
-        <Form.SingleDropdown
+        <Form.DropDown
           placeholder={'Select group'}
           name={'group'}
           data={groups}
@@ -112,7 +111,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
           renderItem={(group: Group) => <GroupSelectItem group={group} />}
           defaultValue={product?.group}
         />
-        <Form.SingleDropdown
+        <Form.DropDown
           placeholder={'Select brand'}
           name={'brand'}
           data={brands}
@@ -124,11 +123,11 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
         />
       </View.Row>
 
-      <Form.InputText
+      <Form.Input
         keyboardType={'numeric'}
         label={'Price'}
         placeholder={'Please input price'}
-        defaultValue={`${product?.price}`}
+        defaultValue={`${product?.price || CONSTANTS.STR_EMPTY}`}
         name={'price'}
         rules={{
           valueAsNumber: true,
@@ -140,12 +139,12 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
           },
         }}
       />
-      <Form.InputText
+      <Form.Input
         editable={!product}
         keyboardType={'numeric'}
         label={'Quantity'}
         placeholder={'Please input quantity'}
-        defaultValue={`${product?.quantity}`}
+        defaultValue={`${product?.quantity || CONSTANTS.STR_EMPTY}`}
         name={'quantity'}
         rules={{
           required: 'Quantity is required!',
@@ -157,13 +156,22 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
           },
         }}
       />
-      <View.Row>
-        <StatusDropdownForm
-          name={'status'}
-          defaultValue={!!product ? product.status : STATUS.ACTIVE}
-        />
-      </View.Row>
-      <Button.Submit />
+      <FormStatusDropDown
+        name={'status'}
+        defaultValue={product?.status || STATUS.ACTIVE}
+      />
+      <Form.SubmitButton />
     </Form.View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    flex: 1,
+  },
+  avatar: {
+    alignSelf: 'center',
+  },
+});

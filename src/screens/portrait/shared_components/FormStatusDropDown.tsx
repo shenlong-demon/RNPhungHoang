@@ -36,7 +36,7 @@ export const FormStatusDropDown: FC<Props> = memo((props: Props) => {
     return (
       statuses.find((status: Status): boolean => {
         return status.id === props.defaultValue;
-      }) || null
+      }) || STATUS.ACTIVE
     );
   }, [props.defaultValue]);
 
@@ -49,7 +49,7 @@ export const FormStatusDropDown: FC<Props> = memo((props: Props) => {
   }, []);
 
   return (
-    <View.V style={{flex: 1}}>
+    <View.Row>
       <Form.DropDown
         placeholder={'Select status'}
         name={props.name}
@@ -63,6 +63,6 @@ export const FormStatusDropDown: FC<Props> = memo((props: Props) => {
         value={defaultValue}
         selectedProperty={'id'}
       />
-    </View.V>
+    </View.Row>
   );
 });

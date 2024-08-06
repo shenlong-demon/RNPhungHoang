@@ -1,9 +1,9 @@
-import { FC, memo } from "react";
-import Form from "@core/components/formbase/Form";
-import { CONSTANTS, Logger } from "@core/common";
-import { StyleSheet } from "react-native";
-import Button from "@core/components/buttonbase/Button";
-import View from "@core/components/viewbase/View";
+import {FC, memo} from 'react';
+import Form from '@core/components/formbase/Form';
+import {CONSTANTS, Logger} from '@core/common';
+import {StyleSheet} from 'react-native';
+import Button from '@core/components/buttonbase/Button';
+import View from '@core/components/viewbase/View';
 
 type Props = {
   onOk: (operationName?: string) => Promise<void>;

@@ -93,11 +93,12 @@ export const PortraitApp: FC<Props> = memo(({}) => {
   const ProductStack = () => {
     return (
       <StackNavigator
+        screenOptions={{...headerStyle}}
         screens={[
           {
             name: Route.PRODUCT_LIST,
             component: ProductListScreen,
-            options: {headerShown: true},
+            options: {headerShown: true, title: 'Product List'},
           },
           {
             name: Route.PRODUCT_UPDATE,
@@ -136,11 +137,15 @@ export const PortraitApp: FC<Props> = memo(({}) => {
               screens={[
                 {name: Route.MAIN, component: MainScreen},
                 {name: Route.STORE, component: StoreScreen},
-                {name: Route.PRODUCT, component: ProductStack},
+                {
+                  name: Route.PRODUCT,
+                  component: ProductStack,
+                  options: {headerShown: false},
+                },
                 {
                   name: Route.POS_SELLER,
                   component: POSStack,
-                  options: {headerShown: false},
+                  options: {headerShown: true},
                 },
                 {name: Route.BRANCH, component: UpdateBrandScreen},
                 {name: Route.GROUP, component: UpdateGroupScreen},

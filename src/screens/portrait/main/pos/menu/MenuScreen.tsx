@@ -1,6 +1,6 @@
 import {FC, memo, useEffect, useState} from 'react';
 import View from '@core/components/viewbase/View';
-import {Pressable, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {
   Product,
   useOperationFacade,

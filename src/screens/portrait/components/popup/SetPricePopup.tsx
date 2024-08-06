@@ -32,6 +32,7 @@ export const SetPricePopup: FC<Props> = memo(
             // valueAsNumber: true,
             required: `${label} is required!`,
           }}
+          keyboardType={'numeric'}
           label={label}
           placeholder={`Please input ${label.toLowerCase()}`}
           name="price"

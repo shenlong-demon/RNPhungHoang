@@ -70,5 +70,17 @@ const API_URL = {
   GET_OPERATION_DETAIL: (operationId: number): string => {
     return `${ENV.HOST}/operation/get-operation-detail/${operationId}`;
   },
+  CREATE_BRAND: (): string => {
+    return `${ENV.HOST}/brand/create`;
+  },
+  UPDATE_BRAND: (brandId: number): string => {
+    return `${ENV.HOST}/brand/update/${brandId}`;
+  },
+  CREATE_GROUP: (): string => {
+    return `${ENV.HOST}/group/create`;
+  },
+  UPDATE_GROUP: (groupId: number): string => {
+    return `${ENV.HOST}/group/update/${groupId}`;
+  },
 };
 export {API_URL};

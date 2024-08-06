@@ -1,84 +1,95 @@
-import React, {memo, useEffect, useMemo, useState} from 'react';
-import {Button, FlatList, Text, TextInput, View} from 'react-native';
-import {DataContextResult, Group, STATUS, useDataContext} from '@src/business';
+import React, {useEffect} from 'react';
+import {StyleSheet} from 'react-native';
+import {
+  Group,
+  DataContextResult,
+  STATUS,
+  useDataContext,
+  usePopupContext,
+} from '@src/business';
+import View from '@core/components/viewbase/View';
+import {Button, FlatList} from '@core/components';
+import Label from '@core/components/labelbase/Label';
+import {UpdateGroupPopup} from '@src/screens/portrait/components/popup';
+import {Dto} from '@core/common';
 
 export const UpdateGroupScreen = () => {
-  const [name, setName] = useState('');
-  const [status, setStatus] = useState<STATUS>(STATUS.ACTIVE);
-  const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
-  const {groups}: DataContextResult = useDataContext();
-  useEffect(() => {}, []);
+  const {openPopup, closeAllPopups} = usePopupContext();
+  const {groups, createGroup, updateGroup}: DataContextResult =
+    useDataContext();
+  useEffect(() => {
+    // loadGroups();
+  }, []);
 
-  const handleSaveBrand = () => {
-    // if (selectedBrand) {
-    //   // Update existing brand
-    //   const updatedBrands = brands.map(brand =>
-    //     brand.id === selectedBrand.id ? {...brand, name, status} : brand,
-    //   );
-    //   setBrands(updatedBrands);
-    //   setSelectedBrand(null);
-    // } else {
-    //   // Create new brand
-    //   const newBrand: Brand = {id: AppUtility.nowInMili(), name, status};
-    //   setBrands([...brands, newBrand]);
-    // }
-    // setSelectedBrand(null);
-    // setName('');
-    // setStatus(STATUS.ACTIVE);
+  const createNewGroup = async (
+    name: string,
+    status: STATUS,
+  ): Promise<void> => {
+    const dto: Dto<Group | null> = await createGroup(name, status);
+    if (dto.next()) {
+      closeAllPopups();
+    }
   };
-
-  // Function to handle brand editing
-  const handleEditBrand = brand => {
-    setName(brand.name);
-    setStatus(brand.status);
-    setSelectedGroup(brand);
+  const updateExistGroup = async (
+    id: number,
+    name: string,
+    status: STATUS,
+  ): Promise<void> => {
+    const dto: Dto<Group | null> = await updateGroup(id, name, status);
+    if (dto.next()) {
+      closeAllPopups();
+    }
   };
-
-  // Function to handle brand deletion
-  const handleDeleteBrand = brand => {
-    // const updatedBrands = brands.filter(b => b.id !== brand.id);
-    // setBrands(updatedBrands);
-  };
-
-  const list = useMemo(() => {
-    return (
-      <FlatList
-        data={groups}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => (
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text>{item.name}</Text>
-            <View style={{flexDirection: 'row'}}>
-              <Button title="Edit" onPress={() => handleEditBrand(item)} />
-              <Button title="Delete" onPress={() => handleDeleteBrand(item)} />
-            </View>
-          </View>
-        )}
-      />
+  const onCreate = (): void => {
+    openPopup(
+      'Create New Group',
+      <UpdateGroupPopup onOk={createNewGroup} onCancel={closeAllPopups} />,
     );
-  }, [groups]);
+  };
+  const onEdit = (Group: Group): void => {
+    openPopup(
+      'Update Group',
+      <UpdateGroupPopup
+        selectedGroup={Group}
+        onOk={(name: string, status: STATUS) =>
+          updateExistGroup(Group.id, name, status)
+        }
+        onCancel={closeAllPopups}
+      />,
+    );
+  };
 
+  const renderItem = (data: {item: Group; index: number}): any => {
+    return (
+      <View.Row
+        style={{
+          backgroundColor:
+            data.item.status === STATUS.ACTIVE
+              ? data.index % 2 === 0
+                ? 'rgba(234,252,234,0.37)'
+                : 'white'
+              : data.index % 2 === 0
+              ? 'rgba(250,236,236,0.95)'
+              : 'rgba(246,220,220,0.95)',
+        }}
+        onPress={() => onEdit(data.item)}>
+        <Label.T text={data.item.name} />
+      </View.Row>
+    );
+  };
   return (
-    <View style={{flex: 1}}>
-      {/* Group form */}
-      <View>
-        <TextInput
-          placeholder="Group name"
-          value={name}
-          onChangeText={text => setName(text)}
-        />
-        <TextInput
-          placeholder="Status (1: active, 2: inactive)"
-          value={status.toString()}
-          onChangeText={text => setStatus(parseInt(text))}
-        />
-        <Button
-          title={selectedGroup ? 'Update' : 'Create'}
-          onPress={handleSaveBrand}
-        />
-      </View>
-
-      {list}
-    </View>
+    <View.V style={styles.container}>
+      <FlatList.L style={styles.list} data={groups} renderItem={renderItem} />
+      <Button.FloatCirle position={'bottom|right'} onPress={onCreate} />
+    </View.V>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  list: {
+    flex: 1,
+  },
+});
