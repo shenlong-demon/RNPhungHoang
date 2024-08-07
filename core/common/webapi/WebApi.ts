@@ -97,7 +97,7 @@ export class WebApi extends Singleton<WebApi> {
       ...header,
       ...(!!token
         ? {
-            Authorization: `Bearer ${token}`,
+            token: `Bearer ${token}`,
           }
         : {}),
     };
