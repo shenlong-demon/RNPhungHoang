@@ -1,4 +1,4 @@
-import {ENV} from '@src/business';
+import { ENV } from '@src/business';
 
 const API_URL = {
   LOGIN: (): string => {
@@ -88,5 +88,8 @@ const API_URL = {
   GET_CLOSE_OUT_REPORT: (): string => {
     return `${ENV.HOST}/report/list-close-out-report`;
   },
+  REMOVE_ISSUE: (operationId: number): string => {
+    return `${ENV.HOST}/operation/remove-issue/${operationId}`;
+  },
 };
-export {API_URL};
+export { API_URL };

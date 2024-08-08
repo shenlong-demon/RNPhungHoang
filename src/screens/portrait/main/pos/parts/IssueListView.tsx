@@ -1,5 +1,5 @@
-import React, {FC, memo, useCallback, useMemo} from 'react';
-import {StyleSheet} from 'react-native';
+import React, { FC, memo, useMemo } from 'react';
+import { StyleSheet } from 'react-native';
 import {
   Issue,
   useOperationContext,
@@ -7,17 +7,20 @@ import {
   usePopupContext,
 } from '@src/business';
 import Button from '@core/components/buttonbase/Button';
-import {UpdateOperationIssuePopup} from '@src/screens/portrait/components/popup';
-import {File} from '@core/models';
+import {
+  UpdateOperationIssuePopup,
+  YesNoPopup,
+} from '@src/screens/portrait/components/popup';
+import { File } from '@core/models';
 import View from '@core/components/viewbase/View';
-import {FlatList} from '@core/components';
-import {IssueListItemView} from '@src/screens/portrait/main/pos/parts/IssueListItemView';
+import { FlatList } from '@core/components';
+import { IssueListItemView } from '@src/screens/portrait/main/pos/parts/IssueListItemView';
 
 type Props = {};
 export const IssueListView: FC<Props> = memo(({}: Props) => {
-  const {operation} = useOperationContext();
-  const {addIssue} = useOperationFacade();
-  const {openPopup, closeAllPopups} = usePopupContext();
+  const { operation, removeIssue } = useOperationContext();
+  const { addIssue } = useOperationFacade();
+  const { openPopup, closeAllPopups } = usePopupContext();
   const issues = useMemo((): Issue[] => {
     return operation?.issues || [];
   }, [operation]);
@@ -32,20 +35,33 @@ export const IssueListView: FC<Props> = memo(({}: Props) => {
     );
   };
 
-  const renderIssueListItem = useCallback(
-    (data: {item: Issue; index: number}): any => {
-      return (
-        <IssueListItemView
-          item={data.item}
-          index={data.index}
-          onPress={async () => {}}
-          onLongPress={async () => {}}
-          isSelected={false}
-        />
-      );
-    },
-    [],
-  );
+  const confirmRemove = (item: Issue): void => {
+    openPopup(
+      'Remove Issue',
+      <YesNoPopup
+        message={'Do you want to remove this issue ?'}
+        onOk={() => {
+          removeIssue(item);
+          closeAllPopups();
+        }}
+        onCancel={closeAllPopups}
+      />,
+    );
+  };
+
+  const renderIssueListItem = (data: { item: Issue; index: number }): any => {
+    return (
+      <IssueListItemView
+        item={data.item}
+        index={data.index}
+        onPress={async () => {}}
+        onLongPress={async () => {
+          confirmRemove(data.item);
+        }}
+        isSelected={false}
+      />
+    );
+  };
   return (
     <View.V style={styles.container}>
       <FlatList.L
@@ -55,8 +71,8 @@ export const IssueListView: FC<Props> = memo(({}: Props) => {
       />
       <View.Row style={styles.actions}>
         <Button.B
-          style={{backgroundColor: '#c23d3d', width: '70%'}}
-          textStyle={{color: 'white'}}
+          style={{ backgroundColor: '#c23d3d', width: '70%' }}
+          textStyle={{ color: 'white' }}
           label={'Add Issue'}
           onPress={openIssuePopup}
         />

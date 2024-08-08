@@ -1,9 +1,11 @@
-import {ApiResult, BaseRepo, Dto} from '@core/common';
+import { ApiResult, BaseRepo, Dto } from '@core/common';
 import {
   AddOperationServiceRequest,
   API_URL,
   CancelBookingRequest,
   CreateOperationIssueRequest,
+  Operation,
+  RemoveIssueRequest,
   SetOperationDiscountRequest,
   SetOperationEstimationRequest,
 } from '@src/business';
@@ -28,6 +30,7 @@ export class OperationRepo extends BaseRepo<OperationRepo> {
     const api: ApiResult = await this.api.get(API_URL.GET_OPERATIONS(offset));
     return this.populate(api);
   }
+
   public async getOperation(id: number): Promise<Dto<any | null>> {
     const api: ApiResult = await this.api.get(API_URL.GET_OPERATION(id));
     return this.populate(api);
@@ -130,6 +133,17 @@ export class OperationRepo extends BaseRepo<OperationRepo> {
   async getOperationDetail(operationId: number): Promise<Dto<any | null>> {
     const api: ApiResult = await this.api.get(
       API_URL.GET_OPERATION_DETAIL(operationId),
+    );
+    return this.populate(api);
+  }
+
+  async removeIssue(
+    operationId: number,
+    req: RemoveIssueRequest,
+  ): Promise<Dto<Operation | null>> {
+    const api: ApiResult = await this.api.put(
+      API_URL.REMOVE_ISSUE(operationId),
+      req,
     );
     return this.populate(api);
   }

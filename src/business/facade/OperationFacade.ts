@@ -1,5 +1,5 @@
 import BaseFacade from '@core/common/models/BaseFacade';
-import {Dto, Utility} from '@core/common';
+import { Dto, Utility } from '@core/common';
 import {
   AddOperationServiceRequest,
   CancelBookingRequest,
@@ -7,13 +7,14 @@ import {
   Customer,
   Operation,
   Product,
+  RemoveIssueRequest,
   SetBookingNoteRequest,
   SetOperationDiscountRequest,
   SetOperationEstimationRequest,
   UpdateFileService,
 } from '@src/business';
-import {OperationService} from '@src/business/service/OperationService';
-import {File} from '@core/models';
+import { OperationService } from '@src/business/service/OperationService';
+import { File } from '@core/models';
 
 export class OperationFacade extends BaseFacade<OperationFacade> {
   private operationService: OperationService = OperationService.shared();
@@ -37,6 +38,7 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
   async getOperations(offset: number): Promise<Dto<Operation[]>> {
     return this.operationService.getOperations(offset);
   }
+
   async getOperation(id: number): Promise<Dto<Operation | null>> {
     return this.operationService.getOperation(id);
   }
@@ -84,6 +86,7 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
   ): Promise<Dto<Operation | null>> {
     return this.operationService.addService(operation, req);
   }
+
   async cancelBooking(
     operation: Operation,
     req: CancelBookingRequest,
@@ -128,5 +131,12 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
     }
     total -= operation.discount || 0;
     return total;
+  }
+
+  async removeIssue(
+    operation: Operation,
+    req: RemoveIssueRequest,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationService.removeIssue(operation, req);
   }
 }

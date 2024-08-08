@@ -1,4 +1,4 @@
-import {BaseService, Dto} from '@core/common';
+import { BaseService, Dto } from '@core/common';
 import {
   AddOperationServiceRequest,
   CancelBookingRequest,
@@ -6,10 +6,11 @@ import {
   Customer,
   Operation,
   Product,
+  RemoveIssueRequest,
   SetOperationDiscountRequest,
   SetOperationEstimationRequest,
 } from '@src/business';
-import {OperationRepo} from '@src/business/repository';
+import { OperationRepo } from '@src/business/repository';
 
 export class OperationService extends BaseService<OperationService> {
   private operationRepo: OperationRepo = OperationRepo.shared();
@@ -32,6 +33,7 @@ export class OperationService extends BaseService<OperationService> {
   async getOperations(offset: number): Promise<Dto<Operation[]>> {
     return this.operationRepo.getOperations(offset);
   }
+
   async getOperation(id: number): Promise<Dto<Operation | null>> {
     return this.operationRepo.getOperation(id);
   }
@@ -99,5 +101,12 @@ export class OperationService extends BaseService<OperationService> {
     operationId: number,
   ): Promise<Dto<Operation | null>> {
     return this.operationRepo.getOperationDetail(operationId);
+  }
+
+  async removeIssue(
+    operation: Operation,
+    req: RemoveIssueRequest,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationRepo.removeIssue(operation.id, req);
   }
 }
