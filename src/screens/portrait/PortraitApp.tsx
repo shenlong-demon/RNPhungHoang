@@ -1,8 +1,8 @@
-import React, {FC, memo} from 'react';
-import {DrawerNavigator, StackNavigator} from '@core/navigation';
+import React, { FC, memo } from 'react';
+import { DrawerNavigator, StackNavigator } from '@core/navigation';
 import LoginScreen from '@src/screens/portrait/auth';
 
-import {Route} from '@src/screens/portrait/Route';
+import { Route } from '@src/screens/portrait/Route';
 import StoreScreen from '@src/screens/portrait/main/store';
 import {
   DataContextProvider,
@@ -16,21 +16,24 @@ import {
   UpdateProductScreen,
 } from '@src/screens/portrait/main/product';
 import MainScreen from '@src/screens/portrait/main';
-import {UpdateBrandScreen} from '@src/screens/portrait/main/brand';
-import {UpdateGroupScreen} from '@src/screens/portrait/main/group';
+import { UpdateBrandScreen } from '@src/screens/portrait/main/brand';
+import { UpdateGroupScreen } from '@src/screens/portrait/main/group';
 import {
   OperationDetailScreen,
   POSSellerScreen,
 } from '@src/screens/portrait/main/pos';
-import {CustomerListScreen} from '@src/screens/portrait/main/customer/CustomerListScreen';
-import {UpdateCustomerScreen} from '@src/screens/portrait/main/customer/UpdateCustomerScreen';
-import {MenuScreen} from '@src/screens/portrait/main/pos/menu';
-import {ReceiptScreen} from '@src/screens/portrait/main/pos/receipt';
-import {CloseOutReportScreen} from '@src/screens/portrait/main/closeouttreport';
+import { CustomerListScreen } from '@src/screens/portrait/main/customer/CustomerListScreen';
+import { UpdateCustomerScreen } from '@src/screens/portrait/main/customer/UpdateCustomerScreen';
+import { MenuScreen } from '@src/screens/portrait/main/pos/menu';
+import { ReceiptScreen } from '@src/screens/portrait/main/pos/receipt';
+import { CloseOutReportScreen } from '@src/screens/portrait/main/closeouttreport';
+import Button from '@core/components/buttonbase/Button';
+import View from '@core/components/viewbase/View';
+import Label from '@core/components/labelbase/Label';
 
 type Props = {};
 export const PortraitApp: FC<Props> = memo(({}) => {
-  const {user, init} = useAuthContext();
+  const { user, init } = useAuthContext();
   const headerStyle = {
     headerStyle: {
       backgroundColor: 'green',
@@ -41,19 +44,49 @@ export const PortraitApp: FC<Props> = memo(({}) => {
     },
     headerTitleAlign: 'center',
   };
+
+  const createHeaderTopStack = (title: string): any => {
+    return {
+      headerShown: true,
+      headerLeft: null,
+      header: (props: any) => (
+        <View.Row style={{ backgroundColor: 'green' }}>
+          <Button.B
+            style={{ backgroundColor: 'green', width: 50, minWidth: 50 }}
+            textStyle={{ color: 'white', fontWeight: 'bold' }}
+            label={'Func'}
+            onPress={() => {
+              props?.navigation?.openDrawer();
+            }}
+          />
+          <Label.T
+            style={{
+              flex: 5,
+              fontWeight: 'bold',
+              fontSize: 24,
+              color: 'white',
+              textAlign: 'center',
+            }}
+            text={title}
+          />
+          <View.V style={{ flex: 1 }} />
+        </View.Row>
+      ),
+    };
+  };
+
   const POSStack = () => {
     return (
       <OperationListContextProvider>
         <OperationContextProvider>
           <StackNavigator
-            screenOptions={{...headerStyle}}
+            screenOptions={{ ...headerStyle }}
             screens={[
               {
                 name: Route.OPERATION_LIST,
                 component: POSSellerScreen,
                 options: {
-                  title: 'Operation List',
-                  headerShown: true,
+                  ...createHeaderTopStack('Operation List'),
                 },
               },
               {
@@ -63,7 +96,7 @@ export const PortraitApp: FC<Props> = memo(({}) => {
               {
                 name: Route.MENU_SCREEN,
                 component: MenuScreen,
-                options: {title: 'Booking Product'},
+                options: { title: 'Booking Product' },
               },
               {
                 name: Route.ASSIGN_CUSTOMER,
@@ -77,12 +110,12 @@ export const PortraitApp: FC<Props> = memo(({}) => {
               {
                 name: Route.CUSTOMER_UPDATE,
                 component: UpdateCustomerScreen,
-                options: {headerShown: true},
+                options: { headerShown: true },
               },
               {
                 name: Route.RECEIPT,
                 component: ReceiptScreen,
-                options: {headerShown: true},
+                options: { headerShown: true },
               },
             ]}
           />
@@ -94,17 +127,19 @@ export const PortraitApp: FC<Props> = memo(({}) => {
   const ProductStack = () => {
     return (
       <StackNavigator
-        screenOptions={{...headerStyle}}
+        screenOptions={{ ...headerStyle }}
         screens={[
           {
             name: Route.PRODUCT_LIST,
             component: ProductListScreen,
-            options: {headerShown: true, title: 'Product List'},
+            options: {
+              ...createHeaderTopStack('Product List'),
+            },
           },
           {
             name: Route.PRODUCT_UPDATE,
             component: UpdateProductScreen,
-            options: {headerShown: true},
+            options: { headerShown: true },
           },
         ]}
       />
@@ -113,16 +148,19 @@ export const PortraitApp: FC<Props> = memo(({}) => {
   const CustomerStack = () => {
     return (
       <StackNavigator
+        screenOptions={{ ...headerStyle, headerShown: true }}
         screens={[
           {
             name: Route.CUSTOMER_LIST,
             component: CustomerListScreen,
-            options: {headerShown: true},
+            options: {
+              ...createHeaderTopStack('Customer List'),
+            },
           },
           {
             name: Route.CUSTOMER_UPDATE,
             component: UpdateCustomerScreen,
-            options: {headerShown: true},
+            options: { headerShown: true, title: 'Update Customer' },
           },
         ]}
       />
@@ -134,24 +172,46 @@ export const PortraitApp: FC<Props> = memo(({}) => {
         <DataContextProvider>
           <>
             <DrawerNavigator
-              screenOptions={{...headerStyle}}
+              screenOptions={{ ...headerStyle, headerShown: true }}
               screens={[
-                {name: Route.MAIN, component: MainScreen},
-                {name: Route.STORE, component: StoreScreen},
+                { name: Route.MAIN, component: MainScreen },
+                { name: Route.STORE, component: StoreScreen },
                 {
                   name: Route.PRODUCT,
                   component: ProductStack,
-                  options: {headerShown: false},
+                  options: { headerShown: false },
                 },
                 {
                   name: Route.POS_SELLER,
                   component: POSStack,
-                  options: {headerShown: true},
+                  options: { headerShown: false },
                 },
-                {name: Route.BRANCH, component: UpdateBrandScreen},
-                {name: Route.GROUP, component: UpdateGroupScreen},
-                {name: Route.CUSTOMER, component: CustomerStack},
-                {name: Route.CLOSE_OUT_REPORT, component: CloseOutReportScreen},
+                {
+                  name: Route.BRANCH,
+                  component: UpdateBrandScreen,
+                  options: {
+                    ...createHeaderTopStack('Brands'),
+                  },
+                },
+                {
+                  name: Route.GROUP,
+                  component: UpdateGroupScreen,
+                  options: {
+                    ...createHeaderTopStack('Group'),
+                  },
+                },
+                {
+                  name: Route.CUSTOMER,
+                  component: CustomerStack,
+                  options: { headerShown: false },
+                },
+                {
+                  name: Route.CLOSE_OUT_REPORT,
+                  component: CloseOutReportScreen,
+                  options: {
+                    ...createHeaderTopStack('Close Out Report'),
+                  },
+                },
               ]}
             />
             {/*<Button.FloatCircle*/}
@@ -178,12 +238,12 @@ export const PortraitApp: FC<Props> = memo(({}) => {
           ? {
               name: Route.LOGIN,
               component: LoginScreen,
-              options: {headerShown: false},
+              options: { headerShown: false },
             }
           : {
               name: Route.APP,
               component: MainStack,
-              options: {...headerStyle, headerShown: false},
+              options: { ...headerStyle, headerShown: false },
             },
       ]}
     />
