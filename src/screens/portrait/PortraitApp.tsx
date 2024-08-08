@@ -34,63 +34,48 @@ type Props = {
   navigation: any;
 };
 const DrawerMenuContent = ({ navigation }: Props) => {
+  const section = (
+    title: string,
+    items: { title: string; navigateToRoute: string }[],
+  ): any => {
+    return (
+      <View.V>
+        <Label.T text={title} style={styles.drawerContentHeaderText} />
+        <View.V style={styles.drawerContentSectionView}>
+          <>
+            {items.map(item => {
+              return (
+                <Button.B
+                  style={styles.drawerContentItemButton}
+                  textStyle={{ fontSize: 18 }}
+                  label={item.title}
+                  onPress={() => {
+                    navigation?.navigate(item.navigateToRoute);
+                  }}
+                />
+              );
+            })}
+          </>
+        </View.V>
+      </View.V>
+    );
+  };
   return (
     <View.V style={{ flex: 1, backgroundColor: 'green' }}>
-      <Label.T text={'POS'} style={styles.drawerContentHeaderText} />
-      <View.V style={styles.drawerContentSectionView}>
-        <Button.B
-          style={styles.drawerContentItemButton}
-          textStyle={{ fontSize: 18 }}
-          label={'Seller'}
-          onPress={() => {
-            navigation?.navigate(Route.POS_SELLER);
-          }}
-        />
-      </View.V>
-      <Label.T text={'CUSTOMER'} style={styles.drawerContentHeaderText} />
-      <View.V style={styles.drawerContentSectionView}>
-        <Button.B
-          style={styles.drawerContentItemButton}
-          textStyle={{ fontSize: 18 }}
-          label={'Customer'}
-          onPress={() => {
-            navigation?.navigate(Route.CUSTOMER);
-          }}
-        />
-      </View.V>
-
-
-      <Label.T text={'MANAGE'} style={styles.drawerContentHeaderText} />
-      <View.V style={styles.drawerContentSectionView}>
-        <Button.B
-          style={styles.drawerContentItemButton}
-          textStyle={{ fontSize: 18 }}
-          label={'Brand'}
-          onPress={() => {
-            navigation?.navigate(Route.BRANCH);
-          }}
-        />
-        <Button.B
-          style={styles.drawerContentItemButton}
-          textStyle={{ fontSize: 18 }}
-          label={'Group'}
-          onPress={() => {
-            navigation?.navigate(Route.GROUP);
-          }}
-        />
-      </View.V>
-
-      <Label.T text={'REPORT'} style={styles.drawerContentHeaderText} />
-      <View.V style={styles.drawerContentSectionView}>
-        <Button.B
-          style={styles.drawerContentItemButton}
-          textStyle={{ fontSize: 18 }}
-          label={'Close Out Report'}
-          onPress={() => {
-            navigation?.navigate(Route.CLOSE_OUT_REPORT);
-          }}
-        />
-      </View.V>
+      {section('POS', [{ title: 'Seller', navigateToRoute: Route.POS_SELLER }])}
+      {section('PRODUCTS', [
+        { title: 'Product', navigateToRoute: Route.PRODUCT },
+      ])}
+      {section('CUSTOMER', [
+        { title: 'Customer', navigateToRoute: Route.CUSTOMER },
+      ])}
+      {section('MANAGE', [
+        { title: 'Brand', navigateToRoute: Route.BRANCH },
+        { title: 'Group', navigateToRoute: Route.GROUP },
+      ])}
+      {section('REPORT', [
+        { title: 'Close Out Report', navigateToRoute: Route.CLOSE_OUT_REPORT },
+      ])}
     </View.V>
   );
 };
@@ -276,15 +261,6 @@ export const PortraitApp: FC<Props> = memo(({}) => {
                 },
               ]}
             />
-            {/*<Button.FloatCircle*/}
-            {/*  style={{*/}
-            {/*    position: 'absolute',*/}
-            {/*    alignSelf: 'center',*/}
-            {/*    bottom: 0,*/}
-            {/*    justifyContent: 'flex-end',*/}
-            {/*  }}*/}
-            {/*  onPress={() => {}}*/}
-            {/*/>*/}
           </>
         </DataContextProvider>
       </SettingContextProvider>
@@ -298,15 +274,15 @@ export const PortraitApp: FC<Props> = memo(({}) => {
       screens={[
         !user
           ? {
-            name: Route.LOGIN,
-            component: LoginScreen,
-            options: { headerShown: false },
-          }
+              name: Route.LOGIN,
+              component: LoginScreen,
+              options: { headerShown: false },
+            }
           : {
-            name: Route.APP,
-            component: MainStack,
-            options: { ...headerStyle, headerShown: false },
-          },
+              name: Route.APP,
+              component: MainStack,
+              options: { ...headerStyle, headerShown: false },
+            },
       ]}
     />
   );
