@@ -3,7 +3,6 @@ import { DrawerNavigator, StackNavigator } from '@core/navigation';
 import LoginScreen from '@src/screens/portrait/auth';
 
 import { Route } from '@src/screens/portrait/Route';
-import StoreScreen from '@src/screens/portrait/main/store';
 import {
   DataContextProvider,
   OperationContextProvider,
@@ -15,7 +14,6 @@ import {
   ProductListScreen,
   UpdateProductScreen,
 } from '@src/screens/portrait/main/product';
-import MainScreen from '@src/screens/portrait/main';
 import { UpdateBrandScreen } from '@src/screens/portrait/main/brand';
 import { UpdateGroupScreen } from '@src/screens/portrait/main/group';
 import {
@@ -30,8 +28,72 @@ import { CloseOutReportScreen } from '@src/screens/portrait/main/closeouttreport
 import Button from '@core/components/buttonbase/Button';
 import View from '@core/components/viewbase/View';
 import Label from '@core/components/labelbase/Label';
+import { StyleSheet } from 'react-native';
 
-type Props = {};
+type Props = {
+  navigation: any;
+};
+const DrawerMenuContent = ({ navigation }: Props) => {
+  return (
+    <View.V style={{ flex: 1, backgroundColor: 'green' }}>
+      <Label.T text={'POS'} style={styles.drawerContentHeaderText} />
+      <View.V style={styles.drawerContentSectionView}>
+        <Button.B
+          style={styles.drawerContentItemButton}
+          textStyle={{ fontSize: 18 }}
+          label={'Seller'}
+          onPress={() => {
+            navigation?.navigate(Route.POS_SELLER);
+          }}
+        />
+      </View.V>
+      <Label.T text={'CUSTOMER'} style={styles.drawerContentHeaderText} />
+      <View.V style={styles.drawerContentSectionView}>
+        <Button.B
+          style={styles.drawerContentItemButton}
+          textStyle={{ fontSize: 18 }}
+          label={'Customer'}
+          onPress={() => {
+            navigation?.navigate(Route.CUSTOMER);
+          }}
+        />
+      </View.V>
+
+
+      <Label.T text={'MANAGE'} style={styles.drawerContentHeaderText} />
+      <View.V style={styles.drawerContentSectionView}>
+        <Button.B
+          style={styles.drawerContentItemButton}
+          textStyle={{ fontSize: 18 }}
+          label={'Brand'}
+          onPress={() => {
+            navigation?.navigate(Route.BRANCH);
+          }}
+        />
+        <Button.B
+          style={styles.drawerContentItemButton}
+          textStyle={{ fontSize: 18 }}
+          label={'Group'}
+          onPress={() => {
+            navigation?.navigate(Route.GROUP);
+          }}
+        />
+      </View.V>
+
+      <Label.T text={'REPORT'} style={styles.drawerContentHeaderText} />
+      <View.V style={styles.drawerContentSectionView}>
+        <Button.B
+          style={styles.drawerContentItemButton}
+          textStyle={{ fontSize: 18 }}
+          label={'Close Out Report'}
+          onPress={() => {
+            navigation?.navigate(Route.CLOSE_OUT_REPORT);
+          }}
+        />
+      </View.V>
+    </View.V>
+  );
+};
 export const PortraitApp: FC<Props> = memo(({}) => {
   const { user, init } = useAuthContext();
   const headerStyle = {
@@ -172,20 +234,20 @@ export const PortraitApp: FC<Props> = memo(({}) => {
         <DataContextProvider>
           <>
             <DrawerNavigator
+              drawerContent={props => <DrawerMenuContent {...props} />}
               screenOptions={{ ...headerStyle, headerShown: true }}
               screens={[
-                { name: Route.MAIN, component: MainScreen },
-                { name: Route.STORE, component: StoreScreen },
-                {
-                  name: Route.PRODUCT,
-                  component: ProductStack,
-                  options: { headerShown: false },
-                },
                 {
                   name: Route.POS_SELLER,
                   component: POSStack,
                   options: { headerShown: false },
                 },
+                {
+                  name: Route.PRODUCT,
+                  component: ProductStack,
+                  options: { headerShown: false },
+                },
+
                 {
                   name: Route.BRANCH,
                   component: UpdateBrandScreen,
@@ -236,16 +298,33 @@ export const PortraitApp: FC<Props> = memo(({}) => {
       screens={[
         !user
           ? {
-              name: Route.LOGIN,
-              component: LoginScreen,
-              options: { headerShown: false },
-            }
+            name: Route.LOGIN,
+            component: LoginScreen,
+            options: { headerShown: false },
+          }
           : {
-              name: Route.APP,
-              component: MainStack,
-              options: { ...headerStyle, headerShown: false },
-            },
+            name: Route.APP,
+            component: MainStack,
+            options: { ...headerStyle, headerShown: false },
+          },
       ]}
     />
   );
+});
+const styles = StyleSheet.create({
+  drawerContentHeaderText: {
+    paddingLeft: 20,
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: 'white',
+    height: 50,
+  },
+  drawerContentItemButton: {
+    backgroundColor: 'white',
+    marginBottom: 5,
+  },
+  drawerContentSectionView: {
+    paddingLeft: 40,
+    paddingRight: 40,
+  },
 });

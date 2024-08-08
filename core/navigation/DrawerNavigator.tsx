@@ -1,6 +1,5 @@
-import React, {FC, memo} from 'react';
-import {Drawer} from './NavigationContainer';
-import {DrawerNavigationOptions} from '@react-navigation/drawer/src/types';
+import React, { FC, memo } from 'react';
+import { Drawer } from './NavigationContainer';
 
 type Screen = {
   name: string;
@@ -10,10 +9,11 @@ type Screen = {
 type Props = {
   screenOptions?: any;
   screens: Screen[];
+  drawerContent?: (props: any) => any;
 };
 
 export const DrawerNavigator: FC<Props> = memo(
-  ({screenOptions, screens, ...rest}) => {
+  ({ screenOptions, screens, ...rest }) => {
     return (
       <Drawer.Navigator {...rest} screenOptions={screenOptions}>
         {(screens || []).map((screen: Screen): any => {
