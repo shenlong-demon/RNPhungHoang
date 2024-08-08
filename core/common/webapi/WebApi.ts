@@ -93,11 +93,13 @@ export class WebApi extends Singleton<WebApi> {
     const token: string = !!this.getToken
       ? await this.getToken()
       : CONSTANTS.STR_EMPTY;
+    const bearerToken: string = `Bearer ${token}`;
     header = {
       ...header,
       ...(!!token
         ? {
-            token: `Bearer ${token}`,
+            Authorization: bearerToken,
+            token: bearerToken,
           }
         : {}),
     };

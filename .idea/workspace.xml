@@ -5,18 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8def0e7d-dc40-4214-9271-5c05a281f5a9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/business/model/request/GetCloseOutReportsRequest.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintrc.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/components/imagebase/ImageBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/imagebase/ImageBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/components/labelbase/MoneyLabel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/labelbase/MoneyLabel.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/common/api_url.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/common/api_url.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/facade/ReportFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/facade/ReportFacade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/model/object/CloseOutReport.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/model/object/CloseOutReport.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/model/request/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/model/request/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/repository/ReportRepo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/repository/ReportRepo.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/service/ReportService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/service/ReportService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/useFacade/useCloseoutReportFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/useFacade/useCloseoutReportFacade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/closeouttreport/CloseOutReportScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/closeouttreport/CloseOutReportScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.prettierrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/.prettierrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/common/webapi/WebApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/common/webapi/WebApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/PortraitApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/PortraitApp.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/OperationListItemView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/OperationListItemView.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,11 +26,17 @@
       </list>
     </option>
   </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
   </component>
   <component name="ProjectId" id="2fN4rFEpdP8hQrAcRdRQKNtppbK" />
   <component name="ProjectViewState">
@@ -49,14 +50,14 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/LONG/LONG/PROJECTS/PHUNG_HOANG/RNPhungHoangNew/src/business/model/request",
+    "last_opened_file_path": "C:/Users/LONG/LONG/PROJECTS/PHUNG_HOANG/RNPhungHoangNew/node_modules/prettier",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\LONG\\LONG\\PROJECTS\\RNPhungHoangNewRN\\RNPhungHoang\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "preferences.sourceCode.TypeScript",
+    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\LONG\\LONG\\PROJECTS\\PHUNG_HOANG\\RNPhungHoangNew\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "settings.javascript.prettier",
     "ts.external.directory.path": "C:\\Users\\LONG\\LONG\\PROJECTS\\PHUNG_HOANG\\RNPhungHoangNew\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -77,6 +78,9 @@
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="8def0e7d-dc40-4214-9271-5c05a281f5a9" name="Changes" comment="" />
@@ -109,7 +113,12 @@
       <workItem from="1721362594245" duration="39476000" />
       <workItem from="1722317280113" duration="26000" />
       <workItem from="1722317317771" duration="50382000" />
-      <workItem from="1722846571872" duration="17417000" />
+      <workItem from="1722846571872" duration="18587000" />
+      <workItem from="1723043360429" duration="167000" />
+      <workItem from="1723043554928" duration="5774000" />
+      <workItem from="1723107836286" duration="3000" />
+      <workItem from="1723107873102" duration="454000" />
+      <workItem from="1723108352842" duration="1075000" />
     </task>
     <servers />
   </component>
@@ -118,6 +127,7 @@
     <option name="includedJSSourcePackages">
       <set>
         <option value="@smithy/smithy-client" />
+        <option value="axios" />
         <option value="react-native-tcp-socket" />
       </set>
     </option>

@@ -1,16 +1,17 @@
-import {FC, memo, useEffect, useMemo, useState} from 'react';
-import {Operation} from '@src/business';
-import {StyleSheet} from 'react-native';
+import { FC, memo, useEffect, useMemo, useState } from 'react';
+import { Operation } from '@src/business';
+import { StyleSheet } from 'react-native';
 import View from '@core/components/viewbase/View';
 import Label from '@core/components/labelbase/Label';
-import {CONSTANTS, DateTimeUtils, Logger} from '@core/common';
+import { DateTimeUtils } from '@core/common';
+
 type Props = {
   operation: Operation;
   index: number;
   onPress: () => void;
 };
 export const OperationListItemView: FC<Props> = memo(
-  ({operation, index, onPress}: Props) => {
+  ({ operation, index, onPress }: Props) => {
     const [time, setTime] = useState<number>(DateTimeUtils.now);
     useEffect(() => {
       const timer = setInterval(() => {
@@ -47,9 +48,20 @@ export const OperationListItemView: FC<Props> = memo(
           onPress={onPress}>
           <Label.T text={operation.name || 'No name'} />
         </View.Row>
-        <View.V style={{height: 5, flexDirection: 'row'}}>
-          <View.V style={{flex: donePercent, backgroundColor: 'red'}} />
-          <View.V style={{flex: 1 - donePercent, backgroundColor: 'green'}} />
+
+        <View.V style={{ height: 5, flexDirection: 'row' }}>
+          <View.V
+            style={{
+              flex: donePercent,
+              backgroundColor: operation.estimation ? 'red' : 'gray',
+            }}
+          />
+          <View.V
+            style={{
+              flex: 1 - donePercent,
+              backgroundColor: operation.estimation ? 'green' : 'gray',
+            }}
+          />
         </View.V>
       </View.V>
     );
