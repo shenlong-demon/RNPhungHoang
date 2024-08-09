@@ -1,7 +1,6 @@
-import {ApiResult, BaseRepo, Dto} from '@core/common';
+import { ApiResult, BaseRepo, Dto } from '@core/common';
 import {
   API_URL,
-  CloseOutReport,
   CloseOutReportRequest,
   CreateBrandRequest,
   CreateGroupRequest,
@@ -28,6 +27,7 @@ export class ReportRepo extends BaseRepo<ReportRepo> {
     const api: ApiResult = await this.api.post(API_URL.CREATE_BRAND(), req);
     return this.populate(api);
   }
+
   async updateBrand(
     brandId: number,
     req: UpdateBrandRequest,
@@ -38,10 +38,12 @@ export class ReportRepo extends BaseRepo<ReportRepo> {
     );
     return this.populate(api);
   }
+
   async createGroup(req: CreateGroupRequest): Promise<Dto<any | null>> {
     const api: ApiResult = await this.api.post(API_URL.CREATE_GROUP(), req);
     return this.populate(api);
   }
+
   async updateGroup(
     groupId: number,
     req: UpdateGroupRequest,
@@ -62,7 +64,8 @@ export class ReportRepo extends BaseRepo<ReportRepo> {
     );
     return this.populate(api);
   }
-  public async getCloseOutReports(
+
+  public async getCloseOutReportsInMonth(
     req: GetCloseOutReportsRequest,
   ): Promise<Dto<any[]>> {
     const api: ApiResult = await this.api.post(

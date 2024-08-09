@@ -5,15 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8def0e7d-dc40-4214-9271-5c05a281f5a9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/business/model/request/RemoveIssueRequest.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/common/api_url.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/common/api_url.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/context/OperationContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/OperationContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/facade/OperationFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/facade/OperationFacade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/model/request/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/model/request/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/repository/OperationRepo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/repository/OperationRepo.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/service/OperationService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/service/OperationService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/IssueListView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/IssueListView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/components/dropdownbase/DropDownBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/dropdownbase/DropDownBase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/components/formbase/FormDropDown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/formbase/FormDropDown.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/context/DataContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/DataContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/facade/ReportFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/facade/ReportFacade.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/repository/ReportRepo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/repository/ReportRepo.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/service/ReportService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/service/ReportService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/useFacade/useCloseoutReportFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/useFacade/useCloseoutReportFacade.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/PortraitApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/PortraitApp.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/closeouttreport/CloseOutReportScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/closeouttreport/CloseOutReportScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/OperationInfoView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/OperationInfoView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/product/ProductListScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/product/ProductListScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/product/UpdateProductScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/product/UpdateProductScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/product/product_list_item.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/product/product_list_item.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/shared_components/FormStatusDropDown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/shared_components/FormStatusDropDown.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/shared_components/SelectBrandAndGroupView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/shared_components/SelectBrandAndGroupView.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,23 +54,23 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/LONG/LONG/PROJECTS/PHUNG_HOANG/RNPhungHoangNew/src/business/model/request",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\LONG\\LONG\\PROJECTS\\PHUNG_HOANG\\RNPhungHoangNew\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "settings.javascript.prettier",
-    "ts.external.directory.path": "C:\\Users\\LONG\\LONG\\PROJECTS\\PHUNG_HOANG\\RNPhungHoangNew\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/LONG/LONG/PROJECTS/PHUNG_HOANG/RNPhungHoangNew/src/business/model/request&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\LONG\\LONG\\PROJECTS\\PHUNG_HOANG\\RNPhungHoangNew\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\LONG\\LONG\\PROJECTS\\PHUNG_HOANG\\RNPhungHoangNew\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew\src\business\model\request" />
@@ -120,7 +127,10 @@
       <workItem from="1723043554928" duration="5774000" />
       <workItem from="1723107836286" duration="3000" />
       <workItem from="1723107873102" duration="454000" />
-      <workItem from="1723108352842" duration="8166000" />
+      <workItem from="1723108352842" duration="14252000" />
+      <workItem from="1723191329090" duration="733000" />
+      <workItem from="1723192143650" duration="325000" />
+      <workItem from="1723215658622" duration="628000" />
     </task>
     <servers />
   </component>

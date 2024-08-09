@@ -2,18 +2,21 @@ import {
   Brand,
   CreateBrandRequest,
   CreateGroupRequest,
+  CreateProductRequest,
   DataResult,
   Group,
   Product,
   STATUS,
   UpdateBrandRequest,
   UpdateGroupRequest,
+  UpdateProductRequest,
   useDataFacade,
   useProductFacade,
 } from '@src/business';
-import React, {FC, useContext, useEffect, useMemo, useState} from 'react';
-import {Dto} from '@core/common';
-import {DataFacade} from '@src/business/facade';
+import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
+import { Dto } from '@core/common';
+import { DataFacade } from '@src/business/facade';
+import { File } from '@core/models';
 
 export type DataContextResult = {
   brands: Brand[];
@@ -35,6 +38,16 @@ export type DataContextResult = {
     name: string,
     status: STATUS,
   ) => Promise<Dto<Group | null>>;
+  updateProduct: (
+    id: number,
+    appKey: string,
+    req: UpdateProductRequest,
+    imageFile?: File,
+  ) => Promise<Dto<Product | null>>;
+  createProduct: (
+    req: CreateProductRequest,
+    imageFile?: File,
+  ) => Promise<Dto<Product | null>>;
 };
 
 export const useDataContextFacade = (): DataContextResult => {
@@ -155,6 +168,42 @@ export const useDataContextFacade = (): DataContextResult => {
     return dto;
   };
 
+  const createProduct = async (
+    req: CreateProductRequest,
+    imageFile?: File,
+  ): Promise<Dto<Product | null>> => {
+    const dto: Dto<Product | null> = await productFacade.createProduct(
+      req,
+      imageFile,
+    );
+    if (dto.next() && dto.data) {
+      const newProduct: Product = dto.data! as Product;
+      setProducts([newProduct, ...products]);
+    }
+    return dto;
+  };
+  const updateProduct = async (
+    id: number,
+    appKey: string,
+    req: UpdateProductRequest,
+    imageFile?: File,
+  ): Promise<Dto<Product | null>> => {
+    const dto: Dto<Product | null> = await productFacade.updateProduct(
+      id,
+      appKey,
+      req,
+      imageFile,
+    );
+    if (dto.next() && dto.data) {
+      const updatedProduct: Product = dto.data! as Product;
+      setProducts([
+        updatedProduct,
+        ...products.filter((p: Product) => p.id !== id),
+      ]);
+    }
+    return dto;
+  };
+
   return {
     brands: allBrands,
     activeBrands,
@@ -165,6 +214,8 @@ export const useDataContextFacade = (): DataContextResult => {
     updateBrand,
     createGroup,
     updateGroup,
+    createProduct,
+    updateProduct,
   };
 };
 
@@ -200,6 +251,21 @@ const DefaultDataContextResult: DataContextResult = {
   ): Promise<Dto<Group | null>> => {
     return Dto.default();
   },
+
+  updateProduct: async (
+    _id: number,
+    _appKey: string,
+    _req: UpdateProductRequest,
+    _imageFile?: File,
+  ): Promise<Dto<Product | null>> => {
+    return Dto.default();
+  },
+  createProduct: async (
+    _req: CreateProductRequest,
+    _imageFile?: File,
+  ): Promise<Dto<Product | null>> => {
+    return Dto.default();
+  },
 };
 
 const DataContext = React.createContext<DataContextResult>(
@@ -210,7 +276,7 @@ export const useDataContext = () => useContext(DataContext);
 type Props = {
   children: React.ReactNode;
 };
-export const DataContextProvider: FC<Props> = ({children}: Props) => {
+export const DataContextProvider: FC<Props> = ({ children }: Props) => {
   const facade = useDataContextFacade();
   return <DataContext.Provider value={facade}>{children}</DataContext.Provider>;
 };

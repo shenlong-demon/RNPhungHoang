@@ -1,8 +1,8 @@
-import {FC, memo} from 'react';
-import {StyleSheet} from 'react-native';
+import { FC, memo } from 'react';
+import { StyleSheet } from 'react-native';
 import View from '@core/components/viewbase/View';
-import {DateTimePicker} from '@core/components';
-import {CONSTANTS, Dto, Logger} from '@core/common';
+import { DateTimePicker } from '@core/components';
+import { CONSTANTS, Dto, Logger } from '@core/common';
 import {
   Customer,
   Operation,
@@ -13,17 +13,18 @@ import {
 import Label from '@core/components/labelbase/Label';
 import Button from '@core/components/buttonbase/Button';
 import Image from '@core/components/imagebase/Image';
-import {Route} from '@src/screens/portrait/Route';
-import {useNavigation} from '@core/navigation';
-import {CustomerListNavigationParam} from '@src/screens/portrait/main/customer/CustomerListScreen';
-import {YesNoPopup} from '@src/screens/portrait/components/popup';
+import { Route } from '@src/screens/portrait/Route';
+import { useNavigation } from '@core/navigation';
+import { CustomerListNavigationParam } from '@src/screens/portrait/main/customer/CustomerListScreen';
+import { YesNoPopup } from '@src/screens/portrait/components/popup';
 
 type Props = {};
 export const OperationInfoView: FC<Props> = memo(({}: Props) => {
   const facade = useOperationFacade();
-  const {operation, setEstimation, getOperationDetail} = useOperationContext();
-  const {navigate, goBack} = useNavigation();
-  const {openPopup, closeAllPopups} = usePopupContext();
+  const { operation, setEstimation, getOperationDetail } =
+    useOperationContext();
+  const { navigate, goBack } = useNavigation();
+  const { openPopup, closeAllPopups } = usePopupContext();
   const onEstimationChanged = (newDate: number): void => {
     Logger.log(() => [`OperationInfoView estimation changed `, newDate]);
     setEstimation(newDate);
@@ -78,17 +79,21 @@ export const OperationInfoView: FC<Props> = memo(({}: Props) => {
             onPress={assignCustomer}
             onLongPress={unassignedCustomer}>
             <Label.T
-              style={{alignSelf: 'center', fontWeight: 'bold'}}
+              style={{ alignSelf: 'center', fontWeight: 'bold' }}
               text={`${operation?.customer?.name || 'Press  to assign'}`}
             />
             <Label.Money
-              style={{alignSelf: 'center', fontWeight: 'bold', color: 'green'}}
+              style={{
+                alignSelf: 'center',
+                fontWeight: 'bold',
+                color: 'green',
+              }}
               value={operation?.customer?.total}
             />
           </View.V>
           <Image.I
             style={styles.customerImage}
-            source={{uri: operation?.customer?.image || CONSTANTS.STR_EMPTY}}
+            source={{ uri: operation?.customer?.image || CONSTANTS.STR_EMPTY }}
           />
         </View.V>
         <View.Row style={styles.row}>
@@ -100,11 +105,20 @@ export const OperationInfoView: FC<Props> = memo(({}: Props) => {
             onChange={onEstimationChanged}
           />
         </View.Row>
+        {operation?.discount ? (
+          <View.Row style={styles.row}>
+            <Label.T text={'Discount'} />
+            <Label.Money
+              style={styles.discount}
+              value={operation?.discount || 0}
+            />
+          </View.Row>
+        ) : null}
       </View.V>
       <View.V style={styles.actionView}>
         <Button.B
           style={styles.buttonReceipt}
-          textStyle={{color: 'white'}}
+          textStyle={{ color: 'white' }}
           label={'Receipt'}
           onPress={doReceipt}
         />
@@ -121,9 +135,12 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
+  discount: { fontWeight: 'bold', textAlign: 'center', width: '50%' },
   row: {
     justifyContent: 'space-between',
     alignContent: 'flex-start',
+    borderBottomWidth: 1,
+    borderColor: 'green',
   },
   datetime: {
     backgroundColor: '#200ae7',

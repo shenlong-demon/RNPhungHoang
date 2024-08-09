@@ -186,7 +186,7 @@ export const PortraitApp: FC<Props> = memo(({}) => {
           {
             name: Route.PRODUCT_UPDATE,
             component: UpdateProductScreen,
-            options: { headerShown: true },
+            options: { title: 'Update Product' },
           },
         ]}
       />

@@ -1,5 +1,5 @@
 import BaseFacade from '@core/common/models/BaseFacade';
-import {Dto} from '@core/common';
+import { Dto } from '@core/common';
 import {
   CloseOutReport,
   CloseOutReportRequest,
@@ -25,9 +25,9 @@ export class ReportFacade extends BaseFacade<ReportFacade> {
     return this.reportService.doCloseOutReport(req);
   }
 
-  public async getCloseOutReports(
+  public async getCloseOutReportsInMonth(
     req: GetCloseOutReportsRequest,
   ): Promise<Dto<CloseOutReport[]>> {
-    return this.reportService.getCloseOutReports(req);
+    return this.reportService.getCloseOutReportsInMonth(req);
   }
 }

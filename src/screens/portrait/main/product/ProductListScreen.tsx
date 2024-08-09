@@ -1,28 +1,30 @@
-import React, {FC, memo, useCallback, useState} from 'react';
-import {Button, FlatList, View} from '@core/components';
-import {Brand, Group, Product, useProductFacade} from '@src/business';
-import {useNavigation} from '@core/navigation';
-import {SelectBrandAndGroupView} from '@src/screens/portrait/shared_components';
-import {ProductListItem} from '@src/screens/portrait/main/product/product_list_item';
-import {Logger} from '@core/common';
-import {Route} from '@src/screens/portrait/Route';
-import {ProductFilterRequest} from '@src/business/model';
+import React, { FC, memo, useCallback, useEffect, useState } from 'react';
+import { Button, FlatList, View } from '@core/components';
+import { Product, useProductSearchFacade } from '@src/business';
+import { useNavigation } from '@core/navigation';
+import { ProductListItem } from '@src/screens/portrait/main/product/product_list_item';
+import { Route } from '@src/screens/portrait/Route';
+import Input from '@core/components/inputbase/Input';
+import { StyleSheet } from 'react-native';
 
 type Props = {};
 
 export const ProductListScreen: FC<Props> = memo(({}) => {
-  const {navigate} = useNavigation();
-  const productFacade = useProductFacade();
+  const { navigate } = useNavigation();
+  const [searchText, setSearchText] = useState<string | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
-
-  const [pageIndex, setPageIndex] = useState<number>(0);
+  const { search } = useProductSearchFacade();
 
   const onClick = useCallback(async (item: Product | null): Promise<void> => {
     navigate(Route.PRODUCT_UPDATE, item);
   }, []);
+  useEffect(() => {
+    const searchProducts: Product[] = search(searchText);
+    setProducts(searchProducts);
+  }, [searchText]);
 
   const renderProductItem = useCallback(
-    (data: {item: Product; index: number}): any => {
+    (data: { item: Product; index: number }): any => {
       return (
         <ProductListItem
           item={data.item}
@@ -34,34 +36,16 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
     [],
   );
 
-  const filterProductsBy = async (
-    brand: Brand | null,
-    group: Group | null,
-  ): Promise<void> => {
-    const request: ProductFilterRequest = {
-      brandId: brand?.id || null,
-      groupId: group?.id || null,
-      offset: pageIndex,
-    };
-    const prs: Product[] = await productFacade.getProductsBy(request);
-    Logger.log(() => [
-      `ProductListScreen filterProductsBy request`,
-      request,
-      prs,
-      prs.length,
-    ]);
-    setProducts(prs);
-  };
-  const onFilterChanged = (brand: Brand | null, group: Group | null) => {
-    filterProductsBy(brand, group);
-  };
-
   return (
-    <View.V style={{flex: 1}}>
-      <SelectBrandAndGroupView onChanged={onFilterChanged} />
-
+    <View.V style={styles.container}>
+      <Input.T
+        style={styles.searchText}
+        placeholder={'Please input text to search'}
+        autoFocus={true}
+        onChangeText={setSearchText}
+      />
       <FlatList.L
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         data={products}
         keyExtractor={item => item.id}
         renderItem={renderProductItem}
@@ -70,8 +54,20 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
         position={'bottom|right'}
         onPress={() => onClick(null)}
       />
-      {/*<Button.FloatCirle position={'bottom|right'} onPress={() => navigate(Route.PRODUCT_UPDATE)} />*/}
-      {/*<Button.B style={{width: 50, height: 50, backgroundColor: 'red'}} onPress={() => {navigate(Route.PRODUCT_UPDATE)}} />*/}
     </View.V>
   );
+});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  resultContainer: {
+    flex: 1,
+  },
+  list: {
+    flex: 1,
+  },
+  searchText: {},
 });

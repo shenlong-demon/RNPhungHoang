@@ -1,18 +1,19 @@
-import {FC, memo, useEffect, useMemo, useState} from 'react';
+import { FC, memo, useEffect, useMemo, useState } from 'react';
 import View from '@core/components/viewbase/View';
-import {StyleSheet} from 'react-native';
-import {DateTimePicker, FlatList} from '@core/components';
+import { StyleSheet } from 'react-native';
+import { DateTimePicker, FlatList } from '@core/components';
 import Button from '@core/components/buttonbase/Button';
-import {DateTimeUtils, Dto} from '@core/common';
-import {CloseOutReport, useCloseOutReportFacade} from '@src/business';
+import { DateTimeUtils, Dto } from '@core/common';
+import { CloseOutReport, useCloseOutReportFacade } from '@src/business';
 import Label from '@core/components/labelbase/Label';
-import {DISPLAY_MODE} from '@core/components/datetimepicker/DateTimePickerBase';
+import { DISPLAY_MODE } from '@core/components/datetimepicker/DateTimePickerBase';
 
 type Props = {};
 export const CloseOutReportScreen: FC<Props> = memo(({}: Props) => {
   const [selectedDate, setSelectedDate] = useState<number>(DateTimeUtils.now());
   const [closeOutReports, setCloseOutReports] = useState<CloseOutReport[]>([]);
-  const {doCloseOutReport, getCloseOutReports} = useCloseOutReportFacade();
+  const { doCloseOutReport, getCloseOutReportsInMonth } =
+    useCloseOutReportFacade();
   const calcCloseoutReport = async (): Promise<void> => {
     await doCloseOutReport(selectedDate);
     loadCloseOutReports();
@@ -23,7 +24,9 @@ export const CloseOutReportScreen: FC<Props> = memo(({}: Props) => {
   }, [selectedDate]);
 
   const loadCloseOutReports = async (): Promise<void> => {
-    const dto: Dto<CloseOutReport[]> = await getCloseOutReports(selectedDate);
+    const dto: Dto<CloseOutReport[]> = await getCloseOutReportsInMonth(
+      selectedDate,
+    );
     if (dto.next()) {
       setCloseOutReports(
         (dto.data || []).sort(
@@ -58,7 +61,7 @@ export const CloseOutReportScreen: FC<Props> = memo(({}: Props) => {
     );
   }, [closeOutReports]);
 
-  const renderItem = (data: {item: CloseOutReport; index: number}): any => {
+  const renderItem = (data: { item: CloseOutReport; index: number }): any => {
     return (
       <View.Row
         style={{
@@ -66,23 +69,23 @@ export const CloseOutReportScreen: FC<Props> = memo(({}: Props) => {
             data.index % 2 === 0 ? 'rgba(234,252,234,0.37)' : 'white',
         }}>
         <Label.T
-          style={{flex: 0.5, textAlign: 'right'}}
+          style={{ flex: 0.5, textAlign: 'right' }}
           text={`${new Date(data.item.date).getDate()}`}
         />
         <Label.T
-          style={{flex: 1.5, textAlign: 'right', fontWeight: 'bold'}}
+          style={{ flex: 1.5, textAlign: 'right', fontWeight: 'bold' }}
           text={`${
             data.item.numberOfBill === 0 ? '-' : data.item.numberOfBill
           }`}
         />
 
         <Label.Money
-          style={{flex: 4, textAlign: 'right'}}
+          style={{ flex: 4, textAlign: 'right' }}
           value={data.item.totalBill}
           replaceIfZero={'-'}
         />
         <Label.Money
-          style={{flex: 4, textAlign: 'right', fontWeight: 'bold'}}
+          style={{ flex: 4, textAlign: 'right', fontWeight: 'bold' }}
           value={data.item.totalProfit}
           replaceIfZero={'-'}
         />
