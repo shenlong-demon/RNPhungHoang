@@ -1,8 +1,8 @@
 import React, { FC, memo, useCallback, useEffect, useState } from 'react';
 import { Button, FlatList, View } from '@core/components';
-import { Product, useProductSearchFacade } from '@src/business';
+import { Product, useDataContext, useProductSearchFacade } from '@src/business';
 import { useNavigation } from '@core/navigation';
-import { ProductListItem } from '@src/screens/portrait/main/product/product_list_item';
+import { ProductListItemView } from '@src/screens/portrait/main/product';
 import { Route } from '@src/screens/portrait/Route';
 import Input from '@core/components/inputbase/Input';
 import { StyleSheet } from 'react-native';
@@ -13,20 +13,23 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
   const { navigate } = useNavigation();
   const [searchText, setSearchText] = useState<string | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
+  const data = useDataContext();
+
   const { search } = useProductSearchFacade();
 
   const onClick = useCallback(async (item: Product | null): Promise<void> => {
     navigate(Route.PRODUCT_UPDATE, item);
   }, []);
+
   useEffect(() => {
     const searchProducts: Product[] = search(searchText);
     setProducts(searchProducts);
-  }, [searchText]);
+  }, [searchText, data.products]);
 
   const renderProductItem = useCallback(
     (data: { item: Product; index: number }): any => {
       return (
-        <ProductListItem
+        <ProductListItemView
           item={data.item}
           index={data.index}
           onClick={() => onClick(data.item)}

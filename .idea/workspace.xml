@@ -5,22 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8def0e7d-dc40-4214-9271-5c05a281f5a9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/screens/portrait/main/product/ProductListItemView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/components/dropdownbase/DropDownBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/dropdownbase/DropDownBase.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/components/formbase/FormDropDown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/formbase/FormDropDown.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/context/DataContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/DataContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/facade/ReportFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/facade/ReportFacade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/repository/ReportRepo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/repository/ReportRepo.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/service/ReportService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/service/ReportService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/useFacade/useCloseoutReportFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/useFacade/useCloseoutReportFacade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/PortraitApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/PortraitApp.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/closeouttreport/CloseOutReportScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/closeouttreport/CloseOutReportScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/OperationInfoView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/OperationInfoView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/context/OperationContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/OperationContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/model/object/product.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/model/object/product.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/model/request/CreateProductRequest.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/model/request/CreateProductRequest.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/model/request/UpdateProductRequest.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/model/request/UpdateProductRequest.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/useFacade/useOperationFacade.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/useFacade/useOperationFacade.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/pos/menu/MenuScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/menu/MenuScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/BookingListView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/parts/BookingListView.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/product/ProductListScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/product/ProductListScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/product/UpdateProductScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/product/UpdateProductScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/product/product_list_item.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/product/product_list_item.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/shared_components/FormStatusDropDown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/shared_components/FormStatusDropDown.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/shared_components/SelectBrandAndGroupView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/shared_components/SelectBrandAndGroupView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/product/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/product/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/product/product_list_item.tsx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +129,7 @@
       <workItem from="1723108352842" duration="14252000" />
       <workItem from="1723191329090" duration="733000" />
       <workItem from="1723192143650" duration="325000" />
-      <workItem from="1723215658622" duration="628000" />
+      <workItem from="1723215658622" duration="5250000" />
     </task>
     <servers />
   </component>

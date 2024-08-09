@@ -3,6 +3,7 @@ import {
   Booking,
   Issue,
   Operation,
+  Product,
   RemoveIssueRequest,
   SetOperationEstimationRequest,
   useOperationListContext,
@@ -32,6 +33,12 @@ export type OperationContextResult = {
   getOperationDetail: () => Promise<Dto<Operation | null>>;
   receipt: () => Promise<Dto<Bill | null>>;
   total: number;
+  booking: (menuItem: Product) => Promise<void>;
+  addService: (
+    name: string,
+    price: number,
+    note?: string,
+  ) => Promise<Dto<Operation | null>>;
 };
 
 export const useOperationContextFacade = (): OperationContextResult => {
@@ -143,6 +150,38 @@ export const useOperationContextFacade = (): OperationContextResult => {
     }
     return dto;
   };
+  const booking = async (menuItem: Product): Promise<void> => {
+    if (operation) {
+      const dto: Dto<Operation | null> = await facade.booking(
+        operation,
+        menuItem,
+      );
+      if (dto.next() && dto.data) {
+        const fullOp: Operation = dto.data as Operation;
+        updateOperationInList(fullOp);
+        setOperation(fullOp);
+      }
+    }
+  };
+
+  const addService = async (
+    name: string,
+    price: number,
+    note?: string,
+  ): Promise<Dto<Operation | null>> => {
+    if (operation) {
+      const dto: Dto<Operation | null> = await facade.addService(operation, {
+        name,
+        price,
+        note,
+      });
+      if (dto.next()) {
+        setOperation(dto.data as Operation);
+      }
+      return dto;
+    }
+    return Dto.default();
+  };
 
   return {
     operation,
@@ -158,6 +197,8 @@ export const useOperationContextFacade = (): OperationContextResult => {
     receipt,
     total,
     removeIssue,
+    booking,
+    addService,
   };
 };
 
@@ -185,6 +226,14 @@ const DefaultOperationContextResult: OperationContextResult = {
   },
   total: 0,
   removeIssue: async (_issue: Issue): Promise<void> => {},
+  booking: async (_menuItem: Product): Promise<void> => {},
+  addService: async (
+    _name: string,
+    _price: number,
+    _note?: string,
+  ): Promise<Dto<Operation | null>> => {
+    return Dto.default();
+  },
 };
 
 const OperationContext = React.createContext<OperationContextResult>(

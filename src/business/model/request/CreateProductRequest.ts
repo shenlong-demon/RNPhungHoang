@@ -4,6 +4,7 @@ export type CreateProductRequest = {
   code?: string;
   otherName?: string;
   image?: string;
+  basePrice: number;
   price: number;
   quantity: number;
   brandId: number;

@@ -1,23 +1,21 @@
-import {OperationFacade} from '@src/business/facade';
-import {CONSTANTS, Dto} from '@core/common';
+import { OperationFacade } from '@src/business/facade';
+import { CONSTANTS, Dto } from '@core/common';
 import {
   Customer,
   Operation,
-  Product,
   useOperationContext,
   useOperationListContext,
   usePopupContext,
 } from '@src/business';
-import {Route} from '@src/screens/portrait/Route';
-import {useNavigation} from '@core/navigation';
-import {File} from '@core/models';
+import { Route } from '@src/screens/portrait/Route';
+import { useNavigation } from '@core/navigation';
+import { File } from '@core/models';
 
 type OperationFacadeResult = {
   createOperation: (name?: string) => Promise<Dto<Operation | null>>;
   getOperations: (offset: number) => Promise<Dto<Operation[]>>;
   getOperation: (id: number) => Promise<Dto<Operation | null>>;
   enterOperation: (id: number) => Promise<Dto<Operation | null>>;
-  booking: (menuItem: Product) => Promise<void>;
   addIssue: (note: string, image?: File) => Promise<void>;
   addService: (
     name: string,
@@ -32,11 +30,11 @@ type OperationFacadeResult = {
 
 export const useOperationFacade = (): OperationFacadeResult => {
   const facade: OperationFacade = OperationFacade.shared();
-  const {openPopup, closeAllPopups} = usePopupContext();
-  const {navigate} = useNavigation();
-  const {setOperation, operation, selectedBooking, setSelectedBooking} =
+  const { openPopup, closeAllPopups } = usePopupContext();
+  const { navigate } = useNavigation();
+  const { setOperation, operation, selectedBooking, setSelectedBooking } =
     useOperationContext();
-  const {updateOperationInList} = useOperationListContext();
+  const { updateOperationInList } = useOperationListContext();
 
   const getOperations = async (offset: number): Promise<Dto<Operation[]>> => {
     return facade.getOperations(offset);
@@ -88,17 +86,6 @@ export const useOperationFacade = (): OperationFacadeResult => {
     return dto;
   };
 
-  const booking = async (menuItem: Product): Promise<void> => {
-    if (operation) {
-      const dto: Dto<Operation | null> = await facade.booking(
-        operation,
-        menuItem,
-      );
-      if (dto.next()) {
-        setOperation(dto.data as Operation);
-      }
-    }
-  };
 
   const addIssue = async (note: string, image?: File): Promise<void> => {
     if (operation) {
@@ -187,7 +174,6 @@ export const useOperationFacade = (): OperationFacadeResult => {
     getOperations,
     getOperation,
     enterOperation,
-    booking,
     assignCustomer,
     addIssue,
     addService,

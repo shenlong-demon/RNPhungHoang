@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Product, STATUS, useDataContext } from '@src/business';
+import { Brand, Group, Product, STATUS, useDataContext } from '@src/business';
 import { useNavigation } from '@core/navigation';
 import { CONSTANTS, Dto, Logger } from '@core/common';
 import { File } from '@core/models';
@@ -12,6 +12,8 @@ import View from '@core/components/viewbase/View';
 import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { FormStatusDropDown } from '@src/screens/portrait/shared_components/FormStatusDropDown';
 import { ScrollView } from 'react-native-gesture-handler';
+import GroupSelectItem from '@src/screens/portrait/shared_components/GroupSelectItem';
+import BrandSelectItem from '@src/screens/portrait/shared_components/BrandSelectItem';
 
 type Props = {};
 type FormValues = Product & {
@@ -27,6 +29,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
   const onSubmit = async (data: FormValues) => {
     let dto: Dto<Product | null>;
     data.price = Number(data.price);
+    data.basePrice = Number(data.basePrice);
     if (product) {
       dto = await updateProduct(
         product.id,
@@ -35,6 +38,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
           name: data.name,
           code: data.code,
           otherName: data.otherName,
+          basePrice: data.basePrice,
           price: data.price,
           brandId: data.brand.id,
           groupId: data.group.id,
@@ -50,6 +54,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
           name: data.name,
           code: data.code,
           otherName: data.otherName,
+          basePrice: data.basePrice,
           price: data.price,
           quantity: data.quantity,
           brandId: data.brand.id,
@@ -103,31 +108,48 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
             defaultValue={product?.code}
             name={'code'}
           />
-          <View.Row>
-            {/*<Form.DropDown*/}
-            {/*  label={'Group'}*/}
-            {/*  placeholder={'Select group'}*/}
-            {/*  name={'group'}*/}
-            {/*  data={activeGroups}*/}
-            {/*  rules={{ required: 'Group is required!' }}*/}
-            {/*  labelField={'name'}*/}
-            {/*  valueField={'id'}*/}
-            {/*  renderItem={(group: Group) => <GroupSelectItem group={group} />}*/}
-            {/*  defaultValue={product?.group}*/}
-            {/*/>*/}
-            {/*<Form.DropDown*/}
-            {/*  label={'Brand'}*/}
-            {/*  placeholder={'Select brand'}*/}
-            {/*  name={'brand'}*/}
-            {/*  data={activeBrands}*/}
-            {/*  rules={{ required: 'Brand is required!' }}*/}
-            {/*  labelField={'name'}*/}
-            {/*  valueField={'id'}*/}
-            {/*  renderItem={(brand: Brand) => <BrandSelectItem brand={brand} />}*/}
-            {/*  defaultValue={product?.brand}*/}
-            {/*/>*/}
-          </View.Row>
+          <Form.DropDown
+            label={'Group'}
+            placeholder={'Select group'}
+            name={'group'}
+            data={activeGroups}
+            rules={{ required: 'Group is required!' }}
+            labelField={'name'}
+            valueField={'id'}
+            renderItem={(group: Group) => <GroupSelectItem group={group} />}
+            defaultValue={product?.group}
+            isSearch={true}
+          />
 
+          <Form.DropDown
+            label={'Brand'}
+            placeholder={'Select brand'}
+            name={'brand'}
+            data={activeBrands}
+            rules={{ required: 'Brand is required!' }}
+            labelField={'name'}
+            valueField={'id'}
+            renderItem={(brand: Brand) => <BrandSelectItem brand={brand} />}
+            defaultValue={product?.brand}
+            isSearch={true}
+          />
+
+          <Form.Input
+            keyboardType={'numeric'}
+            label={'Base Price'}
+            placeholder={'Please input base price'}
+            defaultValue={`${product?.price || CONSTANTS.STR_EMPTY}`}
+            name={'basePrice'}
+            rules={{
+              // valueAsNumber: true,
+              required: 'Base Price is required!',
+              min: 0,
+              pattern: {
+                value: /^[-+]?[1-9]\d*$/,
+                message: 'Price must be number',
+              },
+            }}
+          />
           <Form.Input
             keyboardType={'numeric'}
             label={'Price'}
@@ -165,7 +187,9 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
             name={'status'}
             defaultValue={product?.status || STATUS.ACTIVE}
           />
-          <Form.SubmitButton />
+          <View.Row style={{ marginTop: 30 }}>
+            <Form.SubmitButton />
+          </View.Row>
         </Form.View>
       </ScrollView>
     </KeyboardAvoidingView>

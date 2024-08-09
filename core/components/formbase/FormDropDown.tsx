@@ -1,5 +1,5 @@
-import React, {FC, memo} from 'react';
-import {StyleSheet, ViewStyle} from 'react-native';
+import React, { FC, memo } from 'react';
+import { StyleSheet, ViewStyle } from 'react-native';
 import View from '@core/components/viewbase/View';
 import {
   useController,
@@ -7,9 +7,9 @@ import {
   useFormContext,
 } from 'react-hook-form';
 import Label from '@core/components/labelbase/Label';
-import {CONSTANTS} from '@core/common';
-import {DropdownBaseProps} from '@core/components/dropdownbase/DropDownBase';
-import {DropDown} from '@core/components/dropdownbase';
+import { CONSTANTS } from '@core/common';
+import { DropdownBaseProps } from '@core/components/dropdownbase/DropDownBase';
+import { DropDown } from '@core/components/dropdownbase';
 
 type Props = DropdownBaseProps &
   UseControllerProps & {
@@ -29,14 +29,14 @@ export const FormDropDown: FC<Props> = memo(
     ...rest
   }: Props) => {
     const {
-      field: {onChange, value},
+      field: { onChange, value },
       // fieldState: {error},
     } = useController({
       name,
       rules,
       defaultValue,
     });
-    const {formState} = useFormContext();
+    const { formState } = useFormContext();
     const hasError = Boolean(formState?.errors[name]);
     const message: string = !!hasError
       ? `${formState.errors[name]?.message}`
@@ -56,7 +56,7 @@ export const FormDropDown: FC<Props> = memo(
       <View.Row style={containerStyles}>
         {!!label && (
           <Label.Field
-            style={hasError ? {color: 'red'} : {}}
+            style={hasError ? { color: 'red' } : {}}
             text={!!message ? message : label}
           />
         )}
@@ -71,6 +71,7 @@ export const FormDropDown: FC<Props> = memo(
           style={dropdownStyle}
           // defaultValue={value}
           {...rest}
+          placeholder={hasError ? '' : rest.placeholder}
         />
       </View.Row>
     );
@@ -83,13 +84,16 @@ const styles = StyleSheet.create({
     width: '100%',
     borderBottomWidth: 1,
     borderColor: 'gray',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
+    verticalAlign: 'middle',
     paddingTop: 30,
+    marginTop: -20,
+    marginBottom: 20,
   },
   commonDropdownStyle: {
     borderBottomWidth: 0,
-    paddingTop: -20,
+    // paddingTop: -20,
   },
 });

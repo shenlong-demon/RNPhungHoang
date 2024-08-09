@@ -1,7 +1,7 @@
-import React, {FC, memo, useEffect, useState} from 'react';
-import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
-import {Dropdown} from 'react-native-element-dropdown';
-import {DropdownProps} from 'react-native-element-dropdown/src/components/Dropdown/model';
+import React, { FC, memo, useEffect, useState } from 'react';
+import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
+import { DropdownProps } from 'react-native-element-dropdown/src/components/Dropdown/model';
 
 export type DropdownBaseProps = Omit<DropdownProps<any>, 'onChange'> & {
   onChange?: ((newValue: any | null) => void) | undefined;
@@ -26,7 +26,7 @@ export const DropDownBase: FC<DropdownBaseProps> = memo(
 
     useEffect(() => {
       !!props.onChange && props.onChange(value);
-    }, [props.onChange, value]);
+    }, [value]);
 
     return (
       <Dropdown
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderBottomWidth: 1,
     borderColor: 'gray',
-    paddingTop: 20,
+    // paddingTop: 20,
+    // backgroundColor: 'red',
   },
 });

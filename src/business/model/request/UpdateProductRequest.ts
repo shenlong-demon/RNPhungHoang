@@ -3,6 +3,7 @@ export type UpdateProductRequest = {
   code?: string;
   otherName?: string;
   image?: string;
+  basePrice: number;
   price: number;
   brandId: number;
   groupId: number;

@@ -1,21 +1,20 @@
-import React, {FC, memo, useCallback, useMemo} from 'react';
+import React, { FC, memo, useCallback, useMemo } from 'react';
 import {
   Booking,
   Operation,
   OPERATION_ACTION_SCREEN,
   useOperationContext,
-  useOperationFacade,
   usePopupContext,
 } from '@src/business';
-import {StyleSheet} from 'react-native';
-import {BookingItemView} from '@src/screens/portrait/main/pos/parts/BookingItemView';
-import {FlatList} from '@core/components';
+import { StyleSheet } from 'react-native';
+import { BookingItemView } from '@src/screens/portrait/main/pos/parts/BookingItemView';
+import { FlatList } from '@core/components';
 import Button from '@core/components/buttonbase/Button';
-import {Route} from '@src/screens/portrait/Route';
-import {useNavigation} from '@core/navigation';
+import { Route } from '@src/screens/portrait/Route';
+import { useNavigation } from '@core/navigation';
 import View from '@core/components/viewbase/View';
-import {AddServicePopup} from '@src/screens/portrait/components/popup';
-import {Dto} from '@core/common';
+import { AddServicePopup } from '@src/screens/portrait/components/popup';
+import { Dto } from '@core/common';
 import Label from '@core/components/labelbase/Label';
 
 type Props = {};
@@ -26,10 +25,10 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
     setSelectedBooking,
     selectedBooking,
     setOperationActionScreenIndex,
+    addService,
   } = useOperationContext();
-  const {navigate} = useNavigation();
-  const {openPopup, closeAllPopups} = usePopupContext();
-  const facade = useOperationFacade();
+  const { navigate } = useNavigation();
+  const { openPopup, closeAllPopups } = usePopupContext();
   const bookingItems = useMemo((): Booking[] => {
     return operation?.bookings || [];
   }, [operation]);
@@ -39,7 +38,7 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
   };
 
   const renderBookingListItem = useCallback(
-    (data: {item: Booking; index: number}): any => {
+    (data: { item: Booking; index: number }): any => {
       return (
         <BookingItemView
           key={data.item.id}
@@ -59,16 +58,12 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
     [setSelectedBooking, selectedBooking],
   );
 
-  const addService = async (
+  const doAddService = async (
     name: string,
     price: number,
     note?: string,
   ): Promise<void> => {
-    const dto: Dto<Operation | null> = await facade.addService(
-      name,
-      price,
-      note,
-    );
+    const dto: Dto<Operation | null> = await addService(name, price, note);
     if (dto.next()) {
       setSelectedBooking(null);
       setOperationActionScreenIndex(OPERATION_ACTION_SCREEN.BOOKING_LIST);
@@ -78,7 +73,7 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
   const openAddServicePopup = (): void => {
     openPopup(
       'AddService',
-      <AddServicePopup onOk={addService} onCancel={closeAllPopups} />,
+      <AddServicePopup onOk={doAddService} onCancel={closeAllPopups} />,
     );
   };
   return (
@@ -98,16 +93,16 @@ export const BookingListView: FC<Props> = memo(({}: Props) => {
       <View.Row>
         <Label.T text={`${operation?.total || ''}`} />
       </View.Row>
-      <View.Row style={{justifyContent: 'space-between'}}>
+      <View.Row style={{ justifyContent: 'space-between' }}>
         <Button.B
-          style={[styles.button, {backgroundColor: '#0563a2'}]}
-          textStyle={{color: 'white'}}
+          style={[styles.button, { backgroundColor: '#0563a2' }]}
+          textStyle={{ color: 'white' }}
           label={'Add service'}
           onPress={openAddServicePopup}
         />
         <Button.B
-          style={[styles.button, {backgroundColor: '#7208af'}]}
-          textStyle={{color: 'white'}}
+          style={[styles.button, { backgroundColor: '#7208af' }]}
+          textStyle={{ color: 'white' }}
           label={'Add product'}
           onPress={openMenu}
         />

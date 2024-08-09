@@ -1,23 +1,23 @@
-import {FC, memo, useEffect, useState} from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import View from '@core/components/viewbase/View';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import {
   Product,
-  useOperationFacade,
+  useOperationContext,
   useProductSearchFacade,
 } from '@src/business';
-import {FlatList} from '@core/components';
+import { FlatList } from '@core/components';
 import Input from '@core/components/inputbase/Input';
-import {MenuItemView} from '@src/screens/portrait/main/pos/menu/parts';
-import {useNavigation} from '@core/navigation';
+import { MenuItemView } from '@src/screens/portrait/main/pos/menu/parts';
+import { useNavigation } from '@core/navigation';
 
 type Props = {};
 export const MenuScreen: FC<Props> = memo(({}: Props) => {
   const [searchProducts, setSearchProducts] = useState<Product[]>([]);
   const [searchText, setSearchText] = useState<string | null>(null);
   const productSearchFacade = useProductSearchFacade();
-  const {booking} = useOperationFacade();
-  const {goBack} = useNavigation();
+  const { booking } = useOperationContext();
+  const { goBack } = useNavigation();
   useEffect(() => {
     setSearchProducts(productSearchFacade.search(searchText));
   }, [searchText]);
@@ -26,7 +26,7 @@ export const MenuScreen: FC<Props> = memo(({}: Props) => {
     booking(menuItem);
     goBack();
   };
-  const renderItem = (data: {item: Product; index: number}): any => {
+  const renderItem = (data: { item: Product; index: number }): any => {
     return (
       <MenuItemView
         item={data.item}
