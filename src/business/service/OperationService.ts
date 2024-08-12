@@ -1,6 +1,7 @@
 import { BaseService, Dto } from '@core/common';
 import {
   AddOperationServiceRequest,
+  Bill,
   CancelBookingRequest,
   CreateOperationIssueRequest,
   Customer,
@@ -52,7 +53,7 @@ export class OperationService extends BaseService<OperationService> {
     );
   }
 
-  async receipt(operation: Operation): Promise<Dto<Operation | null>> {
+  async receipt(operation: Operation): Promise<Dto<Bill | null>> {
     return this.operationRepo.receipt(operation.id);
   }
 

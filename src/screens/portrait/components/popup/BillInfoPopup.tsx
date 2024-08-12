@@ -1,10 +1,15 @@
-import { Bill } from '@src/business';
+import { Bill, BillIssue, Order } from '@src/business';
 import { memo, useEffect, useState } from 'react';
 import View from '@core/components/viewbase/View';
 import { StyleSheet } from 'react-native';
 import Button from '@core/components/buttonbase/Button';
 import Label from '@core/components/labelbase/Label';
 import { Logger } from '@core/common';
+import { FlatList } from '@core/components';
+import {
+  BillIssueListItemView,
+  OrderListItemView,
+} from '@src/screens/portrait/main/bill/parts';
 
 type Props = {
   bill: Bill;
@@ -15,6 +20,14 @@ export const BillInfoPopup = memo(({ bill, onClose }: Props) => {
   useEffect(() => {
     Logger.log(() => [`BillInfoPopup ${bill.name || 'No name'}`, bill]);
   }, []);
+
+  const renderIssue = (data: { item: BillIssue; index: number }): any => {
+    return <BillIssueListItemView item={data.item} index={data.index} />;
+  };
+  const renderOrder = (data: { item: Order; index: number }): any => {
+    return <OrderListItemView item={data.item} index={data.index} />;
+  };
+
   return (
     <View.V style={styles.container}>
       <View.V style={styles.infoView}>
@@ -29,10 +42,17 @@ export const BillInfoPopup = memo(({ bill, onClose }: Props) => {
         <Label.T style={styles.titleName} text={`Total`} />
         <Label.Money style={styles.total} value={bill.total} />
       </View.V>
-      <View.V style={{ flexDirection: 'row', width: '100%', flex: 1 }}>
+      <View.V
+        style={{
+          flexDirection: 'row',
+          width: '100%',
+          flex: 1,
+
+        }}>
         <View.V
           style={{
             justifyContent: 'center',
+            marginRight: 5,
           }}>
           <View.V
             style={{ height: '35%', width: 45, backgroundColor: '#0563a2' }}
@@ -43,8 +63,30 @@ export const BillInfoPopup = memo(({ bill, onClose }: Props) => {
             onPress={() => setViewIndex(1)}
           />
         </View.V>
-        {viewIndex === 0 ? <View.V style={{ flex: 1 }}></View.V> : null}
-        {viewIndex === 1 ? <View.V style={{ flex: 1 }}></View.V> : null}
+        {viewIndex === 0 ? (
+          <View.V style={{
+            flex: 1, borderWidth: 1,
+            borderColor: 'green',
+          }}>
+            <FlatList.L
+              data={bill.orders}
+              renderItem={renderOrder}
+              style={styles.list}
+            />
+          </View.V>
+        ) : null}
+        {viewIndex === 1 ? (
+          <View.V style={{
+            flex: 1, borderWidth: 1,
+            borderColor: 'green',
+          }}>
+            <FlatList.L
+              data={bill.issues}
+              renderItem={renderIssue}
+              style={styles.list}
+            />
+          </View.V>
+        ) : null}
       </View.V>
       <Button.Cancel label={'Close'} onPress={onClose} />
     </View.V>
@@ -77,5 +119,8 @@ const styles = StyleSheet.create({
   titleName: {
     fontWeight: 'bold',
     color: 'green',
+  },
+  list: {
+    flex: 1,
   },
 });
