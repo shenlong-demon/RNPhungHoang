@@ -6,3 +6,4 @@ export * from './SetNotePopup';
 export * from './SetPricePopup';
 export * from './UpdateBrandPopup';
 export * from './UpdateGroupPopup';
+export * from './BillInfoPopup';

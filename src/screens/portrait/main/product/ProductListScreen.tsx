@@ -12,8 +12,8 @@ type Props = {};
 export const ProductListScreen: FC<Props> = memo(({}) => {
   const { navigate } = useNavigation();
   const [searchText, setSearchText] = useState<string | null>(null);
-  const [products, setProducts] = useState<Product[]>([]);
-  const data = useDataContext();
+  const [displayProduct, setDisplayProducts] = useState<Product[]>([]);
+  const { products } = useDataContext();
 
   const { search } = useProductSearchFacade();
 
@@ -23,8 +23,8 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
 
   useEffect(() => {
     const searchProducts: Product[] = search(searchText);
-    setProducts(searchProducts);
-  }, [searchText, data.products]);
+    setDisplayProducts(searchProducts);
+  }, [searchText, products]);
 
   const renderProductItem = useCallback(
     (data: { item: Product; index: number }): any => {
@@ -49,7 +49,7 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
       />
       <FlatList.L
         style={{ flex: 1 }}
-        data={products}
+        data={displayProduct}
         keyExtractor={item => item.id}
         renderItem={renderProductItem}
       />

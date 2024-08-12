@@ -91,5 +91,8 @@ const API_URL = {
   REMOVE_ISSUE: (operationId: number): string => {
     return `${ENV.HOST}/operation/remove-issue/${operationId}`;
   },
+  GET_BILLS_BY() {
+    return `${ENV.HOST}/bill/filter`;
+  },
 };
 export { API_URL };

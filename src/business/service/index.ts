@@ -9,3 +9,4 @@ export * from './OperationService';
 export * from './CustomerService';
 export * from './DataService';
 export * from './ReportService';
+export * from './BillService';

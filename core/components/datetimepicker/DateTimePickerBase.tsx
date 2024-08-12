@@ -1,12 +1,13 @@
-import React, {FC, memo, useEffect, useRef, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import React, { FC, memo, useEffect, useRef, useState } from 'react';
+import { StyleSheet } from 'react-native';
 import View from '@core/components/viewbase/View';
 import Label from '@core/components/labelbase/Label';
-import {ViewBaseProps} from '@core/components/viewbase/ViewBase';
-import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
-import {DateTimeUtils, Logger} from '@core/common';
-import {StyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
-import {TextStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import { ViewBaseProps } from '@core/components/viewbase/ViewBase';
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import { DateTimeUtils, Logger } from '@core/common';
+import { StyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
+import { TextStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+
 enum MODE {
   DATE = 'date',
   TIME = 'time',
@@ -83,7 +84,7 @@ export const DateTimePickerBase: FC<DateTimePickerBaseProps> = memo(
     };
     const dateStr: string =
       mode === DISPLAY_MODE.DATETIME
-        ? DateTimeUtils.formatDateTimeString(datetime)
+        ? DateTimeUtils.formatDateTimeStringByDate(datetime)
         : DateTimeUtils.formatDateString(datetime);
     const labelStyles = StyleSheet.flatten([styles.text, textStyle || {}]);
     const containerStyle = StyleSheet.flatten([styles.container, style]);

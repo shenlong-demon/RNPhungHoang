@@ -6,3 +6,4 @@ export * from './OperationRepo';
 export * from './CustomerRepo';
 export * from './DataRepo';
 export * from './ReportRepo';
+export * from './BillRepo';

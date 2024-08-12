@@ -29,6 +29,7 @@ import Button from '@core/components/buttonbase/Button';
 import View from '@core/components/viewbase/View';
 import Label from '@core/components/labelbase/Label';
 import { StyleSheet } from 'react-native';
+import { BillScreen } from '@src/screens/portrait/main/bill';
 
 type Props = {
   navigation: any;
@@ -62,7 +63,13 @@ const DrawerMenuContent = ({ navigation }: Props) => {
   };
   return (
     <View.V style={{ flex: 1, backgroundColor: 'green' }}>
-      {section('POS', [{ title: 'Seller', navigateToRoute: Route.POS_SELLER }])}
+      {section('POS', [
+        { title: 'Seller', navigateToRoute: Route.POS_SELLER },
+        {
+          title: 'Bill',
+          navigateToRoute: Route.BILL,
+        },
+      ])}
       {section('PRODUCTS', [
         { title: 'Product', navigateToRoute: Route.PRODUCT },
       ])}
@@ -226,6 +233,13 @@ export const PortraitApp: FC<Props> = memo(({}) => {
                   name: Route.POS_SELLER,
                   component: POSStack,
                   options: { headerShown: false },
+                },
+                {
+                  name: Route.BILL,
+                  component: BillScreen,
+                  options: {
+                    ...createHeaderTopStack('Bill List'),
+                  },
                 },
                 {
                   name: Route.PRODUCT,
