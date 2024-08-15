@@ -5,6 +5,7 @@ import LoginScreen from '@src/screens/portrait/auth';
 import { Route } from '@src/screens/portrait/Route';
 import {
   DataContextProvider,
+  ENV,
   OperationContextProvider,
   OperationListContextProvider,
   SettingContextProvider,
@@ -83,6 +84,21 @@ const DrawerMenuContent = ({ navigation }: Props) => {
       {section('REPORT', [
         { title: 'Close Out Report', navigateToRoute: Route.CLOSE_OUT_REPORT },
       ])}
+      <View.V
+        style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
+        <View.V style={styles.drawerContentSectionView}>
+          <Label.T
+            text={`${ENV.ENV}`}
+            style={{ color: 'white', alignSelf: 'center', marginBottom: 10 }}
+          />
+          <Button.B
+            label={'Logout'}
+            onPress={() => {}}
+            style={{ backgroundColor: 'red', width: '100%', marginBottom: 10 }}
+            textStyle={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}
+          />
+        </View.V>
+      </View.V>
     </View.V>
   );
 };
@@ -314,6 +330,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   drawerContentSectionView: {
+    width: '100%',
     paddingLeft: 40,
     paddingRight: 40,
   },
