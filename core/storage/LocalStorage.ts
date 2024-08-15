@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CONSTANTS } from '@core/common';
 
 export class LocalStorage {
   public static async save(
@@ -27,7 +28,7 @@ export class LocalStorage {
   public static async getObject<T>(key: string): Promise<T | null> {
     try {
       const val: string | null | undefined = await LocalStorage.getString(key);
-      return JSON.parse(val) as T | null;
+      return JSON.parse(val || CONSTANTS.STR_EMPTY) as T | null;
     } catch (e) {}
     return null;
   }

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 type AppContextFacadeResult = {
   isInitialized: boolean;
@@ -28,8 +28,10 @@ const AppContext = React.createContext<AppContextFacadeResult>(
 );
 
 export const useAppContext = () => useContext(AppContext);
-
-export const AppContextProvider = ({children}) => {
+type Props = {
+  children: React.ReactNode;
+};
+export const AppContextProvider = ({ children }: Props) => {
   const facade = useAppContextFacade();
   return <AppContext.Provider value={facade}>{children}</AppContext.Provider>;
 };
