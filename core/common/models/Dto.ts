@@ -1,4 +1,4 @@
-import {CONSTANTS, RESULT_CODE} from '@core/common';
+import { CONSTANTS, RESULT_CODE } from '@core/common';
 
 export class Dto<T> {
   public code: number = RESULT_CODE.SUCCESS;
@@ -18,19 +18,31 @@ export class Dto<T> {
   public next(): boolean {
     return !this.isError();
   }
+
   public isError(): boolean {
     return !!(this.code & RESULT_CODE.ERROR);
   }
+
+  public isWarning(): boolean {
+    return !!(this.code & RESULT_CODE.WARNING);
+  }
+
   public bypass(): Dto<null> {
     return new Dto<null>(this.code, this.message);
+  }
+
+  public getCode(): number {
+    return this.code & RESULT_CODE.MASK;
   }
 
   public static success<T>(data: T | null | undefined): Dto<T> {
     return new Dto<T>(RESULT_CODE.SUCCESS, CONSTANTS.STR_EMPTY, data);
   }
+
   public static error(code: number, message?: string): Dto<null> {
     return new Dto<null>(RESULT_CODE.ERROR | code, message, null);
   }
+
   public static default(): Dto<null> {
     return new Dto<null>(RESULT_CODE.ERROR, CONSTANTS.STR_EMPTY, null);
   }

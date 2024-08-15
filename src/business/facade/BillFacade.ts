@@ -15,6 +15,6 @@ export class BillFacade extends BaseFacade<BillFacade> {
 
   async getBillsBy(filter: BillFilterRequest): Promise<Dto<Bill[]>> {
     const dto: Dto<Bill[]> = await this.billService.getBillsBy(filter);
-    return dto;
+    return this.populate(dto);
   }
 }

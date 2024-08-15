@@ -19,6 +19,10 @@ export class CacheService extends BaseService<CacheService> {
     return LocalStorage.getObject<User>(LOCAL_STORAGE_KEY.USER);
   }
 
+  async removeUser(): Promise<void> {
+    await LocalStorage.remove(LOCAL_STORAGE_KEY.USER);
+  }
+
   async saveSetting(setting: Setting): Promise<void> {
     await LocalStorage.saveObject(LOCAL_STORAGE_KEY.SETTING, setting);
   }

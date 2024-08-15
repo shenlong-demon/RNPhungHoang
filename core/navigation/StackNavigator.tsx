@@ -1,5 +1,6 @@
-import React, {FC, memo} from 'react';
-import {Stack} from './NavigationContainer';
+import React, { FC, memo } from 'react';
+import { Stack } from './NavigationContainer';
+
 type Screen = {
   name: string;
   component: FC;
@@ -7,11 +8,12 @@ type Screen = {
   options?: any;
 };
 type Props = {
+  initialRouteName?: string;
   screens: Screen[];
   screenOptions?: any;
 };
 
-export const StackNavigator: FC<Props> = memo(({screens, ...rest}) => {
+export const StackNavigator: FC<Props> = memo(({ screens, ...rest }) => {
   return (
     <Stack.Navigator {...rest}>
       {(screens || []).map((screen: Screen): any => {

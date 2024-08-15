@@ -6,6 +6,7 @@ import {
   Product,
   RemoveIssueRequest,
   SetOperationEstimationRequest,
+  useDtoHandlerContext,
   useOperationListContext,
 } from '@src/business';
 import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
@@ -42,6 +43,7 @@ export type OperationContextResult = {
 };
 
 export const useOperationContextFacade = (): OperationContextResult => {
+  const { dtoHandle } = useDtoHandlerContext();
   const facade: OperationFacade = OperationFacade.shared();
   const [operation, setOperation] = useState<Operation | null>(null);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);

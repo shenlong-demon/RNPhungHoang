@@ -69,7 +69,7 @@ export const CloseOutReportScreen: FC<Props> = memo(({}: Props) => {
             data.index % 2 === 0 ? 'rgba(234,252,234,0.37)' : 'white',
         }}>
         <Label.T
-          style={{ flex: 0.5, textAlign: 'right' }}
+          style={{ flex: 1, textAlign: 'right' }}
           text={`${new Date(data.item.date).getDate()}`}
         />
         <Label.T
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   btn: {
-    minWidth: 100,
+    minWidth: 70,
   },
   title: {
     fontWeight: 'bold',

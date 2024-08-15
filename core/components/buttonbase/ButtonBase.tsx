@@ -1,11 +1,11 @@
-import React, {FC, memo, useMemo} from 'react';
+import React, { FC, memo, useMemo } from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native';
-import {TextStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
-import {PositionProp, PositionUtil} from '@core/components/common';
+import { TextStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import { PositionProp, PositionUtil } from '@core/components/common';
 import Label from '@core/components/labelbase/Label';
 
 export type ButtonBaseProps = TouchableOpacityProps &
@@ -25,6 +25,7 @@ const ButtonBase: FC<ButtonBaseProps> = ({
   const positionStyle = useMemo(() => {
     return PositionUtil.positionStyle(position);
   }, [position]);
+
   const finalStyles = useMemo(() => {
     return StyleSheet.flatten([styles.common, style, positionStyle]);
   }, [style, positionStyle]);

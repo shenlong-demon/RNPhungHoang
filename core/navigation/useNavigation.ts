@@ -3,12 +3,12 @@ import {
   useNavigation as useLibNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {useCallback} from 'react';
-import {Logger} from '@core/common';
-import {StackNavigationProp} from '@react-navigation/stack';
+import { useCallback } from 'react';
+import { Logger } from '@core/common';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { navigationRef } from '@core/navigation/NavigationContainer';
 
 type NavigationResult = {
-  navigation?: any | null;
   navigate: (routeName: string, param?: any) => void;
   replace: (routeName: string) => void;
   goBack: () => void;
@@ -19,31 +19,39 @@ type NavigationResult = {
 
 export const useNavigation = (): NavigationResult => {
   const navigation = useLibNavigation<StackNavigationProp<ParamListBase, ''>>();
-  const routeNavigation = useRoute();
-
-  const route = navigation?.current?.getCurrentRoute() || routeNavigation;
+  const navigator = (): any | null | undefined => {
+    if (navigationRef.isReady()) {
+      // Perform navigation if the react navigation is ready to handle actions
+      return navigationRef;
+    } else {
+      // You can decide what to do if react navigation is not ready
+      // You can ignore this, or add these actions to a queue you can call later
+      return navigation;
+    }
+  };
   const navigate = (routeName: string, param?: any): void => {
-    navigation.navigate(routeName, param);
+    navigator()?.navigate(routeName, param);
   };
   const replace = (routeName: string): void => {
-    navigation.replace(routeName);
+    navigator()?.replace(routeName);
   };
   const goBack = (): void => {
-    navigation.goBack();
+    navigator()?.goBack();
   };
 
   const popToTop = (): void => {
-    navigation.popToTop();
+    navigator()?.popToTop();
   };
 
   const setOptions = useCallback(
     (options: any): void => {
-      navigation.setOptions(options);
+      navigator()?.setOptions(options);
     },
-    [navigation],
+    [navigator()],
   );
 
   const getParam = (): any | null => {
+    const route = navigator()?.current?.getCurrentRoute() || useRoute();
     let param: any | null | undefined = route?.params;
     if (param === undefined) {
       param = null;
@@ -52,7 +60,6 @@ export const useNavigation = (): NavigationResult => {
     return param;
   };
   return {
-    navigation,
     navigate,
     replace,
     setOptions,

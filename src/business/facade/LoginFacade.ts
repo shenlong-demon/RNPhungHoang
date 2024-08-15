@@ -1,9 +1,9 @@
 import BaseFacade from '@core/common/models/BaseFacade';
-import {Dto, Logger, WebApi} from '@core/common';
-import {AuthService} from '@src/business/service/AuthService';
-import {Setting, User} from '@src/business';
-import {CacheService} from '@src/business/service/CacheService';
-import {LoginResult} from '@src/business/model';
+import { CONSTANTS, Dto, Logger, WebApi } from '@core/common';
+import { AuthService } from '@src/business/service/AuthService';
+import { Setting, User } from '@src/business';
+import { CacheService } from '@src/business/service/CacheService';
+import { LoginResult } from '@src/business/model';
 
 export class LoginFacade extends BaseFacade<LoginFacade> {
   private authService: AuthService = AuthService.shared();
@@ -30,22 +30,28 @@ export class LoginFacade extends BaseFacade<LoginFacade> {
       const setting: Setting = loginResult.setting;
       await CacheService.shared().saveUser(user);
       await CacheService.shared().saveSetting(setting);
-      this.handleForUser(user);
+      await this.handleForUser(user);
     }
-    return dto;
+    return this.populate(dto);
   }
 
   async isLoggedIn(): Promise<User | null> {
     const user: User | null = await CacheService.shared().getUser();
-    if (!!user) {
-      this.handleForUser(user);
-    }
+    await this.handleForUser(user);
+
     Logger.log(() => [`AuthFacade isLoggedIn ${!!user}`, user]);
     return user;
   }
 
-  private async handleForUser(user: User): Promise<void> {
-    const getTokenFunc = async (): Promise<string> => user.token;
+  async removeUser(): Promise<void> {
+    Logger.log(() => [`AuthFacade removeUser`]);
+    await CacheService.shared().removeUser();
+    await this.handleForUser(null);
+  }
+
+  private async handleForUser(user: User | null): Promise<void> {
+    const getTokenFunc = async (): Promise<string> =>
+      user?.token || CONSTANTS.STR_EMPTY;
 
     WebApi.shared().setGetToken(getTokenFunc);
   }

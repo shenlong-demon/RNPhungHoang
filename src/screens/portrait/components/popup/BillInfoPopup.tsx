@@ -47,7 +47,6 @@ export const BillInfoPopup = memo(({ bill, onClose }: Props) => {
           flexDirection: 'row',
           width: '100%',
           flex: 1,
-
         }}>
         <View.V
           style={{
@@ -64,10 +63,12 @@ export const BillInfoPopup = memo(({ bill, onClose }: Props) => {
           />
         </View.V>
         {viewIndex === 0 ? (
-          <View.V style={{
-            flex: 1, borderWidth: 1,
-            borderColor: 'green',
-          }}>
+          <View.V
+            style={{
+              flex: 1,
+              borderWidth: 1,
+              borderColor: 'green',
+            }}>
             <FlatList.L
               data={bill.orders}
               renderItem={renderOrder}
@@ -76,10 +77,12 @@ export const BillInfoPopup = memo(({ bill, onClose }: Props) => {
           </View.V>
         ) : null}
         {viewIndex === 1 ? (
-          <View.V style={{
-            flex: 1, borderWidth: 1,
-            borderColor: 'green',
-          }}>
+          <View.V
+            style={{
+              flex: 1,
+              borderWidth: 1,
+              borderColor: 'green',
+            }}>
             <FlatList.L
               data={bill.issues}
               renderItem={renderIssue}
@@ -88,7 +91,11 @@ export const BillInfoPopup = memo(({ bill, onClose }: Props) => {
           </View.V>
         ) : null}
       </View.V>
-      <Button.Cancel label={'Close'} onPress={onClose} />
+      <Button.Cancel
+        style={{ marginTop: 20, width: '50%', alignSelf: 'center' }}
+        label={'Close'}
+        onPress={onClose}
+      />
     </View.V>
   );
 });

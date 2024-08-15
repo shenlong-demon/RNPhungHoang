@@ -1,9 +1,9 @@
-import React, {FC, memo} from 'react';
-import {StyleSheet, TextInput, TextInputProps} from 'react-native';
+import React, { FC, memo } from 'react';
+import { StyleSheet, TextInput, TextInputProps } from 'react-native';
 
 export type InputBaseProps = {} & TextInputProps;
 export const InputBase: FC<InputBaseProps> = memo(
-  ({style, multiline, ...rest}) => {
+  ({ style, multiline, ...rest }) => {
     const finalStyles = StyleSheet.flatten([
       styles.common,
       multiline ? styles.multiLine : {},
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     minWidth: '70%',
     paddingBottom: -10,
     width: '100%',
+    color: 'black',
   },
   multiLine: {
     borderWidth: 1,

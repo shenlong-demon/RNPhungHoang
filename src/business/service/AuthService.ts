@@ -1,6 +1,6 @@
-import {BaseService, Dto, Sdo} from '@core/common';
-import {AuthRepo} from '@src/business/repository/AuthRepo';
-import {LoginResult} from '@src/business/model';
+import { BaseService, Dto } from '@core/common';
+import { AuthRepo } from '@src/business/repository/AuthRepo';
+import { LoginResult } from '@src/business/model';
 
 export class AuthService extends BaseService<AuthService> {
   private authRepo: AuthRepo = AuthRepo.shared();

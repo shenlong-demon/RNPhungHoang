@@ -5,17 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8def0e7d-dc40-4214-9271-5c05a281f5a9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/business/model/object/BillIssue.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/business/model/object/Order.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/portrait/main/bill/parts/BillIssueListItemView.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/portrait/main/bill/parts/OrderListItemView.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/business/context/DtoHandlerContext.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/app/AppContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/app/AppContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/common/constants/ResultCode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/common/constants/ResultCode.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/common/models/BaseFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/common/models/BaseFacade.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/common/models/Dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/common/models/Dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/common/webapi/WebApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/common/webapi/WebApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/components/buttonbase/ButtonBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/buttonbase/ButtonBase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/components/inputbase/InputBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/inputbase/InputBase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/components/popup/Popup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/popup/Popup.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/navigation/NavigationContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/navigation/NavigationContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/navigation/StackNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/navigation/StackNavigator.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/navigation/useNavigation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/navigation/useNavigation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/storage/LocalStorage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/storage/LocalStorage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/context/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/AuthContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/context/OperationContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/OperationContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/context/OperationListContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/OperationListContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/context/PopupContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/PopupContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/context/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/facade/BillFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/facade/BillFacade.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/facade/LoginFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/facade/LoginFacade.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/business/facade/OperationFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/facade/OperationFacade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/model/object/Bill.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/model/object/Bill.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/model/object/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/model/object/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/service/OperationService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/service/OperationService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/service/AuthService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/service/AuthService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/service/CacheService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/service/CacheService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/useFacade/useBillFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/useFacade/useBillFacade.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/useFacade/useLoginFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/useFacade/useLoginFacade.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/PortraitApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/PortraitApp.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/portrait/components/popup/BillInfoPopup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/components/popup/BillInfoPopup.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/bill/parts/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/bill/parts/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/closeouttreport/CloseOutReportScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/closeouttreport/CloseOutReportScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +73,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/LONG/LONG/PROJECTS/PHUNG_HOANG/RNPhungHoangNew/src/business/model/request&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/LONG/LONG/PROJECTS/PHUNG_HOANG/RNPhungHoangNew/src/business/context&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -68,11 +87,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew\src\business\context" />
       <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew\src\business\model\request" />
       <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew\src\business\repository" />
       <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew\src\business\service" />
       <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew\src\business\facade" />
-      <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew\src\screens\portrait\components\popup" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew\core\components\viewbase" />
@@ -125,7 +144,14 @@
       <workItem from="1723108352842" duration="14252000" />
       <workItem from="1723191329090" duration="733000" />
       <workItem from="1723192143650" duration="325000" />
-      <workItem from="1723215658622" duration="20157000" />
+      <workItem from="1723215658622" duration="23628000" />
+      <workItem from="1723521179901" duration="5604000" />
+      <workItem from="1723563957889" duration="5235000" />
+      <workItem from="1723620490827" duration="3297000" />
+      <workItem from="1723649552579" duration="183000" />
+      <workItem from="1723649746989" duration="6000" />
+      <workItem from="1723649786706" duration="219000" />
+      <workItem from="1723650036453" duration="7071000" />
     </task>
     <servers />
   </component>

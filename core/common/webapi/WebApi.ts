@@ -1,6 +1,6 @@
-import {CONSTANTS, Logger, Singleton} from '../index';
-import {ApiResult} from './ApiResult';
-import Axios, {AxiosResponse} from 'axios';
+import { CONSTANTS, Logger, RESULT_CODE, Singleton } from '../index';
+import { ApiResult } from './ApiResult';
+import Axios, { AxiosResponse } from 'axios';
 
 export class WebApi extends Singleton<WebApi> {
   private getToken: (() => Promise<string>) | null = null;
@@ -25,26 +25,31 @@ export class WebApi extends Singleton<WebApi> {
     const headers = await this.createHeader();
     let res: ApiResult;
     try {
-      const response: AxiosResponse = await this.api.post(url, data, {headers});
+      const response: AxiosResponse = await this.api.post(url, data, {
+        headers,
+      });
       res = this.handle(response);
       Logger.log(() => [`POST ${url} RETURN `, headers, data, response, res]);
     } catch (ex) {
       res = this.catchException(ex);
-      Logger.log(() => [`POST ${url} ERROR`, headers, data, res]);
+      Logger.log(() => [`POST ${url} ERROR`, headers, data, ex, res]);
     }
     return res;
   }
+
   public async put(url: string, data: any | null): Promise<ApiResult> {
     Logger.log(() => [`PUT ${url}`, data]);
     const headers = await this.createHeader();
     let res: ApiResult;
     try {
-      const response: AxiosResponse = await this.api.put(url, data, {headers});
+      const response: AxiosResponse = await this.api.put(url, data, {
+        headers,
+      });
       res = this.handle(response);
       Logger.log(() => [`PUT ${url} RETURN `, headers, data, response, res]);
     } catch (ex) {
       res = this.catchException(ex);
-      Logger.log(() => [`PUT ${url} ERROR`, headers, data, res]);
+      Logger.log(() => [`PUT ${url} ERROR`, headers, data, ex, res]);
     }
     return res;
   }
@@ -54,18 +59,18 @@ export class WebApi extends Singleton<WebApi> {
     const headers = await this.createHeader();
     let res: ApiResult;
     try {
-      const response: AxiosResponse = await this.api.get(url, {headers});
+      const response: AxiosResponse = await this.api.get(url, { headers });
       res = this.handle(response);
       Logger.log(() => [`GET ${url} RETURN `, headers, response, res]);
     } catch (ex) {
       res = this.catchException(ex);
-      Logger.log(() => [`GET ${url} ERROR`, headers, res]);
+      Logger.log(() => [`GET ${url} ERROR`, headers, ex, res]);
     }
     return res;
   }
 
   private handle(response: AxiosResponse): ApiResult {
-    return {...response.data};
+    return { ...response.data };
   }
 
   private catchException(error: any | null): ApiResult {
@@ -74,9 +79,14 @@ export class WebApi extends Singleton<WebApi> {
     };
     if (!!error) {
       if (!!error.response) {
+        const httpCode: number = error.response.status;
         return {
-          code: 500,
-          message: error.response.statusText,
+          code: RESULT_CODE.ERROR | httpCode,
+          message:
+            httpCode === 401
+              ? 'Your Login is expired !. Please login again'
+              : 'Server Error !!!',
+          data: error.response.data,
         };
       }
     }
@@ -103,7 +113,6 @@ export class WebApi extends Singleton<WebApi> {
           }
         : {}),
     };
-    Logger.log(() => [`WebApi createHeader token ${token} `, header]);
     return header;
   }
 }

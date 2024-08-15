@@ -1,6 +1,10 @@
-import {Operation, useOperationFacade} from '@src/business';
-import React, {FC, useContext, useEffect, useRef, useState} from 'react';
-import {Dto, Logger, ObjectUtils} from '@core/common';
+import {
+  Operation,
+  useDtoHandlerContext,
+  useOperationFacade,
+} from '@src/business';
+import React, { FC, useContext, useEffect, useRef, useState } from 'react';
+import { Dto, Logger, ObjectUtils } from '@core/common';
 
 export type OperationListContextResult = {
   operations: Operation[];
@@ -11,42 +15,36 @@ export type OperationListContextResult = {
 };
 
 export const useOperationListContextFacade = (): OperationListContextResult => {
+  const { dtoHandle } = useDtoHandlerContext();
   const [operations, setOperations] = useState<Operation[]>([]);
-  const [operationPageIndex, setOperationPageIndex] = useState<number>(0);
-  const previousOperationIndexRef = useRef<number>(-1);
+  const pageIndexRef = useRef<number>(0);
   const facade = useOperationFacade();
   useEffect(() => {
-    setOperationPageIndex(operationPageIndex);
+    pageIndexRef.current = 0;
+    loadOperations();
   }, []);
-
-  useEffect(() => {
-    Logger.log(() => [
-      `useOperationListContextFacade loadOperations length ${operations.length} with index ${operationPageIndex}`,
-    ]);
-    if (previousOperationIndexRef.current != operationPageIndex) {
-      loadOperations();
-    }
-    previousOperationIndexRef.current = operationPageIndex;
-  }, [operations.length, operationPageIndex]);
-
   const reloadOperations = (): void => {
-    previousOperationIndexRef.current = -1;
-    setOperations([]);
-    setOperationPageIndex(0);
+    pageIndexRef.current = 0;
+    loadOperations();
   };
   const loadOperations = async (): Promise<void> => {
     const dto: Dto<Operation[]> = await facade.getOperations(
-      operationPageIndex,
+      pageIndexRef.current,
     );
     Logger.log(() => [
-      `useOperationListContextFacade loadOperations ${operationPageIndex}`,
+      `useOperationListContextFacade loadOperations ${pageIndexRef.current}`,
       dto,
     ]);
-    if (dto.next()) {
-      if (operationPageIndex === 0) {
+    const isSuccess: boolean = await dtoHandle(dto);
+    if (isSuccess) {
+      const newOps: Operation[] = (dto.data || []) as Operation[];
+      if (pageIndexRef.current === 0) {
         setOperations((dto.data || []) as Operation[]);
       } else {
-        addOperationInList([...operations, ...(dto.data as Operation[])]);
+        if (newOps.length === 0) {
+          pageIndexRef.current -= 1;
+        }
+        addOperationInList([...operations, ...newOps]);
       }
     }
   };
@@ -68,7 +66,8 @@ export const useOperationListContextFacade = (): OperationListContextResult => {
   };
 
   const loadMoreOperations = (): void => {
-    setOperationPageIndex(operationPageIndex + 1);
+    pageIndexRef.current += 1;
+    loadOperations();
   };
   const removeOperationInList = (op: Operation): void => {
     setOperations([
@@ -103,7 +102,7 @@ export const useOperationListContext = () => useContext(OperationListContext);
 type Props = {
   children: React.ReactNode;
 };
-export const OperationListContextProvider: FC<Props> = ({children}) => {
+export const OperationListContextProvider: FC<Props> = ({ children }) => {
   const facade = useOperationListContextFacade();
   return (
     <OperationListContext.Provider value={facade}>

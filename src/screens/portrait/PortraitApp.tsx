@@ -86,7 +86,7 @@ const DrawerMenuContent = ({ navigation }: Props) => {
     </View.V>
   );
 };
-export const PortraitApp: FC<Props> = memo(({}) => {
+export const PortraitApp: FC = memo(() => {
   const { user, init } = useAuthContext();
   const headerStyle = {
     headerStyle: {
@@ -285,18 +285,18 @@ export const PortraitApp: FC<Props> = memo(({}) => {
     <></>
   ) : (
     <StackNavigator
+      initialRouteName={!!user ? Route.APP : Route.LOGIN}
       screens={[
-        !user
-          ? {
-              name: Route.LOGIN,
-              component: LoginScreen,
-              options: { headerShown: false },
-            }
-          : {
-              name: Route.APP,
-              component: MainStack,
-              options: { ...headerStyle, headerShown: false },
-            },
+        {
+          name: Route.LOGIN,
+          component: LoginScreen,
+          options: { headerShown: false },
+        },
+        {
+          name: Route.APP,
+          component: MainStack,
+          options: { ...headerStyle, headerShown: false },
+        },
       ]}
     />
   );

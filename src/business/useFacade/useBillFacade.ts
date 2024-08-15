@@ -39,8 +39,8 @@ export const useBillFacade = (): BillFacadeResult => {
       text: searchText,
       offset: pageIndexRef.current,
     });
-    if (dto.next() && dto.data) {
-      const bs: Bill[] = dto.data as Bill[];
+    if (dto.next()) {
+      const bs: Bill[] = (dto.data || []) as Bill[];
       if (pageIndexRef.current === 0) {
         setBills(bs);
       } else {

@@ -33,30 +33,48 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
   async createOperation(name?: string): Promise<Dto<Operation | null>> {
     const dto: Dto<Operation | null> =
       await this.operationService.createOperation(name);
-    return dto;
+    return this.populate(dto);
   }
 
   async getOperations(offset: number): Promise<Dto<Operation[]>> {
-    return this.operationService.getOperations(offset);
+    const dto: Dto<Operation[]> = await this.operationService.getOperations(
+      offset,
+    );
+    return this.populate(dto);
   }
 
   async getOperation(id: number): Promise<Dto<Operation | null>> {
-    return this.operationService.getOperation(id);
+    const dto: Dto<Operation | null> = await this.operationService.getOperation(
+      id,
+    );
+    return this.populate(dto);
   }
 
-  async booking(operation: Operation, menuItem: Product) {
-    return this.operationService.booking(operation, menuItem);
+  async booking(
+    operation: Operation,
+    menuItem: Product,
+  ): Promise<Dto<Operation | null>> {
+    const dto: Dto<Operation | null> = await this.operationService.booking(
+      operation,
+      menuItem,
+    );
+    return this.populate(dto);
   }
 
   async assignCustomer(
     operation: Operation,
     customer: Customer | null,
   ): Promise<Dto<Operation | null>> {
-    return this.operationService.assignCustomer(operation, customer);
+    const dto: Dto<Operation | null> =
+      await this.operationService.assignCustomer(operation, customer);
+    return this.populate(dto);
   }
 
   async receipt(operation: Operation): Promise<Dto<Bill | null>> {
-    return this.operationService.receipt(operation);
+    const dto: Dto<Bill | null> = await this.operationService.receipt(
+      operation,
+    );
+    return this.populate(dto);
   }
 
   async addIssue(
@@ -85,41 +103,55 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
     operation: Operation,
     req: AddOperationServiceRequest,
   ): Promise<Dto<Operation | null>> {
-    return this.operationService.addService(operation, req);
+    const dto: Dto<Operation | null> = await this.operationService.addService(
+      operation,
+      req,
+    );
+    return this.populate(dto);
   }
 
   async cancelBooking(
     operation: Operation,
     req: CancelBookingRequest,
   ): Promise<Dto<Operation | null>> {
-    return this.operationService.cancelBooking(operation, req);
+    const dto: Dto<Operation | null> =
+      await this.operationService.cancelBooking(operation, req);
+    return this.populate(dto);
   }
 
   async setBookingNote(
     operation: Operation,
     req: SetBookingNoteRequest,
   ): Promise<Dto<Operation | null>> {
-    return this.operationService.setBookingNote(operation, req);
+    const dto: Dto<Operation | null> =
+      await this.operationService.setBookingNote(operation, req);
+    return this.populate(dto);
   }
 
   async setOperationDiscount(
     operation: Operation,
     req: SetOperationDiscountRequest,
   ): Promise<Dto<Operation | null>> {
-    return this.operationService.setOperationDiscount(operation, req);
+    const dto: Dto<Operation | null> =
+      await this.operationService.setOperationDiscount(operation, req);
+    return this.populate(dto);
   }
 
   async setEstimation(
     operation: Operation,
     req: SetOperationEstimationRequest,
   ): Promise<Dto<Operation | null>> {
-    return this.operationService.setEstimation(operation, req);
+    const dto: Dto<Operation | null> =
+      await this.operationService.setEstimation(operation, req);
+    return this.populate(dto);
   }
 
   async getOperationDetail(
     operationId: number,
   ): Promise<Dto<Operation | null>> {
-    return this.operationService.getOperationDetail(operationId);
+    const dto: Dto<Operation | null> =
+      await this.operationService.getOperationDetail(operationId);
+    return this.populate(dto);
   }
 
   getOperationTotal(operation: Operation | null): number {
@@ -138,6 +170,10 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
     operation: Operation,
     req: RemoveIssueRequest,
   ): Promise<Dto<Operation | null>> {
-    return this.operationService.removeIssue(operation, req);
+    const dto: Dto<Operation | null> = await this.operationService.removeIssue(
+      operation,
+      req,
+    );
+    return this.populate(dto);
   }
 }
