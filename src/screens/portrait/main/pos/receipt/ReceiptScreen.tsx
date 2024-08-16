@@ -1,19 +1,26 @@
-import {FC, memo} from 'react';
+import { FC, memo } from 'react';
 import View from '@core/components/viewbase/View';
-import {StyleSheet} from 'react-native';
-import {FlatList} from '@core/components';
+import { StyleSheet } from 'react-native';
+import { FlatList } from '@core/components';
 import Button from '@core/components/buttonbase/Button';
-import {Bill, Booking, useOperationContext} from '@src/business';
-import {BookingItemView} from '@src/screens/portrait/main/pos/parts';
+import { Bill, Booking, useOperationContext } from '@src/business';
+import { BookingItemView } from '@src/screens/portrait/main/pos/parts';
 import Label from '@core/components/labelbase/Label';
-import {Dto} from '@core/common';
-import {useNavigation} from '@core/navigation';
+import { Dto } from '@core/common';
+import { useNavigation } from '@core/navigation';
+
 type Props = {};
 export const ReceiptScreen: FC<Props> = memo(({}: Props) => {
-  const {operation, total, receipt} = useOperationContext();
-  const {popToTop} = useNavigation();
-  const renderItem = (data: {item: Booking; index: number}): any => {
-    return <BookingItemView item={data.item} index={data.index} />;
+  const { operation, total, receipt } = useOperationContext();
+  const { popToTop } = useNavigation();
+  const renderItem = (data: { item: Booking; index: number }): any => {
+    return (
+      <BookingItemView
+        key={`${data.item.id}`}
+        item={data.item}
+        index={data.index}
+      />
+    );
   };
   const doReceipt = async (): Promise<void> => {
     const dto: Dto<Bill | null> = await receipt();
@@ -39,6 +46,7 @@ export const ReceiptScreen: FC<Props> = memo(({}: Props) => {
         style={styles.list}
         data={operation?.bookings || []}
         renderItem={renderItem}
+        keyExtractor={(item: Booking, index: number) => `${item.id}_${index}`}
       />
 
       <Button.B

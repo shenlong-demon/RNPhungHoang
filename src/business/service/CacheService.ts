@@ -108,4 +108,18 @@ export class CacheService extends BaseService<CacheService> {
     const key: string = this.genBrandKey(brand);
     await LocalStorage.saveObject(key, brand);
   }
+
+  async clearDataForUser(): Promise<void> {
+    await LocalStorage.removeObjectsByWildcard(
+      LOCAL_STORAGE_KEY.PRODUCT_WILDCARD,
+    );
+    await LocalStorage.removeObjectsByWildcard(
+      LOCAL_STORAGE_KEY.BRAND_WILDCARD,
+    );
+    await LocalStorage.removeObjectsByWildcard(
+      LOCAL_STORAGE_KEY.GROUP_WILDCARD,
+    );
+    await LocalStorage.remove(LOCAL_STORAGE_KEY.USER);
+    await LocalStorage.remove(LOCAL_STORAGE_KEY.SETTING);
+  }
 }

@@ -32,6 +32,7 @@ export const MenuScreen: FC<Props> = memo(({}: Props) => {
   const renderItem = (data: { item: Product; index: number }): any => {
     return (
       <MenuItemView
+        key={`${data.item.id}`}
         item={data.item}
         index={data.index}
         onPress={() => book(data.item)}
@@ -51,6 +52,7 @@ export const MenuScreen: FC<Props> = memo(({}: Props) => {
         data={searchProducts}
         numColumns={2}
         renderItem={renderItem}
+        keyExtractor={(item: Product, index: number) => `${item.id}_${index}`}
       />
     </View.V>
   );

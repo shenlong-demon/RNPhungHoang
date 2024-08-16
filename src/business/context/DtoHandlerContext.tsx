@@ -12,7 +12,7 @@ export type DtoHandlerContextResult = {
 const useDtoHandlerContextFacade = (): DtoHandlerContextResult => {
   const { replace, navigate } = useNavigation();
   const { showToast } = usePopupContext();
-  const { removeUser } = useAuthContext();
+  const { removeUserAndClear } = useAuthContext();
 
   const dtoHandle = async (dto: Dto<any | null>): Promise<boolean> => {
     if (dto.next()) {
@@ -29,7 +29,7 @@ const useDtoHandlerContextFacade = (): DtoHandlerContextResult => {
           Logger.log(() => [
             `useDtoHandlerContextFacade dtoHandle code ${code} move to (Route.LOGIN)`,
           ]);
-          await removeUser();
+          await removeUserAndClear();
           showToast(`Your login is expired. Please try login again !`);
           navigate(Route.LOGIN);
         } else if (code === 502) {

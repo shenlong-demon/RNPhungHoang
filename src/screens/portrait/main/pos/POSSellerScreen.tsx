@@ -1,5 +1,5 @@
-import React, {FC, memo, useCallback, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import React, { FC, memo, useState } from 'react';
+import { StyleSheet } from 'react-native';
 import {
   Operation,
   useOperationContext,
@@ -8,19 +8,19 @@ import {
 } from '@src/business';
 import View from '@core/components/viewbase/View';
 import Button from '@core/components/buttonbase/Button';
-import {FlatList} from '@core/components';
-import {OperationListItemView} from '@src/screens/portrait/main/pos/parts';
-import {CreateOperationPopup} from '@src/screens/portrait/components/popup';
-import {Dto} from '@core/common';
-import {useNavigation} from '@core/navigation';
-import {Route} from '@src/screens/portrait/Route';
+import { FlatList } from '@core/components';
+import { OperationListItemView } from '@src/screens/portrait/main/pos/parts';
+import { CreateOperationPopup } from '@src/screens/portrait/components/popup';
+import { Dto } from '@core/common';
+import { useNavigation } from '@core/navigation';
+import { Route } from '@src/screens/portrait/Route';
 
 type Props = {};
 export const POSSellerScreen: FC<Props> = memo(({}) => {
-  const {operations, reloadOperations} = useOperationListContext();
-  const {enterOperation, createOperation} = useOperationContext();
-  const {openPopup, closeAllPopups} = usePopupContext();
-  const {navigate} = useNavigation();
+  const { operations, reloadOperations } = useOperationListContext();
+  const { enterOperation, createOperation } = useOperationContext();
+  const { openPopup, closeAllPopups } = usePopupContext();
+  const { navigate } = useNavigation();
   const [isRefreshing, setIsFreshing] = useState<boolean>(false);
 
   const enter = async (item: Operation): Promise<void> => {
@@ -48,7 +48,10 @@ export const POSSellerScreen: FC<Props> = memo(({}) => {
     );
   };
 
-  const renderOperationListItem = (data: {item: Operation; index: number}) => {
+  const renderOperationListItem = (data: {
+    item: Operation;
+    index: number;
+  }) => {
     return (
       <OperationListItemView
         key={data.item.id}
@@ -68,6 +71,7 @@ export const POSSellerScreen: FC<Props> = memo(({}) => {
       <FlatList.L
         style={styles.flatList}
         data={operations}
+        keyExtractor={(item: Operation, index: number) => `${item.id}_${index}`}
         renderItem={renderOperationListItem}
         onRefresh={onRefresh}
         refreshing={isRefreshing}
@@ -80,6 +84,6 @@ export const POSSellerScreen: FC<Props> = memo(({}) => {
   );
 });
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: { flex: 1 },
   flatList: {},
 });

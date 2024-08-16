@@ -1,21 +1,21 @@
-import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet } from 'react-native';
 import {
-  Group,
   DataContextResult,
+  Group,
   STATUS,
   useDataContext,
   usePopupContext,
 } from '@src/business';
 import View from '@core/components/viewbase/View';
-import {Button, FlatList} from '@core/components';
+import { Button, FlatList } from '@core/components';
 import Label from '@core/components/labelbase/Label';
-import {UpdateGroupPopup} from '@src/screens/portrait/components/popup';
-import {Dto} from '@core/common';
+import { UpdateGroupPopup } from '@src/screens/portrait/components/popup';
+import { Dto } from '@core/common';
 
 export const UpdateGroupScreen = () => {
-  const {openPopup, closeAllPopups} = usePopupContext();
-  const {groups, createGroup, updateGroup}: DataContextResult =
+  const { openPopup, closeAllPopups } = usePopupContext();
+  const { groups, createGroup, updateGroup }: DataContextResult =
     useDataContext();
   useEffect(() => {
     // loadGroups();
@@ -59,9 +59,10 @@ export const UpdateGroupScreen = () => {
     );
   };
 
-  const renderItem = (data: {item: Group; index: number}): any => {
+  const renderItem = (data: { item: Group; index: number }): any => {
     return (
       <View.Row
+        key={`${data.item.id}`}
         style={{
           backgroundColor:
             data.item.status === STATUS.ACTIVE
@@ -79,7 +80,12 @@ export const UpdateGroupScreen = () => {
   };
   return (
     <View.V style={styles.container}>
-      <FlatList.L style={styles.list} data={groups} renderItem={renderItem} />
+      <FlatList.L
+        style={styles.list}
+        data={groups}
+        renderItem={renderItem}
+        keyExtractor={(item: Group, index: number) => `${item.id}_${index}`}
+      />
       <Button.FloatCirle position={'bottom|right'} onPress={onCreate} />
     </View.V>
   );

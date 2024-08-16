@@ -9,13 +9,18 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import PortraitApp from '@src/screens/portrait';
 import AppContainer from '@core/app';
-import {AuthContextProvider} from '@src/business';
+import { AuthContextProvider, DtoHandlerContextProvider } from '@src/business';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreAllLogs();
 
 function App() {
   return (
     <AppContainer>
       <AuthContextProvider>
-        <PortraitApp />
+        <DtoHandlerContextProvider>
+          <PortraitApp />
+        </DtoHandlerContextProvider>
       </AuthContextProvider>
     </AppContainer>
   );

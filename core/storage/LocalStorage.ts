@@ -40,7 +40,6 @@ export class LocalStorage {
   public static async getObjectsByWildcard<T>(wildcard: string): Promise<T[]> {
     const keys: string[] = await LocalStorage.getAllKeysByWildcard(wildcard);
     const res: T[] = [];
-
     for (const key of keys) {
       const data: T | null = await this.getObject<T>(key);
       if (!!data) {
@@ -58,5 +57,12 @@ export class LocalStorage {
     return keys.filter((key: string): boolean => {
       return key.toLowerCase().indexOf(wildcard.toLowerCase()) > -1;
     });
+  }
+
+  static async removeObjectsByWildcard(wildcard: string): Promise<void> {
+    const keys: string[] = await LocalStorage.getAllKeysByWildcard(wildcard);
+    for (const key of keys) {
+      await LocalStorage.remove(key);
+    }
   }
 }

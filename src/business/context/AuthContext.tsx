@@ -7,14 +7,14 @@ export type AuthContextResult = {
   init: boolean;
   user: User | null;
   setUser: (user: User | null) => void;
-  removeUser: () => Promise<void>;
+  removeUserAndClear: () => Promise<void>;
 };
 
 const DefaultAuthContextResult: AuthContextResult = {
   user: null,
   setUser: (_user: User | null): void => {},
   init: false,
-  removeUser: async (): Promise<void> => {},
+  removeUserAndClear: async (): Promise<void> => {},
 };
 
 const useAuthContextFacade = (): AuthContextResult => {
@@ -39,7 +39,7 @@ const useAuthContextFacade = (): AuthContextResult => {
     setUser(user);
     setInit(true);
   };
-  const removeUser = async (): Promise<void> => {
+  const removeUserAndClear = async (): Promise<void> => {
     Logger.log(() => [`useAuthContextFacade removeUser`]);
     await facade.removeUserAndClearData();
     setUser(null);
@@ -49,7 +49,7 @@ const useAuthContextFacade = (): AuthContextResult => {
     user,
     setUser,
     init,
-    removeUser,
+    removeUserAndClear,
   };
 };
 

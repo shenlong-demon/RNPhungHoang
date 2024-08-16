@@ -30,6 +30,7 @@ export const BillScreen: FC<Props> = ({}: Props) => {
   const renderBill = (data: { item: Bill; index: number }): any => {
     return (
       <BillListItemView
+        key={`${data.item.id}`}
         item={data.item}
         index={data.index}
         onPress={() => showBillInfo(data.item)}
@@ -47,6 +48,7 @@ export const BillScreen: FC<Props> = ({}: Props) => {
       <FlatList.L
         data={bills}
         renderItem={renderBill}
+        keyExtractor={(item: Bill, index: number) => `${item.id}_${index}`}
         style={styles.list}
         onRefresh={onRefresh}
         refreshing={isRefreshing}

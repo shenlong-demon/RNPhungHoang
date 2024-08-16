@@ -52,6 +52,7 @@ export const IssueListView: FC<Props> = memo(({}: Props) => {
   const renderIssueListItem = (data: { item: Issue; index: number }): any => {
     return (
       <IssueListItemView
+        key={`${data.item.id}`}
         item={data.item}
         index={data.index}
         onPress={async () => {}}
@@ -68,6 +69,7 @@ export const IssueListView: FC<Props> = memo(({}: Props) => {
         style={styles.list}
         data={issues}
         renderItem={renderIssueListItem}
+        keyExtractor={(item: Issue, index: number) => `${item.id}_${index}`}
       />
       <View.Row style={styles.actions}>
         <Button.B

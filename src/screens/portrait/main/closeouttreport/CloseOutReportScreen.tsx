@@ -64,6 +64,7 @@ export const CloseOutReportScreen: FC<Props> = memo(({}: Props) => {
   const renderItem = (data: { item: CloseOutReport; index: number }): any => {
     return (
       <View.Row
+        key={`${data.item.id}`}
         style={{
           backgroundColor:
             data.index % 2 === 0 ? 'rgba(234,252,234,0.37)' : 'white',
@@ -106,6 +107,9 @@ export const CloseOutReportScreen: FC<Props> = memo(({}: Props) => {
         style={styles.list}
         data={closeOutReports}
         renderItem={renderItem}
+        keyExtractor={(item: CloseOutReport, index: number) =>
+          `${item.id}_${index}`
+        }
       />
       <View.V>
         <View.Row style={styles.actionView}>

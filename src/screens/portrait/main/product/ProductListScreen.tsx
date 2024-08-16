@@ -30,6 +30,7 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
     (data: { item: Product; index: number }): any => {
       return (
         <ProductListItemView
+          key={`${data.item.id}`}
           item={data.item}
           index={data.index}
           onClick={() => onClick(data.item)}

@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet } from 'react-native';
 import {
   Brand,
   DataContextResult,
@@ -8,14 +8,14 @@ import {
   usePopupContext,
 } from '@src/business';
 import View from '@core/components/viewbase/View';
-import {Button, FlatList} from '@core/components';
+import { Button, FlatList } from '@core/components';
 import Label from '@core/components/labelbase/Label';
-import {UpdateBrandPopup} from '@src/screens/portrait/components/popup';
-import {Dto} from '@core/common';
+import { UpdateBrandPopup } from '@src/screens/portrait/components/popup';
+import { Dto } from '@core/common';
 
 export const UpdateBrandScreen = () => {
-  const {openPopup, closeAllPopups} = usePopupContext();
-  const {brands, createBrand, updateBrand}: DataContextResult =
+  const { openPopup, closeAllPopups } = usePopupContext();
+  const { brands, createBrand, updateBrand }: DataContextResult =
     useDataContext();
   useEffect(() => {
     // loadBrands();
@@ -59,9 +59,10 @@ export const UpdateBrandScreen = () => {
     );
   };
 
-  const renderItem = (data: {item: Brand; index: number}): any => {
+  const renderItem = (data: { item: Brand; index: number }): any => {
     return (
       <View.Row
+        key={`${data.item.id}`}
         style={{
           backgroundColor:
             data.item.status === STATUS.ACTIVE
@@ -79,7 +80,12 @@ export const UpdateBrandScreen = () => {
   };
   return (
     <View.V style={styles.container}>
-      <FlatList.L style={styles.list} data={brands} renderItem={renderItem} />
+      <FlatList.L
+        style={styles.list}
+        data={brands}
+        renderItem={renderItem}
+        keyExtractor={(item: Brand, index: number) => `${item.id}_${index}`}
+      />
       <Button.FloatCirle position={'bottom|right'} onPress={onCreate} />
     </View.V>
   );

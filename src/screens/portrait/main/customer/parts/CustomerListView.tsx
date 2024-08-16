@@ -1,20 +1,20 @@
-import {FC, memo, useEffect, useState} from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import View from '@core/components/viewbase/View';
-import {StyleSheet} from 'react-native';
-import {Customer, STATUS} from '@src/business';
+import { StyleSheet } from 'react-native';
+import { Customer, STATUS } from '@src/business';
 import Input from '@core/components/inputbase/Input';
-import {FlatList} from '@core/components';
-import {useCustomerFacade} from '@src/business/useFacade/useCustomerFacade';
-import {CustomerListItemView} from '@src/screens/portrait/main/customer/parts/CustomerListItemView';
-import {CONSTANTS} from '@core/common';
-import {useDebounce} from '@core/use_hook';
+import { FlatList } from '@core/components';
+import { useCustomerFacade } from '@src/business/useFacade/useCustomerFacade';
+import { CustomerListItemView } from '@src/screens/portrait/main/customer/parts/CustomerListItemView';
+import { CONSTANTS } from '@core/common';
+import { useDebounce } from '@core/use_hook';
 
 type Props = {
   onPressItem: (customer: Customer) => void;
   selectedStatus: STATUS | null;
 };
 export const CustomerListView: FC<Props> = memo(
-  ({selectedStatus, onPressItem}: Props) => {
+  ({ selectedStatus, onPressItem }: Props) => {
     const [searchCustomers, setSearchCustomer] = useState<Customer[]>([]);
     const [searchText, setSearchText] = useState<string>(CONSTANTS.STR_EMPTY);
     const debouncedValue = useDebounce(searchText);
@@ -34,7 +34,7 @@ export const CustomerListView: FC<Props> = memo(
       setSearchCustomer(customers);
     };
 
-    const renderCustomer = (data: {item: Customer; index: number}): any => {
+    const renderCustomer = (data: { item: Customer; index: number }): any => {
       return (
         <CustomerListItemView
           key={data.item.id}
@@ -60,6 +60,9 @@ export const CustomerListView: FC<Props> = memo(
           style={styles.list}
           data={searchCustomers}
           renderItem={renderCustomer}
+          keyExtractor={(item: Customer, index: number) =>
+            `${item.id}_${index}`
+          }
         />
       </View.V>
     );
@@ -70,7 +73,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   search: {
-    marginBottom: 20
+    marginBottom: 20,
   },
-  list: {flex: 1},
+  list: { flex: 1 },
 });

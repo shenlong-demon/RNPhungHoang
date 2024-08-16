@@ -22,10 +22,22 @@ export const BillInfoPopup = memo(({ bill, onClose }: Props) => {
   }, []);
 
   const renderIssue = (data: { item: BillIssue; index: number }): any => {
-    return <BillIssueListItemView item={data.item} index={data.index} />;
+    return (
+      <BillIssueListItemView
+        key={`${data.item.id}`}
+        item={data.item}
+        index={data.index}
+      />
+    );
   };
   const renderOrder = (data: { item: Order; index: number }): any => {
-    return <OrderListItemView item={data.item} index={data.index} />;
+    return (
+      <OrderListItemView
+        key={`${data.item.id}`}
+        item={data.item}
+        index={data.index}
+      />
+    );
   };
 
   return (
@@ -72,6 +84,9 @@ export const BillInfoPopup = memo(({ bill, onClose }: Props) => {
             <FlatList.L
               data={bill.orders}
               renderItem={renderOrder}
+              keyExtractor={(item: Order, index: number) =>
+                `${item.id}_${index}`
+              }
               style={styles.list}
             />
           </View.V>
@@ -86,6 +101,9 @@ export const BillInfoPopup = memo(({ bill, onClose }: Props) => {
             <FlatList.L
               data={bill.issues}
               renderItem={renderIssue}
+              keyExtractor={(item: BillIssue, index: number) =>
+                `${item.id}_${index}`
+              }
               style={styles.list}
             />
           </View.V>

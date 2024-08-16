@@ -7,6 +7,7 @@ import { LoginResult } from '@src/business/model';
 
 export class LoginFacade extends BaseFacade<LoginFacade> {
   private authService: AuthService = AuthService.shared();
+  private cacheService: CacheService = CacheService.shared();
 
   constructor() {
     super();
@@ -28,8 +29,8 @@ export class LoginFacade extends BaseFacade<LoginFacade> {
       const loginResult: LoginResult = dto.data!;
       const user: User = loginResult.user;
       const setting: Setting = loginResult.setting;
-      await CacheService.shared().saveUser(user);
-      await CacheService.shared().saveSetting(setting);
+      await this.cacheService.saveUser(user);
+      await this.cacheService.saveSetting(setting);
       await this.handleForUser(user);
     }
     return this.populate(dto);
@@ -45,7 +46,7 @@ export class LoginFacade extends BaseFacade<LoginFacade> {
 
   async removeUserAndClearData(): Promise<void> {
     Logger.log(() => [`AuthFacade removeUser`]);
-    await CacheService.shared().removeUser();
+    await this.cacheService.clearDataForUser();
     await this.handleForUser(null);
   }
 
