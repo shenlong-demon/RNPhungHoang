@@ -17,7 +17,7 @@ const DefaultAuthContextResult: AuthContextResult = {
   removeUser: async (): Promise<void> => {},
 };
 
-export const useAuthContextFacade = (): AuthContextResult => {
+const useAuthContextFacade = (): AuthContextResult => {
   useEffect(() => {
     Logger.log(() => [`useAuthContextFacade create at ${DateTimeUtils.now()}`]);
   }, []);
@@ -40,7 +40,8 @@ export const useAuthContextFacade = (): AuthContextResult => {
     setInit(true);
   };
   const removeUser = async (): Promise<void> => {
-    await facade.removeUser();
+    Logger.log(() => [`useAuthContextFacade removeUser`]);
+    await facade.removeUserAndClearData();
     setUser(null);
   };
 
@@ -55,7 +56,7 @@ export const useAuthContextFacade = (): AuthContextResult => {
 const AuthContext = React.createContext<AuthContextResult>(
   DefaultAuthContextResult,
 );
-export const useAuthContext = () => useContext(AuthContext);
+
 type Props = {
   children: React.ReactNode;
 };
@@ -63,3 +64,5 @@ export const AuthContextProvider = ({ children }: Props) => {
   const facade = useAuthContextFacade();
   return <AuthContext.Provider value={facade}>{children}</AuthContext.Provider>;
 };
+
+export const useAuthContext = () => useContext(AuthContext);

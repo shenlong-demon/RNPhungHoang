@@ -43,7 +43,7 @@ export class LoginFacade extends BaseFacade<LoginFacade> {
     return user;
   }
 
-  async removeUser(): Promise<void> {
+  async removeUserAndClearData(): Promise<void> {
     Logger.log(() => [`AuthFacade removeUser`]);
     await CacheService.shared().removeUser();
     await this.handleForUser(null);
