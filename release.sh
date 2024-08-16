@@ -11,4 +11,4 @@ rm -f ./android/app/build/outputs/apk/debug/*.apk && rm -rf ./android/app/build/
 # rm-dup-files
 find android/app/src/main/res/drawable-xxxhdpi android/app/src/main/res/drawable-xxhdpi android/app/src/main/res/drawable-xhdpi android/app/src/main/res/drawable-mdpi android/app/src/main/res/drawable-hdpi android/app/src/main/res/raw -type f ! -name launch_screen* -delete
 
-cd ./android && ENVFILE=.env.prod ./gradlew assembleRelease && cd ..
+cd ./android && ENVFILE=.env.production ./gradlew assembleRelease && cd ..
