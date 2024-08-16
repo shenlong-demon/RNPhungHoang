@@ -32,6 +32,8 @@ const useDtoHandlerContextFacade = (): DtoHandlerContextResult => {
           await removeUser();
           showToast(`Your login is expired. Please try login again !`);
           navigate(Route.LOGIN);
+        } else if (code === 502) {
+          showToast('Cannot connect to server !');
         } else {
           showToast(dto.message || 'Something went wrong. Please try again !');
         }
