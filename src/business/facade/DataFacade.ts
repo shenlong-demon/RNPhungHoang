@@ -1,8 +1,8 @@
 import BaseFacade from '@core/common/models/BaseFacade';
-import {Dto} from '@core/common';
+import { Dto, Logger } from '@core/common';
 import {
   Brand,
-  BrandService,
+  CacheService,
   CreateBrandRequest,
   CreateGroupRequest,
   DataResult,
@@ -11,12 +11,10 @@ import {
   UpdateBrandRequest,
   UpdateGroupRequest,
 } from '@src/business';
-import {GroupService} from '@src/business/service/GroupService';
 
 export class DataFacade extends BaseFacade<DataFacade> {
-  private brandService: BrandService = BrandService.shared();
-  private groupService: GroupService = GroupService.shared();
   private dataService: DataService = DataService.shared();
+  private cacheService: CacheService = CacheService.shared();
 
   constructor() {
     super();
@@ -26,37 +24,69 @@ export class DataFacade extends BaseFacade<DataFacade> {
     return this.Instance(DataFacade);
   }
 
-  async getBrands(): Promise<Dto<Brand[]>> {
-    const dto: Dto<Brand[]> = await this.brandService.getBrands();
-    return dto;
-  }
-
-  async getGroups(): Promise<Dto<Group[]>> {
-    const dto: Dto<Group[]> = await this.groupService.getGroups();
-    return dto;
-  }
-  async getAllData(): Promise<Dto<DataResult | null>> {
-    return this.dataService.getAll();
+  async getAllData(forceGetNew?: boolean): Promise<Dto<DataResult | null>> {
+    if (!forceGetNew) {
+      const brands: Brand[] = await this.cacheService.getBrands();
+      const groups: Group[] = await this.cacheService.getGroups();
+      Logger.log(() => [`DataFacade getAllData from CACHE `, brands, groups]);
+      if (brands.length > 0 && groups.length > 0) {
+        return Dto.success({ groups, brands } as DataResult);
+      }
+    }
+    const dto: Dto<DataResult | null> = await this.dataService.getAll();
+    if (dto.next() && dto.data) {
+      const data: DataResult = dto.data as DataResult;
+      await this.cacheService.saveBrands(data.brands);
+      await this.cacheService.saveGroups(data.groups);
+    }
+    return this.populate(dto);
   }
 
   async createBrand(req: CreateBrandRequest): Promise<Dto<Brand | null>> {
-    return this.dataService.createBrand(req);
+    const dto: Dto<Brand | null> = await this.dataService.createBrand(req);
+    if (dto.next() && dto.data) {
+      const newBrand: Brand = dto.data as Brand;
+      await this.cacheService.saveBrand(newBrand);
+    }
+    return this.populate(dto);
   }
 
   async updateBrand(
     brandId: number,
     req: UpdateBrandRequest,
   ): Promise<Dto<Brand | null>> {
-    return this.dataService.updateBrand(brandId, req);
+    const dto: Dto<Brand | null> = await this.dataService.updateBrand(
+      brandId,
+      req,
+    );
+    if (dto.next() && dto.data) {
+      const newBrand: Brand = dto.data as Brand;
+      await this.cacheService.saveBrand(newBrand);
+    }
+    return this.populate(dto);
   }
+
   async createGroup(req: CreateGroupRequest): Promise<Dto<Group | null>> {
-    return this.dataService.createGroup(req);
+    const dto: Dto<Group | null> = await this.dataService.createGroup(req);
+    if (dto.next() && dto.data) {
+      const newGroup: Group = dto.data as Group;
+      await this.cacheService.saveGroup(newGroup);
+    }
+    return this.populate(dto);
   }
 
   async updateGroup(
     groupId: number,
     req: UpdateGroupRequest,
   ): Promise<Dto<Group | null>> {
-    return this.dataService.updateGroup(groupId, req);
+    const dto: Dto<Group | null> = await this.dataService.updateGroup(
+      groupId,
+      req,
+    );
+    if (dto.next() && dto.data) {
+      const newGroup: Group = dto.data as Group;
+      await this.cacheService.saveGroup(newGroup);
+    }
+    return this.populate(dto);
   }
 }

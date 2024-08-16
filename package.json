@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "sh ./stg.sh",
+    "stg": "sh ./stg.sh",
+    "prod": "sh ./prod.sh",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",

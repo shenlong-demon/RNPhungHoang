@@ -22,7 +22,7 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
   }, []);
 
   useEffect(() => {
-    const searchProducts: Product[] = search(searchText);
+    const searchProducts: Product[] = search(searchText, null);
     setDisplayProducts(searchProducts);
   }, [searchText, products]);
 
@@ -36,7 +36,7 @@ export const ProductListScreen: FC<Props> = memo(({}) => {
         />
       );
     },
-    [],
+    [products],
   );
 
   return (

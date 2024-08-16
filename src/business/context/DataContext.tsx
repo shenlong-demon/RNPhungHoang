@@ -11,11 +11,10 @@ import {
   UpdateGroupRequest,
   UpdateProductRequest,
   useDataFacade,
-  useProductFacade,
 } from '@src/business';
 import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { Dto } from '@core/common';
-import { DataFacade } from '@src/business/facade';
+import { DataFacade, ProductFacade } from '@src/business/facade';
 import { File } from '@core/models';
 
 export type DataContextResult = {
@@ -48,18 +47,20 @@ export type DataContextResult = {
     req: CreateProductRequest,
     imageFile?: File,
   ) => Promise<Dto<Product | null>>;
+
+  refreshData: () => Promise<void>;
 };
 
 export const useDataContextFacade = (): DataContextResult => {
   const dataFacade = useDataFacade();
-  const productFacade = useProductFacade();
+  const productFacade = ProductFacade.shared();
   const facade = DataFacade.shared();
   const [brands, setBrands] = useState<Brand[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    reloadAllData();
+    reloadAllData(false);
   }, []);
 
   const allBrands = useMemo(() => {
@@ -70,6 +71,25 @@ export const useDataContextFacade = (): DataContextResult => {
       return b1.name > b2.name ? 1 : -1;
     });
   }, [brands]);
+
+  const allGroups = useMemo(() => {
+    return (groups || []).sort((b1: Group, b2: Group): number => {
+      if (b1.status !== b2.status) {
+        return b1.status === STATUS.ACTIVE ? -1 : 1;
+      }
+      return b1.name > b2.name ? 1 : -1;
+    });
+  }, [groups]);
+
+  const allProducts = useMemo(() => {
+    return (products || []).sort((b1: Product, b2: Product): number => {
+      if (b1.status !== b2.status) {
+        return b1.status === STATUS.ACTIVE ? -1 : 1;
+      }
+      return b1.name > b2.name ? 1 : -1;
+    });
+  }, [products]);
+
 
   const activeBrands = useMemo(() => {
     return (brands || [])
@@ -91,23 +111,27 @@ export const useDataContextFacade = (): DataContextResult => {
       });
   }, [groups]);
 
-  const loadCommonData = async (): Promise<void> => {
-    const data: DataResult | null = await dataFacade.getAllData();
+  const loadCommonData = async (forceGetNew?: boolean): Promise<void> => {
+    const data: DataResult | null = await dataFacade.getAllData(forceGetNew);
     if (!!data) {
       setGroups(data.groups);
       setBrands(data.brands);
     }
   };
-  const getAllProducts = async (): Promise<void> => {
-    const dto: Dto<Product[]> = await productFacade.getAllActiveProducts();
+  const getAllProducts = async (forceGetNew?: boolean): Promise<void> => {
+    const dto: Dto<Product[]> = await productFacade.getAllProducts(forceGetNew);
     if (dto.next()) {
       setProducts(dto.data as Product[]);
     }
   };
 
-  const reloadAllData = async (): Promise<void> => {
-    loadCommonData();
-    getAllProducts();
+  const reloadAllData = async (forceGetNew?: boolean): Promise<void> => {
+    loadCommonData(forceGetNew);
+    getAllProducts(forceGetNew);
+  };
+
+  const refreshData = async (): Promise<void> => {
+    reloadAllData(true);
   };
   const createBrand = async (
     name: string,
@@ -207,15 +231,16 @@ export const useDataContextFacade = (): DataContextResult => {
   return {
     brands: allBrands,
     activeBrands,
-    groups,
+    groups: allGroups,
     activeGroups,
-    products,
+    products: allProducts,
     createBrand,
     updateBrand,
     createGroup,
     updateGroup,
     createProduct,
     updateProduct,
+    refreshData,
   };
 };
 
@@ -265,6 +290,8 @@ const DefaultDataContextResult: DataContextResult = {
     _imageFile?: File,
   ): Promise<Dto<Product | null>> => {
     return Dto.default();
+  },
+  refreshData: async (): Promise<void> => {
   },
 };
 

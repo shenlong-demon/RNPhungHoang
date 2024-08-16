@@ -3,6 +3,8 @@ import View from '@core/components/viewbase/View';
 import { StyleSheet } from 'react-native';
 import {
   Product,
+  STATUS,
+  useDataContext,
   useOperationContext,
   useProductSearchFacade,
 } from '@src/business';
@@ -16,11 +18,12 @@ export const MenuScreen: FC<Props> = memo(({}: Props) => {
   const [searchProducts, setSearchProducts] = useState<Product[]>([]);
   const [searchText, setSearchText] = useState<string | null>(null);
   const productSearchFacade = useProductSearchFacade();
+  const { products } = useDataContext();
   const { booking } = useOperationContext();
   const { goBack } = useNavigation();
   useEffect(() => {
-    setSearchProducts(productSearchFacade.search(searchText));
-  }, [searchText]);
+    setSearchProducts(productSearchFacade.search(searchText, STATUS.ACTIVE));
+  }, [searchText, products]);
 
   const book = async (menuItem: Product): Promise<void> => {
     booking(menuItem);

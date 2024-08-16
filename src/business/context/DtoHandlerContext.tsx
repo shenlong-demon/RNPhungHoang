@@ -20,7 +20,9 @@ const useDtoHandlerContextFacade = (): DtoHandlerContextResult => {
       `useDtoHandlerContextFacade dtoHandle code ${code} isError ${dto.isError()}`,
       dto,
     ]);
+
     if (dto.isWarning()) {
+      showToast(dto.message || 'Something went wrong. Please try again !');
     } else if (dto.isError()) {
       if (code === 401) {
         Logger.log(() => [
@@ -29,7 +31,8 @@ const useDtoHandlerContextFacade = (): DtoHandlerContextResult => {
         await removeUser();
         showToast(`Your login is expired. Please try login again !`);
         navigate(Route.LOGIN);
-        return false;
+      } else {
+        showToast(dto.message || 'Something went wrong. Please try again !');
       }
     }
     return dto.next();

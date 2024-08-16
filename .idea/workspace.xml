@@ -5,36 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8def0e7d-dc40-4214-9271-5c05a281f5a9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/business/context/DtoHandlerContext.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prod.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/app/AppContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/app/AppContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/common/constants/ResultCode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/common/constants/ResultCode.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/common/models/BaseFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/common/models/BaseFacade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/common/models/Dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/common/models/Dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/common/webapi/WebApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/common/webapi/WebApi.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/components/buttonbase/ButtonBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/buttonbase/ButtonBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/components/inputbase/InputBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/inputbase/InputBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/components/popup/Popup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/components/popup/Popup.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/navigation/NavigationContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/navigation/NavigationContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/navigation/StackNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/core/navigation/StackNavigator.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/navigation/useNavigation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/navigation/useNavigation.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/storage/LocalStorage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/storage/LocalStorage.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/context/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/AuthContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/context/OperationContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/OperationContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/context/OperationListContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/OperationListContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/context/PopupContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/PopupContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/context/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/facade/BillFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/facade/BillFacade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/facade/LoginFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/facade/LoginFacade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/facade/OperationFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/facade/OperationFacade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/service/AuthService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/service/AuthService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/common/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/common/constants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/context/DataContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/DataContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/context/DtoHandlerContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/context/DtoHandlerContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/facade/DataFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/facade/DataFacade.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/facade/ProductFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/facade/ProductFacade.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/repository/BrandRepo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/repository/GroupRepo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/repository/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/repository/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/service/BrandService.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/business/service/CacheService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/service/CacheService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/useFacade/useBillFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/useFacade/useBillFacade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/business/useFacade/useLoginFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/useFacade/useLoginFacade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/PortraitApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/PortraitApp.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/components/popup/BillInfoPopup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/components/popup/BillInfoPopup.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/closeouttreport/CloseOutReportScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/closeouttreport/CloseOutReportScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/service/GroupService.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/service/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/service/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/useFacade/useDataFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/useFacade/useDataFacade.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/business/useFacade/useProductSearchFacade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/business/useFacade/useProductSearchFacade.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/pos/menu/MenuScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/pos/menu/MenuScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/product/ProductListItemView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/product/ProductListItemView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/portrait/main/product/ProductListScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/portrait/main/product/ProductListScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,30 +60,30 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/LONG/LONG/PROJECTS/PHUNG_HOANG/RNPhungHoangNew/src/business/context&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\LONG\\LONG\\PROJECTS\\PHUNG_HOANG\\RNPhungHoangNew\\node_modules\\prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\LONG\\LONG\\PROJECTS\\PHUNG_HOANG\\RNPhungHoangNew\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/LONG/LONG/PROJECTS/PHUNG_HOANG/RNPhungHoangNew",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\LONG\\LONG\\PROJECTS\\PHUNG_HOANG\\RNPhungHoangNew\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "ts.external.directory.path": "C:\\Users\\LONG\\LONG\\PROJECTS\\PHUNG_HOANG\\RNPhungHoangNew\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew" />
       <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew\src\business\context" />
       <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew\src\business\model\request" />
       <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew\src\business\repository" />
       <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew\src\business\service" />
-      <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew\src\business\facade" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\LONG\LONG\PROJECTS\PHUNG_HOANG\RNPhungHoangNew\core\components\viewbase" />
@@ -151,7 +143,7 @@
       <workItem from="1723649552579" duration="183000" />
       <workItem from="1723649746989" duration="6000" />
       <workItem from="1723649786706" duration="219000" />
-      <workItem from="1723650036453" duration="7071000" />
+      <workItem from="1723650036453" duration="16801000" />
     </task>
     <servers />
   </component>

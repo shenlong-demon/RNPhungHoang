@@ -36,4 +36,27 @@ export class LocalStorage {
   public static async remove(key: string): Promise<void> {
     await AsyncStorage.removeItem(key);
   }
+
+  public static async getObjectsByWildcard<T>(wildcard: string): Promise<T[]> {
+    const keys: string[] = await LocalStorage.getAllKeysByWildcard(wildcard);
+    const res: T[] = [];
+
+    for (const key of keys) {
+      const data: T | null = await this.getObject<T>(key);
+      if (!!data) {
+        res.push(data);
+      }
+    }
+
+    return res;
+  }
+
+  public static async getAllKeysByWildcard(
+    wildcard: string,
+  ): Promise<string[]> {
+    const keys: string[] = (await AsyncStorage.getAllKeys()) as string[];
+    return keys.filter((key: string): boolean => {
+      return key.toLowerCase().indexOf(wildcard.toLowerCase()) > -1;
+    });
+  }
 }

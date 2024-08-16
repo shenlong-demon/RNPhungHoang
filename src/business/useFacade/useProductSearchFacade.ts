@@ -1,17 +1,27 @@
-import {Product, useDataContext} from '@src/business';
-import {CONSTANTS} from '@core/common';
+import { Product, STATUS, useDataContext } from '@src/business';
+import { CONSTANTS } from '@core/common';
 
 type ProductSearchFacadeResult = {
-  search: (searchText: string | null) => Product[];
+  search: (searchText: string | null, status: STATUS | null) => Product[];
 };
 
 export const useProductSearchFacade = (): ProductSearchFacadeResult => {
-  const {products} = useDataContext();
-  const search = (searchText: string | null): Product[] => {
+  const { products } = useDataContext();
+
+  const search = (
+    searchText: string | null,
+    status: STATUS | null,
+  ): Product[] => {
     const textNormal: string =
       searchText?.replace(/[\u0300-\u036f]/g, '')?.toLowerCase() ||
       CONSTANTS.STR_EMPTY;
-    const result: Product[] = products.filter((p: Product): boolean => {
+    let allProducts: Product[] = products;
+    if (status !== null) {
+      allProducts = allProducts.filter((p: Product): boolean => {
+        return p.status === status;
+      });
+    }
+    const result: Product[] = allProducts.filter((p: Product): boolean => {
       const id: string = p.id.toString().toLowerCase();
       const name: string = p.name.replace(/[\u0300-\u036f]/g, '').toLowerCase();
       const otherName: string | undefined = p.otherName
@@ -35,5 +45,5 @@ export const useProductSearchFacade = (): ProductSearchFacadeResult => {
     });
     return result.slice(0, 20);
   };
-  return {search};
+  return { search };
 };
