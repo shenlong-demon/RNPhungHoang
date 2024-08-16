@@ -5,7 +5,7 @@ import { Setting, User } from '@src/business';
 import { CacheService } from '@src/business/service/CacheService';
 import { LoginResult } from '@src/business/model';
 
-export class LoginFacade extends BaseFacade<LoginFacade> {
+export class AuthFacade extends BaseFacade<AuthFacade> {
   private authService: AuthService = AuthService.shared();
   private cacheService: CacheService = CacheService.shared();
 
@@ -13,8 +13,8 @@ export class LoginFacade extends BaseFacade<LoginFacade> {
     super();
   }
 
-  public static shared(): LoginFacade {
-    return this.Instance(LoginFacade);
+  public static shared(): AuthFacade {
+    return this.Instance(AuthFacade);
   }
 
   async login(
@@ -55,5 +55,10 @@ export class LoginFacade extends BaseFacade<LoginFacade> {
       user?.token || CONSTANTS.STR_EMPTY;
 
     WebApi.shared().setGetToken(getTokenFunc);
+  }
+
+  async logout(): Promise<void> {
+    this.authService.logout();
+    this.removeUserAndClearData();
   }
 }

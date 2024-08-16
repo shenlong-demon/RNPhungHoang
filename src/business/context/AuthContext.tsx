@@ -1,6 +1,6 @@
 import { User } from '@src/business';
 import React, { useContext, useEffect, useState } from 'react';
-import { LoginFacade } from '@src/business/facade';
+import { AuthFacade } from '@src/business/facade';
 import { DateTimeUtils, Logger } from '@core/common';
 
 export type AuthContextResult = {
@@ -8,6 +8,7 @@ export type AuthContextResult = {
   user: User | null;
   setUser: (user: User | null) => void;
   removeUserAndClear: () => Promise<void>;
+  logout: () => Promise<void>;
 };
 
 const DefaultAuthContextResult: AuthContextResult = {
@@ -15,6 +16,7 @@ const DefaultAuthContextResult: AuthContextResult = {
   setUser: (_user: User | null): void => {},
   init: false,
   removeUserAndClear: async (): Promise<void> => {},
+  logout: async (): Promise<void> => {},
 };
 
 const useAuthContextFacade = (): AuthContextResult => {
@@ -24,7 +26,7 @@ const useAuthContextFacade = (): AuthContextResult => {
   const [user, setUser] = useState<User | null>(null);
   const [init, setInit] = useState<boolean>(false);
 
-  const facade: LoginFacade = LoginFacade.shared();
+  const facade: AuthFacade = AuthFacade.shared();
   useEffect(() => {
     loadUserInCache();
   }, []);
@@ -44,12 +46,18 @@ const useAuthContextFacade = (): AuthContextResult => {
     await facade.removeUserAndClearData();
     setUser(null);
   };
+  const logout = async (): Promise<void> => {
+    Logger.log(() => [`useAuthContextFacade logout`]);
+    await facade.logout();
+    setUser(null);
+  };
 
   return {
     user,
     setUser,
     init,
     removeUserAndClear,
+    logout,
   };
 };
 

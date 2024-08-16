@@ -1,4 +1,4 @@
-import { LoginFacade } from '@src/business/facade';
+import { AuthFacade } from '@src/business/facade';
 import { Dto } from '@core/common';
 import {
   useAuthContext,
@@ -15,7 +15,7 @@ type AuthFacadeResult = {
 
 export const useAuthFacade = (): AuthFacadeResult => {
   const { showToast } = usePopupContext();
-  const facade: LoginFacade = LoginFacade.shared().withHandler({
+  const facade: AuthFacade = AuthFacade.shared().withHandler({
     handle_1003: async (dto: Dto<any | null>): Promise<void> => {
       showToast('Wrong Phone or Password !!!');
     },

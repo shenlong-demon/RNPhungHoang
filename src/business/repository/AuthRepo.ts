@@ -1,5 +1,5 @@
-import { ApiResult, BaseRepo, Dto } from "@core/common";
-import { API_URL } from "@src/business";
+import { ApiResult, BaseRepo, Dto } from '@core/common';
+import { API_URL } from '@src/business';
 
 export class AuthRepo extends BaseRepo<AuthRepo> {
   constructor() {
@@ -16,5 +16,9 @@ export class AuthRepo extends BaseRepo<AuthRepo> {
       password,
     });
     return this.populate(api);
+  }
+
+  async logout(): Promise<void> {
+    await this.api.post(API_URL.LOGOUT(), {});
   }
 }

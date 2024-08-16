@@ -23,4 +23,8 @@ export class AuthService extends BaseService<AuthService> {
     );
     return dto;
   }
+
+  async logout(): Promise<void> {
+    return this.authRepo.logout();
+  }
 }

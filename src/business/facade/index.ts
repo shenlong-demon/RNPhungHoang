@@ -1,4 +1,4 @@
-export * from './LoginFacade';
+export * from './AuthFacade';
 export * from './DataFacade';
 export * from './ProductFacade';
 export * from './OperationFacade';

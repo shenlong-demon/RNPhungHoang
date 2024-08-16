@@ -4,6 +4,9 @@ const API_URL = {
   LOGIN: (): string => {
     return `${ENV.HOST}/auth/login`;
   },
+  LOGOUT: (): string => {
+    return `${ENV.HOST}/auth/logout`;
+  },
   GET_BRANDS: (): string => {
     return `${ENV.HOST}/brand`;
   },
