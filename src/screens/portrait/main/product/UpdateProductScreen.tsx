@@ -8,12 +8,12 @@ import {
   UpdateProductRequest,
 } from '@src/business/model';
 import Form from '@core/components/formbase/Form';
-import View from '@core/components/viewbase/View';
 import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { FormStatusDropDown } from '@src/screens/portrait/shared_components/FormStatusDropDown';
 import { ScrollView } from 'react-native-gesture-handler';
 import GroupSelectItem from '@src/screens/portrait/shared_components/GroupSelectItem';
 import BrandSelectItem from '@src/screens/portrait/shared_components/BrandSelectItem';
+import View from '@core/components/viewbase/View';
 
 type Props = {};
 type FormValues = Product & {
@@ -167,7 +167,6 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
             }}
           />
           <Form.Input
-            editable={!product}
             keyboardType={'numeric'}
             label={'Quantity'}
             placeholder={'Please input quantity'}
@@ -187,9 +186,8 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
             name={'status'}
             defaultValue={product?.status || STATUS.ACTIVE}
           />
-          <View.Row style={{ marginTop: 30 }}>
-            <Form.SubmitButton />
-          </View.Row>
+          <Form.SubmitButton />
+          <View.V style={{ width: '100%', height: 100 }} />
         </Form.View>
       </ScrollView>
     </KeyboardAvoidingView>
