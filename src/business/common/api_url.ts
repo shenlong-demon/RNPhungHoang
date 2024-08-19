@@ -94,6 +94,12 @@ const API_URL = {
   REMOVE_ISSUE: (operationId: number): string => {
     return `${ENV.HOST}/operation/remove-issue/${operationId}`;
   },
+  RENAME_OPERATION: (operationId: number): string => {
+    return `${ENV.HOST}/operation/rename/${operationId}`;
+  },
+  DELETE_OPERATION: (operationId: number): string => {
+    return `${ENV.HOST}/operation/delete/${operationId}`;
+  },
   GET_BILLS_BY() {
     return `${ENV.HOST}/bill/filter`;
   },

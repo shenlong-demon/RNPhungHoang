@@ -4,8 +4,8 @@ import {
   API_URL,
   CancelBookingRequest,
   CreateOperationIssueRequest,
-  Operation,
   RemoveIssueRequest,
+  RenameOperationRequest,
   SetOperationDiscountRequest,
   SetOperationEstimationRequest,
 } from '@src/business';
@@ -140,10 +140,28 @@ export class OperationRepo extends BaseRepo<OperationRepo> {
   async removeIssue(
     operationId: number,
     req: RemoveIssueRequest,
-  ): Promise<Dto<Operation | null>> {
+  ): Promise<Dto<any | null>> {
     const api: ApiResult = await this.api.put(
       API_URL.REMOVE_ISSUE(operationId),
       req,
+    );
+    return this.populate(api);
+  }
+
+  async renameOperation(
+    operationId: number,
+    req: RenameOperationRequest,
+  ): Promise<Dto<any | null>> {
+    const api: ApiResult = await this.api.put(
+      API_URL.RENAME_OPERATION(operationId),
+      req,
+    );
+    return this.populate(api);
+  }
+
+  async deleteOperation(operationId: number): Promise<Dto<null>> {
+    const api: ApiResult = await this.api.delete(
+      API_URL.DELETE_OPERATION(operationId),
     );
     return this.populate(api);
   }

@@ -1,11 +1,12 @@
-import {FC, memo} from 'react';
+import { FC, memo } from 'react';
 import Form from '@core/components/formbase/Form';
-import {CONSTANTS, Logger} from '@core/common';
-import {StyleSheet} from 'react-native';
+import { CONSTANTS, Logger } from '@core/common';
+import { StyleSheet } from 'react-native';
 import Button from '@core/components/buttonbase/Button';
 import View from '@core/components/viewbase/View';
 
 type Props = {
+  defaultValue?: string;
   onOk: (operationName?: string) => Promise<void>;
   onCancel: () => void;
 };
@@ -13,7 +14,7 @@ type FormValue = {
   name?: string;
 };
 export const CreateOperationPopup: FC<Props> = memo(
-  ({onOk, onCancel}: Props) => {
+  ({ defaultValue, onOk, onCancel }: Props) => {
     const onSubmit = async (data: FormValue): Promise<void> => {
       onOk(data.name);
     };
@@ -27,7 +28,7 @@ export const CreateOperationPopup: FC<Props> = memo(
         <Form.Input
           label={'Name'}
           name="name"
-          defaultValue={CONSTANTS.STR_EMPTY}
+          defaultValue={defaultValue || CONSTANTS.STR_EMPTY}
           autoFocus={true}
         />
         <View.Row>

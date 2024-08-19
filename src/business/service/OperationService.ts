@@ -8,6 +8,7 @@ import {
   Operation,
   Product,
   RemoveIssueRequest,
+  RenameOperationRequest,
   SetOperationDiscountRequest,
   SetOperationEstimationRequest,
 } from '@src/business';
@@ -109,5 +110,16 @@ export class OperationService extends BaseService<OperationService> {
     req: RemoveIssueRequest,
   ): Promise<Dto<Operation | null>> {
     return this.operationRepo.removeIssue(operation.id, req);
+  }
+
+  async renameOperation(
+    operation: Operation,
+    req: RenameOperationRequest,
+  ): Promise<Dto<Operation | null>> {
+    return this.operationRepo.renameOperation(operation.id, req);
+  }
+
+  async deleteOperation(operation: Operation): Promise<Dto<null>> {
+    return this.operationRepo.deleteOperation(operation.id);
   }
 }

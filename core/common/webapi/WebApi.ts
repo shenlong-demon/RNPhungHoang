@@ -69,6 +69,21 @@ export class WebApi extends Singleton<WebApi> {
     return res;
   }
 
+  public async delete(url: string): Promise<ApiResult> {
+    Logger.log(() => [`DELETE ${url}`]);
+    const headers = await this.createHeader();
+    let res: ApiResult;
+    try {
+      const response: AxiosResponse = await this.api.delete(url, { headers });
+      res = this.handle(response);
+      Logger.log(() => [`DELETE ${url} RETURN `, headers, response, res]);
+    } catch (ex) {
+      res = this.catchException(ex);
+      Logger.log(() => [`DELETE ${url} ERROR`, headers, ex, res]);
+    }
+    return res;
+  }
+
   private handle(response: AxiosResponse): ApiResult {
     return { ...response.data };
   }

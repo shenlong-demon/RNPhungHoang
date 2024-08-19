@@ -9,6 +9,7 @@ import {
   Operation,
   Product,
   RemoveIssueRequest,
+  RenameOperationRequest,
   SetBookingNoteRequest,
   SetOperationDiscountRequest,
   SetOperationEstimationRequest,
@@ -173,6 +174,22 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
     const dto: Dto<Operation | null> = await this.operationService.removeIssue(
       operation,
       req,
+    );
+    return this.populate(dto);
+  }
+
+  async rename(
+    operation: Operation,
+    req: RenameOperationRequest,
+  ): Promise<Dto<Operation | null>> {
+    const dto: Dto<Operation | null> =
+      await this.operationService.renameOperation(operation, req);
+    return this.populate(dto);
+  }
+
+  async deleteOperation(operation: Operation): Promise<Dto<null>> {
+    const dto: Dto<null> = await this.operationService.deleteOperation(
+      operation,
     );
     return this.populate(dto);
   }

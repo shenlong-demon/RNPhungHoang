@@ -1,10 +1,12 @@
 import {
+  AddOperationServiceRequest,
   Bill,
   Booking,
   Issue,
   Operation,
   Product,
   RemoveIssueRequest,
+  RenameOperationRequest,
   SetOperationEstimationRequest,
   useDtoHandlerContext,
   useOperationListContext,
@@ -29,6 +31,8 @@ export type OperationContextResult = {
   setOperationActionScreenIndex: (index: OPERATION_ACTION_SCREEN) => void;
   setEstimation: (newDate: number) => Promise<void>;
   removeIssue: (issue: Issue) => Promise<void>;
+  rename: (newName: string) => Promise<Dto<Operation | null>>;
+  deleteOperation: () => Promise<Dto<Operation | null>>;
   enterOperation: (op: Operation) => Promise<Dto<Operation | null>>;
   createOperation: (operationName?: string) => Promise<Dto<Operation | null>>;
   getOperationDetail: () => Promise<Dto<Operation | null>>;
@@ -152,6 +156,31 @@ export const useOperationContextFacade = (): OperationContextResult => {
     }
     return dto;
   };
+  const rename = async (newName: string): Promise<Dto<Operation | null>> => {
+    if (!operation) {
+      return Dto.default();
+    }
+    const dto: Dto<Operation | null> = await facade.rename(operation, {
+      name: newName,
+    } as RenameOperationRequest);
+    if (dto.next() && dto.data) {
+      const newOp: Operation = dto.data as Operation;
+      updateOperationInList(newOp);
+      setOperation(newOp);
+    }
+    return dto;
+  };
+  const deleteOperation = async (): Promise<Dto<Operation | null>> => {
+    if (!operation) {
+      return Dto.default();
+    }
+    const dto: Dto<null> = await facade.deleteOperation(operation);
+    if (dto.next()) {
+      removeOperationInList(operation);
+      setOperation(null);
+    }
+    return dto;
+  };
   const booking = async (menuItem: Product): Promise<void> => {
     if (operation) {
       const dto: Dto<Operation | null> = await facade.booking(
@@ -176,7 +205,7 @@ export const useOperationContextFacade = (): OperationContextResult => {
         name,
         price,
         note,
-      });
+      } as AddOperationServiceRequest);
       if (dto.next()) {
         setOperation(dto.data as Operation);
       }
@@ -201,17 +230,23 @@ export const useOperationContextFacade = (): OperationContextResult => {
     removeIssue,
     booking,
     addService,
+    rename,
+    deleteOperation,
   };
 };
 
 const DefaultOperationContextResult: OperationContextResult = {
   operation: null,
-  setOperation: (_op: Operation | null): void => {},
+  setOperation: (_op: Operation | null): void => {
+  },
   selectedBooking: null,
-  setSelectedBooking: (_booking: Booking | null): void => {},
+  setSelectedBooking: (_booking: Booking | null): void => {
+  },
   operationActionScreenIndex: OPERATION_ACTION_SCREEN.BOOKING_LIST,
-  setOperationActionScreenIndex: (_index: OPERATION_ACTION_SCREEN): void => {},
-  setEstimation: async (_newDate: number): Promise<void> => {},
+  setOperationActionScreenIndex: (_index: OPERATION_ACTION_SCREEN): void => {
+  },
+  setEstimation: async (_newDate: number): Promise<void> => {
+  },
   enterOperation: async (_op: Operation): Promise<Dto<Operation | null>> => {
     return Dto.default();
   },
@@ -227,13 +262,21 @@ const DefaultOperationContextResult: OperationContextResult = {
     return Dto.default();
   },
   total: 0,
-  removeIssue: async (_issue: Issue): Promise<void> => {},
-  booking: async (_menuItem: Product): Promise<void> => {},
+  removeIssue: async (_issue: Issue): Promise<void> => {
+  },
+  booking: async (_menuItem: Product): Promise<void> => {
+  },
   addService: async (
     _name: string,
     _price: number,
     _note?: string,
   ): Promise<Dto<Operation | null>> => {
+    return Dto.default();
+  },
+  rename: async (_name: string): Promise<Dto<Operation | null>> => {
+    return Dto.default();
+  },
+  deleteOperation: async (): Promise<Dto<Operation | null>> => {
     return Dto.default();
   },
 };
