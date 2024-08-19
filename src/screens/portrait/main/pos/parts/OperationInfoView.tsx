@@ -80,7 +80,9 @@ export const OperationInfoView: FC<Props> = memo(({}: Props) => {
             onLongPress={unassignedCustomer}>
             <Label.T
               style={{ alignSelf: 'center', fontWeight: 'bold' }}
-              text={`${operation?.customer?.name || 'Press  to assign'}`}
+              text={`${
+                operation?.customer?.name || 'Press  to assign customer'
+              }`}
             />
             <Label.Money
               style={{
