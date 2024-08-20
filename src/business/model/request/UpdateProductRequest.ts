@@ -7,5 +7,6 @@ export type UpdateProductRequest = {
   price: number;
   brandId: number;
   groupId: number;
+  quantity: number;
   status: number;
 };

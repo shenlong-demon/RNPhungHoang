@@ -30,6 +30,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
     let dto: Dto<Product | null>;
     data.price = Number(data.price);
     data.basePrice = Number(data.basePrice);
+    data.quantity = Number(data.quantity);
     if (product) {
       dto = await updateProduct(
         product.id,
@@ -44,11 +45,11 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
           groupId: data.group.id,
           image: product.image,
           status: data.status,
+          quantity: data.quantity,
         } as UpdateProductRequest,
         data.imageFile,
       );
     } else {
-      data.quantity = Number(data.quantity);
       dto = await createProduct(
         {
           name: data.name,
@@ -138,7 +139,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
             keyboardType={'numeric'}
             label={'Base Price'}
             placeholder={'Please input base price'}
-            defaultValue={`${product?.price || CONSTANTS.STR_EMPTY}`}
+            defaultValue={`${product?.basePrice || CONSTANTS.STR_EMPTY}`}
             name={'basePrice'}
             rules={{
               // valueAsNumber: true,
