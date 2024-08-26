@@ -1,15 +1,14 @@
 import BaseFacade from '@core/common/models/BaseFacade';
-import {Dto, Utility} from '@core/common';
+import { Dto, Utility } from '@core/common';
 import {
   CreateCustomerRequest,
   Customer,
   CustomerFilterRequest,
   CustomerService,
-  STATUS,
   UpdateCustomerRequest,
   UpdateFileService,
 } from '@src/business';
-import {File} from '@core/models';
+import { File } from '@core/models';
 
 export class CustomerFacade extends BaseFacade<CustomerFacade> {
   private static readonly IMAGE_FOLDER: string = 'Customer';
@@ -40,9 +39,9 @@ export class CustomerFacade extends BaseFacade<CustomerFacade> {
       req.image = uploadDto.data as string;
       const dto: Dto<Customer | null> =
         await this.customerService.createCustomer(req);
-      return dto;
+      return this.populate(dto);
     }
-    return uploadDto.bypass();
+    return this.populate(uploadDto);
   }
 
   async updateCustomer(
@@ -62,12 +61,13 @@ export class CustomerFacade extends BaseFacade<CustomerFacade> {
       req.image = uploadDto.data as string;
       const dto: Dto<Customer | null> =
         await this.customerService.updateCustomer(id, req);
-      return dto;
+      return this.populate(dto);
     }
-    return uploadDto.bypass();
+    return this.populate(uploadDto);
   }
 
   async getCustomers(req: CustomerFilterRequest): Promise<Dto<Customer[]>> {
-    return this.customerService.getCustomers(req);
+    const dto: Dto<Customer[]> = await this.customerService.getCustomers(req);
+    return this.populate(dto);
   }
 }

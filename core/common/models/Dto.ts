@@ -4,6 +4,7 @@ export class Dto<T> {
   public code: number = RESULT_CODE.SUCCESS;
   public data: T | null | undefined;
   public message: string | null | undefined;
+  public extraData?: any | null | undefined;
 
   constructor(
     code: number,

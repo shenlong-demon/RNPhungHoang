@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Dto, Logger } from '@core/common';
 import { useNavigation } from '@core/navigation';
-import { useAuthContext, usePopupContext } from '@src/business';
+import { ENV, useAuthContext, usePopupContext } from '@src/business';
 import { Route } from '@src/screens/portrait/Route';
 import BaseFacade from '@core/common/models/BaseFacade';
 
@@ -23,7 +23,7 @@ const useDtoHandlerContextFacade = (): DtoHandlerContextResult => {
         dto,
       ]);
       if (dto.isWarning()) {
-        showToast(dto.message || 'Something went wrong. Please try again !');
+        showToast(dto.message || 'Warning !!!');
       } else if (dto.isError()) {
         if (code === 401) {
           Logger.log(() => [
@@ -32,10 +32,11 @@ const useDtoHandlerContextFacade = (): DtoHandlerContextResult => {
           await removeUserAndClear();
           showToast(`Your login is expired. Please try login again !`);
           navigate(Route.LOGIN);
-        } else if (code === 502) {
-          showToast('Cannot connect to server !');
         } else {
           showToast(dto.message || 'Something went wrong. Please try again !');
+          Logger.logEvent(`===== ${ENV.ENV} - ${code} =====`, {
+            dto,
+          });
         }
       }
     }

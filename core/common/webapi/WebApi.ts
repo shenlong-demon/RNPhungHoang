@@ -28,10 +28,10 @@ export class WebApi extends Singleton<WebApi> {
       const response: AxiosResponse = await this.api.post(url, data, {
         headers,
       });
-      res = this.handle(response);
+      res = this.handle(url, data, response);
       Logger.log(() => [`POST ${url} RETURN `, headers, data, response, res]);
     } catch (ex) {
-      res = this.catchException(ex);
+      res = this.catchException(url, data, ex);
       Logger.log(() => [`POST ${url} ERROR`, headers, data, ex, res]);
     }
     return res;
@@ -45,10 +45,10 @@ export class WebApi extends Singleton<WebApi> {
       const response: AxiosResponse = await this.api.put(url, data, {
         headers,
       });
-      res = this.handle(response);
+      res = this.handle(url, data, response);
       Logger.log(() => [`PUT ${url} RETURN `, headers, data, response, res]);
     } catch (ex) {
-      res = this.catchException(ex);
+      res = this.catchException(url, data, ex);
       Logger.log(() => [`PUT ${url} ERROR`, headers, data, ex, res]);
     }
     return res;
@@ -60,10 +60,10 @@ export class WebApi extends Singleton<WebApi> {
     let res: ApiResult;
     try {
       const response: AxiosResponse = await this.api.get(url, { headers });
-      res = this.handle(response);
+      res = this.handle(url, null, response);
       Logger.log(() => [`GET ${url} RETURN `, headers, response, res]);
     } catch (ex) {
-      res = this.catchException(ex);
+      res = this.catchException(url, null, ex);
       Logger.log(() => [`GET ${url} ERROR`, headers, ex, res]);
     }
     return res;
@@ -75,27 +75,35 @@ export class WebApi extends Singleton<WebApi> {
     let res: ApiResult;
     try {
       const response: AxiosResponse = await this.api.delete(url, { headers });
-      res = this.handle(response);
+      res = this.handle(url, null, response);
       Logger.log(() => [`DELETE ${url} RETURN `, headers, response, res]);
     } catch (ex) {
-      res = this.catchException(ex);
+      res = this.catchException(url, null, ex);
       Logger.log(() => [`DELETE ${url} ERROR`, headers, ex, res]);
     }
     return res;
   }
 
-  private handle(response: AxiosResponse): ApiResult {
-    return { ...response.data };
+  private handle(
+    url: string,
+    data: any | null,
+    response: AxiosResponse,
+  ): ApiResult {
+    return { ...response.data, extraData: { url, data } };
   }
 
-  private catchException(error: any | null): ApiResult {
-    const res: ApiResult = {
+  private catchException(
+    url: string,
+    data: any | null,
+    error: any | null,
+  ): ApiResult {
+    let res: ApiResult = {
       code: 500,
     };
     if (!!error) {
       if (!!error.response) {
         const httpCode: number = error.response.status;
-        return {
+        res = {
           code: RESULT_CODE.ERROR | httpCode,
           message:
             httpCode === 401
@@ -103,8 +111,19 @@ export class WebApi extends Singleton<WebApi> {
               : 'Server Error !!!',
           data: error.response.data,
         };
+      } else {
+        res = {
+          code: RESULT_CODE.ERROR | 500,
+          message: 'Server Error !!!',
+          data: error,
+        };
       }
     }
+    res.extraData = {
+      url,
+      data,
+      error,
+    };
     return res;
   }
 

@@ -3,7 +3,10 @@ import { StyleSheet } from 'react-native';
 import View from '@core/components/viewbase/View';
 import Label from '@core/components/labelbase/Label';
 import { ViewBaseProps } from '@core/components/viewbase/ViewBase';
-import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import {
+  DateTimePickerAndroid,
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
 import { DateTimeUtils, Logger } from '@core/common';
 import { StyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
 import { TextStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
@@ -34,18 +37,29 @@ export const DateTimePickerBase: FC<DateTimePickerBaseProps> = memo(
     style,
     ...rest
   }: DateTimePickerBaseProps) => {
-    const [datetime, setDatetime] = useState<Date>(
-      new Date(defaultValue || DateTimeUtils.now()),
+    Logger.log(() => [`DateTimePickerBase defaultValue ${defaultValue}`]);
+    const [datetime, setDatetime] = useState<Date | null>(
+      !!defaultValue ? new Date(defaultValue) : null,
     );
     const [showMode, setShowMode] = useState<MODE | null>(null);
     const prevShowModeRef = useRef<MODE | null>(null);
 
-    const onDateTimeChange = (event: any, selectedDate: any) => {
+    const onDateTimeChange = (
+      event: DateTimePickerEvent,
+      selectedDate: any,
+    ) => {
       Logger.log(() => [
         `DateTimePickerBase onChange ${showMode}`,
         event,
         selectedDate,
       ]);
+      if (event.type === 'dismissed') {
+        setShowMode(null);
+        setDatetime(!!defaultValue ? new Date(defaultValue) : null);
+        onChange(defaultValue || 0);
+
+        return;
+      }
       // const currentDate = selectedDate;
       setDatetime(selectedDate);
 
@@ -63,7 +77,7 @@ export const DateTimePickerBase: FC<DateTimePickerBaseProps> = memo(
       if (showMode !== prevShowModeRef.current) {
         showDateTimePicker();
       } else if (showMode === MODE.TIME || mode === DISPLAY_MODE.DATE) {
-        onChange(datetime.getTime());
+        onChange(datetime?.getTime() || 0);
       }
       prevShowModeRef.current = showMode;
     }, [datetime, showMode]);
@@ -72,8 +86,8 @@ export const DateTimePickerBase: FC<DateTimePickerBaseProps> = memo(
         return;
       }
       DateTimePickerAndroid.open({
-        value: datetime,
-        onChange: (event, selectedData) =>
+        value: datetime || new Date(),
+        onChange: (event: DateTimePickerEvent, selectedData) =>
           onDateTimeChange(event, selectedData),
         mode: showMode,
         is24Hour: true,
