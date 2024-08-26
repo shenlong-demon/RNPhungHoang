@@ -1,8 +1,8 @@
-import React, {FC, memo, useEffect, useState} from 'react';
-import {ImageProps, StyleSheet} from 'react-native';
+import React, { FC, memo, useEffect, useState } from 'react';
+import { ImageProps, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {ImageFile, ImagePickerLibrary} from '@core/system';
-import {File} from '@core/models';
+import { ImageFile, ImagePickerLibrary } from '@core/system';
+import { File } from '@core/models';
 import View from '@core/components/viewbase/View';
 import Button from '@core/components/buttonbase/Button';
 
@@ -24,6 +24,15 @@ const ImageBase: FC<ImageBaseProps> = ({
 }) => {
   const [imageSource, setImageSource] = useState<File | null>(source);
   const finalStyles = StyleSheet.flatten([styles.common, style]);
+  const [ready, setReady] = useState<boolean>(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setReady(true);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, []);
+
   const capture = async (): Promise<void> => {
     const result: ImageFile | null = await ImagePickerLibrary.capture();
     if (!!result) {
@@ -44,7 +53,11 @@ const ImageBase: FC<ImageBaseProps> = ({
   const getImage = (): any => {
     return (
       <FastImage
-        source={!!imageSource ? {uri: imageSource.uri} : {uri: IMG}}
+        source={
+          !!imageSource && ready
+            ? { uri: imageSource.uri, priority: 'low' }
+            : { uri: IMG, priority: 'low' }
+        }
         style={finalStyles}
         {...rest}
       />
@@ -65,12 +78,12 @@ const ImageBase: FC<ImageBaseProps> = ({
             right: 0,
           }}>
           <Button.B
-            style={[styles.button, {backgroundColor: '#faf1b6'}]}
+            style={[styles.button, { backgroundColor: '#faf1b6' }]}
             onPress={capture}
             label={'Capture'}
           />
           <Button.B
-            style={[styles.button, {backgroundColor: '#c0efff'}]}
+            style={[styles.button, { backgroundColor: '#c0efff' }]}
             onPress={select}
             label={'Select'}
           />
