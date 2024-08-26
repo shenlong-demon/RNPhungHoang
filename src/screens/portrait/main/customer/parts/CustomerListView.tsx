@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useState } from 'react';
 import View from '@core/components/viewbase/View';
 import { StyleSheet } from 'react-native';
 import { Customer, STATUS } from '@src/business';
@@ -8,6 +8,7 @@ import { useCustomerFacade } from '@src/business/useFacade/useCustomerFacade';
 import { CustomerListItemView } from '@src/screens/portrait/main/customer/parts/CustomerListItemView';
 import { CONSTANTS } from '@core/common';
 import { useDebounce } from '@core/use_hook';
+import { useFocusEffect } from '@react-navigation/native';
 
 type Props = {
   onPressItem: (customer: Customer) => void;
@@ -20,6 +21,16 @@ export const CustomerListView: FC<Props> = memo(
     const debouncedValue = useDebounce(searchText);
 
     const facade = useCustomerFacade();
+
+    useFocusEffect(
+      useCallback(() => {
+        let isLoad = true;
+        getCustomers();
+        return () => {
+          isLoad = false;
+        };
+      }, [debouncedValue]),
+    );
 
     useEffect(() => {
       getCustomers();
