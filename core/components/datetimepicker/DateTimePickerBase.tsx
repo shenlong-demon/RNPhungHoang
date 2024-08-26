@@ -39,8 +39,18 @@ export const DateTimePickerBase: FC<DateTimePickerBaseProps> = memo(
   }: DateTimePickerBaseProps) => {
     Logger.log(() => [`DateTimePickerBase defaultValue ${defaultValue}`]);
     const [datetime, setDatetime] = useState<Date | null>(
-      !!defaultValue ? new Date(defaultValue) : null,
+      !defaultValue || defaultValue === 0 ? null : new Date(defaultValue),
     );
+    Logger.log(() => [
+      `DateTimePickerBase defaultValue render ${defaultValue}`,
+      datetime,
+    ]);
+    useEffect(() => {
+      setDatetime(
+        !defaultValue || defaultValue === 0 ? null : new Date(defaultValue),
+      );
+    }, [defaultValue]);
+
     const [showMode, setShowMode] = useState<MODE | null>(null);
     const prevShowModeRef = useRef<MODE | null>(null);
 
@@ -100,8 +110,16 @@ export const DateTimePickerBase: FC<DateTimePickerBaseProps> = memo(
       mode === DISPLAY_MODE.DATETIME
         ? DateTimeUtils.formatDateTimeStringByDate(datetime)
         : DateTimeUtils.formatDateString(datetime);
+
     const labelStyles = StyleSheet.flatten([styles.text, textStyle || {}]);
     const containerStyle = StyleSheet.flatten([styles.container, style]);
+
+    Logger.log(() => [
+      `DateTimePickerBase defaultValue dateStr ${defaultValue}`,
+      datetime,
+      dateStr,
+    ]);
+
     return (
       <View.V {...rest} style={containerStyle} onPress={open}>
         <Label.T style={labelStyles} text={dateStr} />

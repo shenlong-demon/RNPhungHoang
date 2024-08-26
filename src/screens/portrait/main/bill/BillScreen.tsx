@@ -50,13 +50,14 @@ export const BillScreen: FC<Props> = ({}: Props) => {
     <View.V style={styles.container}>
       <View.Row>
         <Input.T
-          style={{ minWidth: '40%', width: 70, marginRight: 20 }}
+          style={{ minWidth: '40%', width: 100 }}
           onChangeText={setSearchText}
           value={searchText}
+          placeholder={'Input search text'}
         />
         <DateTimePicker.DT
           defaultValue={selectedDate}
-          style={{ marginLeft: 20, marginRight: 20 }}
+          style={{ marginLeft: 10, marginRight: 10 }}
           onChange={setSelectedDate}
           mode={DISPLAY_MODE.DATETIME}
         />
