@@ -4,10 +4,10 @@ import {
   CustomerFilterRequest,
   UpdateCustomerRequest,
 } from '@src/business';
-import {File} from '@core/models';
+import { File } from '@core/models';
 
-import {Dto} from '@core/common';
-import {CustomerFacade} from '@src/business/facade/CustomerFacade';
+import { Dto } from '@core/common';
+import { CustomerFacade } from '@src/business/facade/CustomerFacade';
 
 type CustomerFacadeResult = {
   updateCustomer: (

@@ -1,14 +1,15 @@
-import React, {FC} from 'react';
-import {Customer, STATUS} from '@src/business';
-import {useNavigation} from '@core/navigation';
-import {CONSTANTS, Dto, Logger, Utility} from '@core/common';
-import {File} from '@core/models';
+import React, { FC } from 'react';
+import { Customer, STATUS } from '@src/business';
+import { useNavigation } from '@core/navigation';
+import { CONSTANTS, Dto, Logger, Utility } from '@core/common';
+import { File } from '@core/models';
 import Form from '@core/components/formbase/Form';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import View from '@core/components/viewbase/View';
 import Button from '@core/components/buttonbase/Button';
-import {useCustomerFacade} from '@src/business/useFacade/useCustomerFacade';
-import {FormStatusDropDown} from '@src/screens/portrait/shared_components/FormStatusDropDown';
+import { useCustomerFacade } from '@src/business/useFacade/useCustomerFacade';
+import { FormStatusDropDown } from '@src/screens/portrait/shared_components/FormStatusDropDown';
+
 export type CustomerUpdateNavigationParam = {
   assignCustomerFunc?: (
     selectedCustomer: Customer,
@@ -24,18 +25,18 @@ type FormValues = {
   nickName?: string;
 };
 export const UpdateCustomerScreen: FC<Props> = ({}) => {
-  const {getParam, goBack} = useNavigation();
+  const { getParam, goBack } = useNavigation();
   const param: CustomerUpdateNavigationParam | null = getParam();
   const customer: Customer | null = param?.customer || null;
-  const {createCustomer, updateCustomer} = useCustomerFacade();
+  const { createCustomer, updateCustomer } = useCustomerFacade();
   const onSubmit = async (data: FormValues) => {
     const id: number = customer?.id || 0;
     const appKey: string = customer?.appKey || Utility.UUID();
     const status: number = 1;
     Logger.log(() => [`UpdateProductScreen onSubmit data`, data]);
-
+    let dto: Dto<Customer | null>;
     if (id === 0) {
-      const dto: Dto<Customer | null> = await createCustomer(
+      dto = await createCustomer(
         {
           name: data.name,
           phone: data.phone,
@@ -48,10 +49,11 @@ export const UpdateCustomerScreen: FC<Props> = ({}) => {
       if (dto.next()) {
         if (!!param?.assignCustomerFunc) {
           param.assignCustomerFunc(dto.data as Customer, false);
+          return;
         }
       }
     } else {
-      const dto: Dto<Customer | null> = await updateCustomer(
+      dto = await updateCustomer(
         id,
         appKey,
         {
@@ -64,6 +66,9 @@ export const UpdateCustomerScreen: FC<Props> = ({}) => {
       );
       Logger.log(() => [`UpdateProductScreen onSubmit updateCustomer`, dto]);
     }
+    if (dto.next()) {
+      goBack();
+    }
   };
   const onError = (errors: any, e: any) => {
     Logger.log(() => [`UpdateProductScreen onError errors`, errors, e]);
@@ -74,7 +79,7 @@ export const UpdateCustomerScreen: FC<Props> = ({}) => {
     <Form.View onSubmit={onSubmit} onError={onError} style={styles.container}>
       <Form.Image
         name="imageFile"
-        source={{uri: customer?.image || CONSTANTS.STR_EMPTY} as File}
+        source={{ uri: customer?.image || CONSTANTS.STR_EMPTY } as File}
         // defaultValue={{uri: customer?.image || CONSTANTS.STR_EMPTY} as File}
         style={styles.avatar}
         canSetSource={true}
@@ -85,14 +90,14 @@ export const UpdateCustomerScreen: FC<Props> = ({}) => {
         name="name"
         placeholder={`Please input customer's name`}
         defaultValue={customer?.name || CONSTANTS.STR_EMPTY}
-        rules={{required: 'Name is required.'}}
+        rules={{ required: 'Name is required.' }}
       />
       <Form.Input
         label={'Phone number'}
         name="phone"
         placeholder={`Please input phone number`}
         defaultValue={customer?.phone || CONSTANTS.STR_EMPTY}
-        rules={{required: 'Phone number is required.'}}
+        rules={{ required: 'Phone number is required.' }}
       />
       <Form.Input
         label={'Nick name'}
