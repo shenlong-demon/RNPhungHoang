@@ -103,5 +103,11 @@ const API_URL = {
   GET_BILLS_BY() {
     return `${ENV.HOST}/bill/filter`;
   },
+  GET_EXPENSES_BY() {
+    return `${ENV.HOST}/expense/filter`;
+  },
+  CREATE_EXPENSE() {
+    return `${ENV.HOST}/expense/create`;
+  },
 };
 export { API_URL };

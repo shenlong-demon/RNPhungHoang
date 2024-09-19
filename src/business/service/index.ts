@@ -8,3 +8,4 @@ export * from './CustomerService';
 export * from './DataService';
 export * from './ReportService';
 export * from './BillService';
+export * from './ExpenseService';

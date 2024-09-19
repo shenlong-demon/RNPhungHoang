@@ -1,4 +1,4 @@
-import {BaseModel} from '@src/business/model/object/base_model';
+import { BaseModel } from '@src/business/model/object/base_model';
 
 export type CloseOutReport = BaseModel & {
   date: number;
@@ -6,4 +6,6 @@ export type CloseOutReport = BaseModel & {
   totalProfit: number;
   numberOfBill: number;
   totalDiscount: number;
+  numberOfExpense: number;
+  totalExpense: number;
 };

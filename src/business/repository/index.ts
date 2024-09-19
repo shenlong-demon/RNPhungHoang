@@ -5,3 +5,4 @@ export * from './CustomerRepo';
 export * from './DataRepo';
 export * from './ReportRepo';
 export * from './BillRepo';
+export * from './ExpenseRepo';

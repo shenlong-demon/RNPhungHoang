@@ -43,9 +43,21 @@ export const CloseOutReportScreen: FC<Props> = memo(({}: Props) => {
       0,
     );
   }, [closeOutReports]);
+  const numberOfExpense = useMemo(() => {
+    return closeOutReports.reduce(
+      (n, r: CloseOutReport) => n + r.numberOfExpense,
+      0,
+    );
+  }, [closeOutReports]);
 
   const totalBill = useMemo(() => {
     return closeOutReports.reduce((n, r: CloseOutReport) => n + r.totalBill, 0);
+  }, [closeOutReports]);
+  const totalExpense = useMemo(() => {
+    return closeOutReports.reduce(
+      (n, r: CloseOutReport) => n + r.totalExpense,
+      0,
+    );
   }, [closeOutReports]);
 
   const totalDiscount = useMemo(() => {
@@ -86,6 +98,11 @@ export const CloseOutReportScreen: FC<Props> = memo(({}: Props) => {
           replaceIfZero={'-'}
         />
         <Label.Money
+          style={{ flex: 4, textAlign: 'right' }}
+          value={data.item.totalExpense}
+          replaceIfZero={'-'}
+        />
+        <Label.Money
           style={{ flex: 4, textAlign: 'right', fontWeight: 'bold' }}
           value={data.item.totalProfit}
           replaceIfZero={'-'}
@@ -112,21 +129,39 @@ export const CloseOutReportScreen: FC<Props> = memo(({}: Props) => {
         }
       />
       <View.V>
+        <View.Row style={styles.actionViewHeader}>
+          <Label.T style={styles.titleHeader} text={`REVENUE`} />
+        </View.Row>
         <View.Row style={styles.actionView}>
-          <Label.T style={styles.title} text={'Number of bill'} />
-          <Label.T style={styles.title} text={`${numberOfBill}`} />
+          <Label.T style={styles.title} text={`Total (${numberOfBill})`} />
+          <Label.Money style={styles.title} value={totalBill} />
         </View.Row>
         <View.Row style={styles.actionView}>
           <Label.T style={styles.title} text={'Discount'} />
           <Label.Money style={styles.title} value={totalDiscount} />
         </View.Row>
         <View.Row style={styles.actionView}>
-          <Label.T style={styles.title} text={'Total'} />
-          <Label.Money style={styles.title} value={totalBill} />
-        </View.Row>
-        <View.Row style={styles.actionView}>
           <Label.T style={styles.title} text={'Profit'} />
           <Label.Money style={styles.title} value={totalProfit} />
+        </View.Row>
+        <View.Row style={styles.actionViewHeader}>
+          <Label.T style={styles.titleHeader} text={`INCOME / OUTCOME`} />
+        </View.Row>
+        <View.Row style={styles.actionView}>
+          <Label.T style={styles.title} text={`Expense (${numberOfExpense})`} />
+          <Label.Money style={styles.title} value={totalExpense} />
+        </View.Row>
+        <View.Row style={styles.actionView}>
+          <Label.T style={styles.title} text={`Income (${numberOfExpense})`} />
+          <Label.Money style={styles.title} value={0} />
+        </View.Row>
+
+        <View.Row style={styles.actionViewHeader}>
+          <Label.T style={styles.titleHeader} text={`CASH BOOK`} />
+        </View.Row>
+        <View.Row style={styles.actionView}>
+          <Label.T style={styles.title} text={`Total`} />
+          <Label.Money style={styles.title} value={0} />
         </View.Row>
       </View.V>
     </View.V>
@@ -142,11 +177,19 @@ const styles = StyleSheet.create({
   },
   actionView: {
     borderColor: 'green',
-    borderWidth: 1,
+    borderTopWidth: 1,
     // flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft: 10,
     paddingRight: 10,
+    height: 40,
+  },
+  actionViewHeader: {
+    backgroundColor: 'green',
+    justifyContent: 'center',
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 40,
   },
   list: {
     flex: 1,
@@ -157,6 +200,11 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 18,
+  },
+  titleHeader: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: 'white',
   },
   itemText: {
     flex: 1,

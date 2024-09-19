@@ -30,6 +30,7 @@ import View from '@core/components/viewbase/View';
 import Label from '@core/components/labelbase/Label';
 import { BillScreen } from '@src/screens/portrait/main/bill';
 import { DrawerMenu } from '@src/screens/portrait/components';
+import { ExpenseListScreen } from '@src/screens/portrait/main/cashbook';
 
 export const PortraitApp: FC = memo(() => {
   const { user, init } = useAuthContext();
@@ -216,6 +217,13 @@ export const PortraitApp: FC = memo(() => {
                   component: CloseOutReportScreen,
                   options: {
                     ...createHeaderTopStack('Close Out Report'),
+                  },
+                },
+                {
+                  name: Route.EXPENSE,
+                  component: ExpenseListScreen,
+                  options: {
+                    ...createHeaderTopStack('Expenses'),
                   },
                 },
               ]}

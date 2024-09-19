@@ -11,3 +11,4 @@ export * from './Bill';
 export * from './CloseOutReport';
 export * from './BillIssue';
 export * from './Order';
+export * from './Expense';
