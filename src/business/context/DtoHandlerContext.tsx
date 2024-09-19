@@ -16,28 +16,28 @@ const useDtoHandlerContextFacade = (): DtoHandlerContextResult => {
 
   const dtoHandle = async (dto: Dto<any | null>): Promise<boolean> => {
     if (dto.next()) {
+      if (dto.isWarning()) {
+        showToast(dto.message || 'Warning !!!');
+      }
     } else {
       const code: number = dto.getCode();
       Logger.log(() => [
         `useDtoHandlerContextFacade dtoHandle code ${code} isError ${dto.isError()}`,
         dto,
       ]);
-      if (dto.isWarning()) {
-        showToast(dto.message || 'Warning !!!');
-      } else if (dto.isError()) {
-        if (code === 401) {
-          Logger.log(() => [
-            `useDtoHandlerContextFacade dtoHandle code ${code} move to (Route.LOGIN)`,
-          ]);
-          await removeUserAndClear();
-          showToast(`Your login is expired. Please try login again !`);
-          navigate(Route.LOGIN);
-        } else {
-          showToast(dto.message || 'Something went wrong. Please try again !');
-          Logger.logEvent(`===== ${ENV.ENV} - ${code} =====`, {
-            dto,
-          });
-        }
+
+      if (code === 401) {
+        Logger.log(() => [
+          `useDtoHandlerContextFacade dtoHandle code ${code} move to (Route.LOGIN)`,
+        ]);
+        await removeUserAndClear();
+        showToast(`Your login is expired. Please try login again !`);
+        navigate(Route.LOGIN);
+      } else {
+        showToast(dto.message || 'Something went wrong. Please try again !');
+        Logger.logEvent(`===== ${ENV.ENV} - ${code} =====`, {
+          dto,
+        });
       }
     }
 
