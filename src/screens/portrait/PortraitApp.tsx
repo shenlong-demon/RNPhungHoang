@@ -14,8 +14,6 @@ import {
   ProductListScreen,
   UpdateProductScreen,
 } from '@src/screens/portrait/main/product';
-import { UpdateBrandScreen } from '@src/screens/portrait/main/brand';
-import { UpdateGroupScreen } from '@src/screens/portrait/main/group';
 import {
   OperationDetailScreen,
   POSSellerScreen,
@@ -193,20 +191,6 @@ export const PortraitApp: FC = memo(() => {
                   options: { headerShown: false },
                 },
 
-                {
-                  name: Route.BRANCH,
-                  component: UpdateBrandScreen,
-                  options: {
-                    ...createHeaderTopStack('Brands'),
-                  },
-                },
-                {
-                  name: Route.GROUP,
-                  component: UpdateGroupScreen,
-                  options: {
-                    ...createHeaderTopStack('Group'),
-                  },
-                },
                 {
                   name: Route.CUSTOMER,
                   component: CustomerStack,

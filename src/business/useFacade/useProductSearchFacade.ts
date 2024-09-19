@@ -30,17 +30,13 @@ export const useProductSearchFacade = (): ProductSearchFacadeResult => {
       const code: string | undefined = p.code
         ?.replace(/[\u0300-\u036f]/g, '')
         .toLowerCase();
-      const groupName: string = p.group.name;
-      const brandName: string = p.brand.name;
       return (
         textNormal === CONSTANTS.STR_EMPTY ||
         textNormal.trim() === CONSTANTS.STR_EMPTY ||
         id.includes(textNormal) ||
         name.includes(textNormal) ||
-        otherName?.includes(textNormal) ||
-        code?.includes(textNormal) ||
-        groupName.includes(textNormal) ||
-        brandName.includes(textNormal)
+        (!!otherName && otherName.includes(textNormal)) ||
+        (!!code && code.includes(textNormal))
       );
     });
     return result.slice(0, 20);

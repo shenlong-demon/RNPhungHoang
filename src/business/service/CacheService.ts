@@ -1,12 +1,5 @@
 import { BaseService } from '@core/common';
-import {
-  Brand,
-  Group,
-  LOCAL_STORAGE_KEY,
-  Product,
-  Setting,
-  User,
-} from '@src/business';
+import { LOCAL_STORAGE_KEY, Product, Setting, User } from '@src/business';
 import { LocalStorage } from '@core/storage';
 
 export class CacheService extends BaseService<CacheService> {
@@ -65,59 +58,9 @@ export class CacheService extends BaseService<CacheService> {
     );
   }
 
-  async saveBrands(brands: Brand[]): Promise<void> {
-    for (let i = 0; i < brands.length; i++) {
-      const brand: Brand = brands[i];
-      await this.saveBrand(brand);
-    }
-  }
-
-  async saveGroups(groups: Group[]): Promise<void> {
-    for (let i = 0; i < groups.length; i++) {
-      const group: Group = groups[i];
-      await this.saveGroup(group);
-    }
-  }
-
-  private genBrandKey(brand: Brand): string {
-    return `${LOCAL_STORAGE_KEY.BRAND_WILDCARD}_${brand.id}`;
-  }
-
-  private genGroupKey(group: Group): string {
-    return `${LOCAL_STORAGE_KEY.GROUP_WILDCARD}_${group.id}`;
-  }
-
-  async getBrands(): Promise<Brand[]> {
-    return LocalStorage.getObjectsByWildcard<Brand>(
-      LOCAL_STORAGE_KEY.BRAND_WILDCARD,
-    );
-  }
-
-  async getGroups(): Promise<Group[]> {
-    return LocalStorage.getObjectsByWildcard<Group>(
-      LOCAL_STORAGE_KEY.GROUP_WILDCARD,
-    );
-  }
-
-  async saveGroup(group: Group): Promise<void> {
-    const key: string = this.genGroupKey(group);
-    await LocalStorage.saveObject(key, group);
-  }
-
-  async saveBrand(brand: Brand): Promise<void> {
-    const key: string = this.genBrandKey(brand);
-    await LocalStorage.saveObject(key, brand);
-  }
-
   async clearDataForUser(): Promise<void> {
     await LocalStorage.removeObjectsByWildcard(
       LOCAL_STORAGE_KEY.PRODUCT_WILDCARD,
-    );
-    await LocalStorage.removeObjectsByWildcard(
-      LOCAL_STORAGE_KEY.BRAND_WILDCARD,
-    );
-    await LocalStorage.removeObjectsByWildcard(
-      LOCAL_STORAGE_KEY.GROUP_WILDCARD,
     );
     await LocalStorage.remove(LOCAL_STORAGE_KEY.USER);
     await LocalStorage.remove(LOCAL_STORAGE_KEY.SETTING);

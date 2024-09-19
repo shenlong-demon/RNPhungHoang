@@ -7,12 +7,6 @@ const API_URL = {
   LOGOUT: (): string => {
     return `${ENV.HOST}/auth/logout`;
   },
-  GET_BRANDS: (): string => {
-    return `${ENV.HOST}/brand`;
-  },
-  GET_GROUPS: (): string => {
-    return `${ENV.HOST}/group`;
-  },
   GET_PRODUCTS_BY() {
     return `${ENV.HOST}/product/filter`;
   },
@@ -73,18 +67,7 @@ const API_URL = {
   GET_OPERATION_DETAIL: (operationId: number): string => {
     return `${ENV.HOST}/operation/get-operation-detail/${operationId}`;
   },
-  CREATE_BRAND: (): string => {
-    return `${ENV.HOST}/brand/create`;
-  },
-  UPDATE_BRAND: (brandId: number): string => {
-    return `${ENV.HOST}/brand/update/${brandId}`;
-  },
-  CREATE_GROUP: (): string => {
-    return `${ENV.HOST}/group/create`;
-  },
-  UPDATE_GROUP: (groupId: number): string => {
-    return `${ENV.HOST}/group/update/${groupId}`;
-  },
+
   DO_CLOSE_OUT_REPORT: (): string => {
     return `${ENV.HOST}/report/close-out-report`;
   },

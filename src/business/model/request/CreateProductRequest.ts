@@ -7,7 +7,5 @@ export type CreateProductRequest = {
   basePrice: number;
   price: number;
   quantity: number;
-  brandId: number;
-  groupId: number;
   status: number;
 };

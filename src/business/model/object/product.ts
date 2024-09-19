@@ -1,4 +1,4 @@
-import { Brand, Group, STATUS } from '@src/business';
+import { STATUS } from '@src/business';
 import { BaseModel } from './base_model';
 
 export type Product = BaseModel & {
@@ -10,8 +10,4 @@ export type Product = BaseModel & {
   price: number;
   quantity: number;
   status: STATUS;
-  brandId: number;
-  groupId: number;
-  brand: Brand;
-  group: Group;
 };

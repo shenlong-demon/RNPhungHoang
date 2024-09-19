@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Brand, Group, Product, STATUS, useDataContext } from '@src/business';
+import { Product, STATUS, useDataContext } from '@src/business';
 import { useNavigation } from '@core/navigation';
 import { CONSTANTS, Dto, Logger } from '@core/common';
 import { File } from '@core/models';
@@ -11,8 +11,6 @@ import Form from '@core/components/formbase/Form';
 import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { FormStatusDropDown } from '@src/screens/portrait/shared_components/FormStatusDropDown';
 import { ScrollView } from 'react-native-gesture-handler';
-import GroupSelectItem from '@src/screens/portrait/shared_components/GroupSelectItem';
-import BrandSelectItem from '@src/screens/portrait/shared_components/BrandSelectItem';
 import View from '@core/components/viewbase/View';
 
 type Props = {};
@@ -23,8 +21,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
   const { goBack, getParam } = useNavigation();
 
   const product: Product | null = getParam();
-  const { activeGroups, activeBrands, createProduct, updateProduct } =
-    useDataContext();
+  const { createProduct, updateProduct } = useDataContext();
 
   const onSubmit = async (data: FormValues) => {
     let dto: Dto<Product | null>;
@@ -41,8 +38,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
           otherName: data.otherName,
           basePrice: data.basePrice,
           price: data.price,
-          brandId: data.brand.id,
-          groupId: data.group.id,
+
           image: product.image,
           status: data.status,
           quantity: data.quantity,
@@ -58,8 +54,7 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
           basePrice: data.basePrice,
           price: data.price,
           quantity: data.quantity,
-          brandId: data.brand.id,
-          groupId: data.group.id,
+
           status: data.status,
         } as CreateProductRequest,
         data.imageFile,
@@ -108,31 +103,6 @@ export const UpdateProductScreen: FC<Props> = ({}) => {
             placeholder={'Please input code'}
             defaultValue={product?.code}
             name={'code'}
-          />
-          <Form.DropDown
-            label={'Group'}
-            placeholder={'Select group'}
-            name={'group'}
-            data={activeGroups}
-            rules={{ required: 'Group is required!' }}
-            labelField={'name'}
-            valueField={'id'}
-            renderItem={(group: Group) => <GroupSelectItem group={group} />}
-            defaultValue={product?.group}
-            isSearch={true}
-          />
-
-          <Form.DropDown
-            label={'Brand'}
-            placeholder={'Select brand'}
-            name={'brand'}
-            data={activeBrands}
-            rules={{ required: 'Brand is required!' }}
-            labelField={'name'}
-            valueField={'id'}
-            renderItem={(brand: Brand) => <BrandSelectItem brand={brand} />}
-            defaultValue={product?.brand}
-            isSearch={true}
           />
 
           <Form.Input

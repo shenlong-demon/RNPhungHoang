@@ -61,10 +61,6 @@ export const DrawerMenu: FC<Props> = ({ navigation }: Props) => {
         {section('CUSTOMER', [
           { title: 'Customer', navigateToRoute: Route.CUSTOMER },
         ])}
-        {section('MANAGE', [
-          { title: 'Brand', navigateToRoute: Route.BRANCH },
-          { title: 'Group', navigateToRoute: Route.GROUP },
-        ])}
         {section('REPORT', [
           {
             title: 'Close Out Report',
