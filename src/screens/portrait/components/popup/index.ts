@@ -6,3 +6,4 @@ export * from './SetNotePopup';
 export * from './SetPricePopup';
 export * from './BillInfoPopup';
 export * from './CreateExpensePopup';
+export * from './AddSimpleProductPopup';
