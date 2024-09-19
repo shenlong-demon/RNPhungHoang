@@ -152,7 +152,7 @@ export const CloseOutReportScreen: FC<Props> = memo(({}: Props) => {
           <Label.Money style={styles.title} value={totalExpense} />
         </View.Row>
         <View.Row style={styles.actionView}>
-          <Label.T style={styles.title} text={`Income (${numberOfExpense})`} />
+          <Label.T style={styles.title} text={`Income (${0})`} />
           <Label.Money style={styles.title} value={0} />
         </View.Row>
 
