@@ -37,7 +37,7 @@ export class AuthFacade extends BaseFacade<AuthFacade> {
   }
 
   async isLoggedIn(): Promise<User | null> {
-    const user: User | null = await CacheService.shared().getUser();
+    const user: User | null = await this.cacheService.getUser();
     await this.handleForUser(user);
 
     Logger.log(() => [`AuthFacade isLoggedIn ${!!user}`, user]);
