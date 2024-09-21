@@ -13,8 +13,8 @@ type FormData = {
 export const LoginScreen: FC<Props> = memo(({}) => {
   const { login } = useAuthFacade();
 
-  const handleSubmit = (data: FormData): void => {
-    login(data.phone, data.password);
+  const handleSubmit = async (data: FormData): Promise<void> => {
+    await login(data.phone, data.password);
   };
   return (
     <View.Center style={styles.container}>

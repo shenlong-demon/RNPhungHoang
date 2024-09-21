@@ -2,12 +2,12 @@ import { FC, memo } from 'react';
 import View from '@core/components/viewbase/View';
 import { StyleSheet } from 'react-native';
 import { FlatList } from '@core/components';
-import Button from '@core/components/buttonbase/Button';
 import { Bill, Booking, useOperationContext } from '@src/business';
 import { BookingItemView } from '@src/screens/portrait/main/pos/parts';
 import Label from '@core/components/labelbase/Label';
 import { Dto } from '@core/common';
 import { useNavigation } from '@core/navigation';
+import Form from '@core/components/formbase/Form';
 
 type Props = {};
 export const ReceiptScreen: FC<Props> = memo(({}: Props) => {
@@ -22,14 +22,14 @@ export const ReceiptScreen: FC<Props> = memo(({}: Props) => {
       />
     );
   };
-  const doReceipt = async (): Promise<void> => {
+  const handleSubmit = async (_data: any): Promise<void> => {
     const dto: Dto<Bill | null> = await receipt();
     if (dto.next()) {
       popToTop();
     }
   };
   return (
-    <View.V style={styles.container}>
+    <Form.View onSubmit={handleSubmit} style={styles.container}>
       <View.V style={styles.infoView}>
         <Label.T style={styles.titleName} text={`Operation Name`} />
         <Label.T style={styles.name} text={`${operation?.name}`} />
@@ -49,13 +49,12 @@ export const ReceiptScreen: FC<Props> = memo(({}: Props) => {
         keyExtractor={(item: Booking, index: number) => `${item.id}_${index}`}
       />
 
-      <Button.B
+      <Form.SubmitButton
         textStyle={styles.receiptButtonText}
         style={styles.receiptButton}
         label={'Receipt'}
-        onPress={doReceipt}
       />
-    </View.V>
+    </Form.View>
   );
 });
 const styles = StyleSheet.create({

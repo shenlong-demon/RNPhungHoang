@@ -20,6 +20,7 @@ const ButtonBase: FC<ButtonBaseProps> = ({
   position,
   label,
   textStyle,
+  isLoading,
   ...rest
 }) => {
   const positionStyle = useMemo(() => {
@@ -30,8 +31,14 @@ const ButtonBase: FC<ButtonBaseProps> = ({
     return StyleSheet.flatten([styles.common, style, positionStyle]);
   }, [style, positionStyle]);
   return (
-    <TouchableOpacity style={finalStyles} onPress={onPress} {...rest}>
-      {!!label ? <Label.T style={textStyle} text={label} /> : null}
+    <TouchableOpacity
+      style={finalStyles}
+      onPress={onPress}
+      {...rest}
+      disabled={rest.disabled || !!isLoading}>
+      {!!label ? (
+        <Label.T style={textStyle} text={!!isLoading ? 'Wait' : label} />
+      ) : null}
     </TouchableOpacity>
   );
 };

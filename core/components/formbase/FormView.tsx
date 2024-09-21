@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC, memo, useState } from 'react';
 import { ViewBaseProps } from '@core/components/viewbase/ViewBase';
 import View from '@core/components/viewbase/View';
 import {
@@ -11,15 +11,18 @@ import { Logger } from '@core/common';
 import { DeviceUtility } from '@core/system/device';
 
 type Props = ViewBaseProps & {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: any) => Promise<void>;
   onError?: (error: any, e: any) => void;
 };
 export const FormView: FC<Props> = memo(
   ({ onSubmit, onError, children, ...rest }: Props) => {
-    const onSubmitForm: SubmitHandler<any> = (data: any) => {
+    const [isSubmitting, setSubmitting] = useState<boolean>(false);
+    const onSubmitForm: SubmitHandler<any> = async (data: any) => {
       Logger.log(() => [`ViewForm onSubmit data`, data]);
+      setSubmitting(true);
       DeviceUtility.hideKeyboard();
-      onSubmit(data);
+      await onSubmit(data);
+      setSubmitting(false);
     };
 
     const onErrorForm: SubmitErrorHandler<any> = (errors, e) => {
@@ -32,6 +35,7 @@ export const FormView: FC<Props> = memo(
       ...methods,
       onSubmit: onSubmitForm,
       onError: onErrorForm,
+      isSubmitting,
     };
     return (
       <View.V {...rest}>
