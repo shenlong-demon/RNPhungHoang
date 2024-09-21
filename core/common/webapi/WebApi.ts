@@ -1,6 +1,7 @@
 import { CONSTANTS, Logger, RESULT_CODE, Singleton } from '../index';
 import { ApiResult } from './ApiResult';
 import Axios, { AxiosResponse } from 'axios';
+import { ENV } from '@src/business';
 
 export class WebApi extends Singleton<WebApi> {
   private getToken: (() => Promise<string>) | null = null;
@@ -97,6 +98,11 @@ export class WebApi extends Singleton<WebApi> {
     data: any | null,
     error: any | null,
   ): ApiResult {
+    Logger.logEvent(`===== ${ENV.ENV} - ${url} =====`, {
+      url,
+      data,
+      error,
+    });
     let res: ApiResult = {
       code: 500,
     };

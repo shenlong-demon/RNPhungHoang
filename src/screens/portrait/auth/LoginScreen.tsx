@@ -24,7 +24,7 @@ export const LoginScreen: FC<Props> = memo(({}) => {
         <Form.SubmitButton style={styles.submit} label={'Login'} />
       </Form.View>
       <Label.T
-        text={`${ENV.ENV}`}
+        text={`${ENV.ENV}\n${ENV.HOST}`}
         style={{
           position: 'absolute',
           left: 0,

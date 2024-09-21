@@ -1,3 +1,5 @@
+import { ENV } from '@src/business';
+
 export class Logger {
   public static log(func: () => any[]): void {
     const data: any[] = func();
@@ -12,6 +14,10 @@ export class Logger {
       text: JSON.stringify({
         message,
         data,
+        env: {
+          ENV: ENV.ENV,
+          HOST: ENV.HOST,
+        },
       }),
     });
     fetch(
