@@ -137,7 +137,9 @@ export class WebApi extends Singleton<WebApi> {
     contentType?: string | undefined,
   ): Promise<Record<string, string>> {
     let header = {
-      ['Content-Type']: !!contentType ? contentType : 'application/json',
+      'Content-Type': !!contentType ? contentType : 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      Accept: 'application/json',
     };
 
     const token: string = !!this.getToken
