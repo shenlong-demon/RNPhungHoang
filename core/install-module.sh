@@ -21,6 +21,8 @@ yarn add @react-navigation/native@6.1.6 \
  buffer@6.0.3 \
  react-native-fast-image@8.6.3 \
  react-native-tcp-socket@6.2.0 \
- @react-native-community/datetimepicker@8.2.0
+ @react-native-community/datetimepicker@8.2.0 \
+ safe-stringify@1.1.1
+
 
 

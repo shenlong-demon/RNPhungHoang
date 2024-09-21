@@ -114,7 +114,7 @@ export class WebApi extends Singleton<WebApi> {
           message:
             httpCode === 401
               ? 'Your Login is expired !. Please login again'
-              : 'Server Error !!!',
+              : `Server Error (${httpCode}) !!!`,
           data: error.response.data,
         };
       } else {
