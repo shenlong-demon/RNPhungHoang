@@ -7,6 +7,7 @@ import {
   Customer,
   Operation,
   Product,
+  ReceiptRequest,
   RemoveIssueRequest,
   RenameOperationRequest,
   SetOperationDiscountRequest,
@@ -54,8 +55,11 @@ export class OperationService extends BaseService<OperationService> {
     );
   }
 
-  async receipt(operation: Operation): Promise<Dto<Bill | null>> {
-    return this.operationRepo.receipt(operation.id);
+  async receipt(
+    operation: Operation,
+    req: ReceiptRequest,
+  ): Promise<Dto<Bill | null>> {
+    return this.operationRepo.receipt(operation.id, req);
   }
 
   createIssue = async (

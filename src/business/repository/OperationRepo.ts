@@ -4,6 +4,7 @@ import {
   API_URL,
   CancelBookingRequest,
   CreateOperationIssueRequest,
+  ReceiptRequest,
   RemoveIssueRequest,
   RenameOperationRequest,
   SetOperationDiscountRequest,
@@ -59,8 +60,14 @@ export class OperationRepo extends BaseRepo<OperationRepo> {
     return this.populate(api);
   }
 
-  async receipt(operationId: number): Promise<Dto<any | null>> {
-    const api: ApiResult = await this.api.put(API_URL.RECEIPT(operationId), {});
+  async receipt(
+    operationId: number,
+    req: ReceiptRequest,
+  ): Promise<Dto<any | null>> {
+    const api: ApiResult = await this.api.put(
+      API_URL.RECEIPT(operationId),
+      req,
+    );
     return this.populate(api);
   }
 

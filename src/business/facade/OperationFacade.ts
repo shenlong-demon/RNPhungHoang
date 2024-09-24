@@ -8,6 +8,7 @@ import {
   Customer,
   Operation,
   Product,
+  ReceiptRequest,
   RemoveIssueRequest,
   RenameOperationRequest,
   SetBookingNoteRequest,
@@ -71,9 +72,13 @@ export class OperationFacade extends BaseFacade<OperationFacade> {
     return this.populate(dto);
   }
 
-  async receipt(operation: Operation): Promise<Dto<Bill | null>> {
+  async receipt(
+    operation: Operation,
+    req: ReceiptRequest,
+  ): Promise<Dto<Bill | null>> {
     const dto: Dto<Bill | null> = await this.operationService.receipt(
       operation,
+      req,
     );
     return this.populate(dto);
   }

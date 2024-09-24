@@ -17,3 +17,4 @@ export * from './BillFilterRequest';
 export * from './RenameOperationRequest';
 export * from './ExpenseFilterRequest';
 export * from './CreateExpenseRequest';
+export * from './ReceiptRequest';

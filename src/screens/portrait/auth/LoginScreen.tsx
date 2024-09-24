@@ -1,9 +1,11 @@
-import React, { FC, memo } from 'react';
+import React, { FC, memo, useEffect, useState } from 'react';
 import { ENV, useAuthFacade } from '@src/business';
 import Form from '@core/components/formbase/Form';
 import View from '@core/components/viewbase/View';
 import { StyleSheet } from 'react-native';
 import Label from '@core/components/labelbase/Label';
+import { CONSTANTS } from '@core/common';
+import { InfoFacade } from '@src/business/facade/InfoFacade';
 
 type Props = {};
 type FormData = {
@@ -11,8 +13,16 @@ type FormData = {
   password: string;
 };
 export const LoginScreen: FC<Props> = memo(({}) => {
+  const [info, setInfo] = useState<string>(CONSTANTS.STR_EMPTY);
   const { login } = useAuthFacade();
+  useEffect(() => {
+    loadInfo();
+  }, []);
 
+  const loadInfo = async (): Promise<void> => {
+    const data = await InfoFacade.shared().getInfo();
+    setInfo(data);
+  };
   const handleSubmit = async (data: FormData): Promise<void> => {
     await login(data.phone, data.password);
   };
@@ -24,7 +34,7 @@ export const LoginScreen: FC<Props> = memo(({}) => {
         <Form.SubmitButton style={styles.submit} label={'Login'} />
       </Form.View>
       <Label.T
-        text={`${ENV.ENV}\n${ENV.HOST}`}
+        text={`${ENV.ENV}\n${ENV.HOST}\n${info}`}
         style={{
           position: 'absolute',
           left: 0,

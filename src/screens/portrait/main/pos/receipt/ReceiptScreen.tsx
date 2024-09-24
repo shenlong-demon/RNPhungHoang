@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import React, { FC, memo } from 'react';
 import View from '@core/components/viewbase/View';
 import { StyleSheet } from 'react-native';
 import { FlatList } from '@core/components';
@@ -8,7 +8,11 @@ import Label from '@core/components/labelbase/Label';
 import { Dto } from '@core/common';
 import { useNavigation } from '@core/navigation';
 import Form from '@core/components/formbase/Form';
+import { DISPLAY_MODE } from '@core/components/datetimepicker/DateTimePickerBase';
 
+type FormValues = {
+  receiptedAt: number;
+};
 type Props = {};
 export const ReceiptScreen: FC<Props> = memo(({}: Props) => {
   const { operation, total, receipt } = useOperationContext();
@@ -22,8 +26,10 @@ export const ReceiptScreen: FC<Props> = memo(({}: Props) => {
       />
     );
   };
-  const handleSubmit = async (_data: any): Promise<void> => {
-    const dto: Dto<Bill | null> = await receipt();
+  const handleSubmit = async (data: FormValues): Promise<void> => {
+    const dto: Dto<Bill | null> = await receipt({
+      receiptedAt: Number(data.receiptedAt),
+    });
     if (dto.next()) {
       popToTop();
     }
@@ -48,6 +54,22 @@ export const ReceiptScreen: FC<Props> = memo(({}: Props) => {
         renderItem={renderItem}
         keyExtractor={(item: Booking, index: number) => `${item.id}_${index}`}
       />
+      <Form.DateTimePicker
+        label={`Receipt Date`}
+        defaultValue={0}
+        containerStyle={{ marginBottom: 10 }}
+        mode={DISPLAY_MODE.DATETIME}
+        name={`receiptedAt`}
+        rules={{
+          // valueAsNumber: true,
+          required: false,
+          min: 0,
+          pattern: {
+            value: /^[-+]?[1-9]\d*$/,
+            message: 'Receipt Date must be number',
+          },
+        }}
+      />
 
       <Form.SubmitButton
         textStyle={styles.receiptButtonText}
@@ -67,7 +89,6 @@ const styles = StyleSheet.create({
     width: '100%',
     borderWidth: 1,
     borderColor: 'green',
-    marginBottom: 30,
   },
   receiptButton: {
     backgroundColor: 'green',

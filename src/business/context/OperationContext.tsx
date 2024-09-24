@@ -5,6 +5,7 @@ import {
   Issue,
   Operation,
   Product,
+  ReceiptRequest,
   RemoveIssueRequest,
   RenameOperationRequest,
   SetOperationEstimationRequest,
@@ -36,7 +37,7 @@ export type OperationContextResult = {
   enterOperation: (op: Operation) => Promise<Dto<Operation | null>>;
   createOperation: (operationName?: string) => Promise<Dto<Operation | null>>;
   getOperationDetail: () => Promise<Dto<Operation | null>>;
-  receipt: () => Promise<Dto<Bill | null>>;
+  receipt: (req: ReceiptRequest) => Promise<Dto<Bill | null>>;
   total: number;
   booking: (menuItem: Product) => Promise<void>;
   addService: (
@@ -142,11 +143,11 @@ export const useOperationContextFacade = (): OperationContextResult => {
     return dto;
   };
 
-  const receipt = async (): Promise<Dto<Bill | null>> => {
+  const receipt = async (req: ReceiptRequest): Promise<Dto<Bill | null>> => {
     if (!operation) {
       return Dto.default();
     }
-    const dto: Dto<Bill | null> = await facade.receipt(operation);
+    const dto: Dto<Bill | null> = await facade.receipt(operation, req);
     if (dto.next()) {
       removeOperationInList(operation);
       setOperation(null);
@@ -251,7 +252,7 @@ const DefaultOperationContextResult: OperationContextResult = {
   getOperationDetail: async (): Promise<Dto<Operation | null>> => {
     return Dto.default();
   },
-  receipt: async (): Promise<Dto<Bill | null>> => {
+  receipt: async (_req: ReceiptRequest): Promise<Dto<Bill | null>> => {
     return Dto.default();
   },
   total: 0,
